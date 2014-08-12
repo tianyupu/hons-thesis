@@ -1,0 +1,96 @@
+\documentclass[a4paper]{article}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+
+\title{INFO5993 IT Research Methods \\
+    Assignment 2: Outline of Research Approach}
+\author{Tianyu Pu \\
+    Supervisor: Irena Koprinska}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Research Contribution}
+\subsection{Background}
+Hospitals are always subject to limitations in funding, and as a result,
+it is critical that they effectiely utilise the resources at their
+disposal.
+A key measure of hospital activity and utilisation is the length of stay
+of patients, usually expressed in days. To this end, much research has been
+conducted in the past few decades to find accurate and reliable models to
+assist in predicting the length of stay of patients, so as to allow hospitals
+to allocate their resources and plan their treatment processes more
+efficiently. This is especially important in settings where there is a
+prominent scarcity of a resource, such as patient beds\citep{Tu1993}.
+
+Due to the numerous functions and units of hospitals, and the absence of a
+standard in medical data collection, many models have been devised in the
+literature applying statistical or data mining techniques (or both) to
+length of stay prediction for various medical domains, such as burn injuries
+\citep{Yang2010} and psychiatry\citep{Lowell1997}. Among these, logistic
+regression remains a commonly-used and well-understood technique
+\citep{Gabbe2005}\citep{Tu1996}. Artificial neural networks are also gaining
+attention in the medical domain through their use in predicting various
+outcomes of diseases such as breast cancer\citep{Bellazzi2008}. However,
+many works have restricted themselves to looking at a few statistical or data
+mining methods in a very specific domain.
+
+\subsection{Intended Contribution}
+As part of my research, I intend to:
+\begin{enumerate}
+\item apply a range of data mining techniques (artificial neural
+networks, support vector machines, decision trees, na\"{i}ve Bayesian
+classifier, Bayesian networks) to predict the length of stay of patients that
+are admitted to a trauma centre. This builds upon the work of Dinh et al.
+\citep{Dinh2013a}, who constructed a logistic regression model;
+\item develop a new, accurate, and most importantly reliable method for
+predicting the length of stay of trauma patients, based on the advantages and
+drawbracks of the investigated data mining methods
+\item use data mining techniques to discover what patient factors contribute
+to their transfer to rehabilitation after trauma, and to predict the
+probability of requiring rehabilitation upon admission;
+\item generalise my findings in the trauma domain into other hospital functions
+to see if there are over-arching, universal, or common factors that contribute
+to how long patients stay in hospital; and
+\item develop a mobile application that is easy-to-use and reliable that will
+incorporate the proposed methods to assist medical professionals in resource
+planning.
+\end{enumerate}
+
+The value of the work will be multi-faceted: accurately predicting how long
+a patient will stay when they are first admitted will allow hospital staff to
+better plan their resources (such as beds, medication, and the staff
+themselves) to efficiently use the funding that they receive; additionally,
+knowing about common warning signs across all medical domains that indicate
+longer stays means that staff can plan for long-term structural improvements
+in the hospital (for example, if a particular ward receives patients that
+characteristically require longer-term care, then they could look at adding
+more beds or other decisions to improve the delivery of care to that ward).
+
+\section{Evaluation}
+In order to gauge how the data mining models perform, I will compare them to
+the logistic regression model that Dinh et al.\citep{Dinh2013a} came up with.
+In that study, the area under the receiver operating characteristic curve was
+used to measure the performance of the model, and I will also use this
+measurement to evaluate the models that I construct. Additionally, I will
+also use a number of other metrics (such as sensitivity, specificity,
+classification accuracy, and mean absolute difference\citep{Walczak2003}) to
+evaluate and compare the performance of the various techniques.
+
+It is also important to keep the training and testing data separate as part
+of the evaluation process. To this end, I will use ten-fold cross-validation
+and the average of the runs will be reported. In order for this to be
+comparable to Dinh et al.\citep{Dinh2013a}, who used bootstrap
+cross-validation, I will re-run their method and use ten-fold cross-validation
+to evaluate the performance of their model. These techniques ensure that we
+obtain an accurate record of the performance of the constructed models, and
+allows us to make comparisons and draw conclusions and insights from them.
+
+\bibliographystyle{abbrv}
+\bibliography{../hons/references}
+
+\end{document}
