@@ -3,8 +3,11 @@
 *.bbl
 *.blg
 *.log
+*.lof
+*.lot
 *.out
 *.pdf
+*.toc
 
 # Backup files created by some programs
 *~
