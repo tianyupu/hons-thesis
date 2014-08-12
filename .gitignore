@@ -1,0 +1,10 @@
+# LaTeX related generated files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdf
+
+# Backup files created by some programs
+*~
