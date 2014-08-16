@@ -1,8 +1,28 @@
 /*
+ * Import Excel data into SAS
+ */
+proc import out=hons.trauma
+		datafile='Z:\Dropbox\uni\hons\data\working-trauma-los.xlsx'
+		dbms=excelcs replace;
+	range="'Irena to use - no deaths48hrs$'";
+	scantext=yes;
+	usedate=yes;
+	scantime=yes;
+run;
+
+/*
+ * Remove the records for patients who died
+ */
+data hons.trauma;
+	set hons.trauma;
+	if (outcome = 'Died') then delete;
+run;
+
+/*
  * Split the trauma dataset into half for derivation and validation
  */
 proc surveyselect data=hons.trauma
-	method=srs n=1273 out=hons.split outall;
+	method=srs n=1256 out=hons.split outall;
 run;
 
 data hons.derivation hons.validation;
@@ -16,9 +36,19 @@ run;
  * dataset with stepwise selection
  */
 title 'Stepwise Selection on Trauma Patient LOS data';
-proc logistic data=hons.derivation covout outest=hons.betas;
-	class ssa;
-	model ssa=gcs1 normalvitals age65 penetrating chestany spineany lowerlimbany fall mentalhealth operation iss8 mechanism
+proc logistic data=hons.derivation descending outest=hons.betas;
+	class ssa sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode fall
+			headany faceany neckany chestany abdoany spineany upperlimbany lowerlimbany
+			head3 face3 neck3 chest3 abdo3 spine3 upper3 lower3
+			operation laparotomy thoracotomy neurosurgery
+			married english mentalhealth
+			comorbidity;
+	model ssa=sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode fall
+			headany faceany neckany chestany abdoany spineany upperlimbany lowerlimbany
+			head3 face3 neck3 chest3 abdo3 spine3 upper3 lower3
+			operation laparotomy thoracotomy neurosurgery
+			married english mentalhealth
+			comorbidity
 		/ selection=stepwise
 		  slentry=0.05
 		  slstay=0.05
