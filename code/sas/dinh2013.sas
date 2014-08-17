@@ -36,14 +36,16 @@ run;
  * dataset with stepwise selection
  */
 title 'Stepwise Selection on Trauma Patient LOS data';
-proc logistic data=hons.derivation descending outest=hons.betas;
-	class ssa sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode fall
+proc logistic data=hons.derivation descending outest=hons.betas outmodel=hons.outmodel;
+	class ssa sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode
+			bodyregions
 			headany faceany neckany chestany abdoany spineany upperlimbany lowerlimbany
 			head3 face3 neck3 chest3 abdo3 spine3 upper3 lower3
 			operation laparotomy thoracotomy neurosurgery
 			married english mentalhealth
 			comorbidity;
-	model ssa=sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode fall
+	model ssa=sex normalvitals gcs1 iss8 age65 transfer penetrating mechcode
+			bodyregions
 			headany faceany neckany chestany abdoany spineany upperlimbany lowerlimbany
 			head3 face3 neck3 chest3 abdo3 spine3 upper3 lower3
 			operation laparotomy thoracotomy neurosurgery
@@ -53,15 +55,30 @@ proc logistic data=hons.derivation descending outest=hons.betas;
 		  slentry=0.05
 		  slstay=0.05
 		  details
-		  lackfit;
+		  lackfit
+		  outroc=hons.roc
+		  clodds=pl;
 	output out=hons.predicted p=phat lower=lcl upper=ucl
 		predprob=(individual crossvalidate);
 run;
 
-proc print data=hons.betas;
-	title2 'Parameter Estimates and Covariance Matrix';
+/*
+ * Score the validation set with the model fitted in the above procedure
+ */
+proc logistic inmodel=hons.outmodel;
+	score data=hons.validation
+		out=hons.validation_out
+		outroc=hons.validation_roc;
 run;
 
-proc print data=hons.predicted;
-	title2 'Predicted Probabilities and 95% Confidence Limits';
+/*
+ * Plot the ROC curves for both derivation and validation data sets
+ */
+title1 'Receiver Operating Characteristic (ROC) Curves';
+symbol interpol=join;
+proc gplot data=hons.roc;
+	plot _sensit_*_1mspec_;
+run;
+proc gplot data=hons.validation_roc;
+	plot _sensit_*_1mspec_;
 run;
