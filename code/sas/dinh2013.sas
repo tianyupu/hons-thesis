@@ -1,8 +1,13 @@
+%inc "E:\Dropbox\uni\hons\code\sas\roc.sas";
+%inc "E:\Dropbox\uni\hons\code\sas\rocplot.sas";
+
+ods graphics on;
+
 /*
  * Import Excel data into SAS
  */
 proc import out=hons.trauma
-		datafile='Z:\Dropbox\uni\hons\data\working-trauma-los.xlsx'
+		datafile='..\..\data\working-trauma-los.xlsx'
 		dbms=excelcs replace;
 	range="'Irena to use - no deaths48hrs$'";
 	scantext=yes;
