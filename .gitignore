@@ -10,3 +10,4 @@
 
 # Backup files created by some programs
 *~
+*.bak
