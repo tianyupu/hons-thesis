@@ -9,10 +9,12 @@ TEMP_DIR=~/install-sklearn
 SKLEARN_VERSION="scikit-learn-0.15.1"
 NUMPY_VERSION="numpy-1.8.1"
 SCIPY_VERSION="scipy-0.14.0"
+NOSE_VERSION="nose-1.3.3.tar.gz"
 
 SKLEARN_URL="https://pypi.python.org/packages/source/s/scikit-learn/$SKLEARN_VERSION.tar.gz"
 NUMPY_URL="http://downloads.sourceforge.net/project/numpy/NumPy/1.8.1/$NUMPY_VERSION.tar.gz"
 SCIPY_URL="http://downloads.sourceforge.net/project/scipy/scipy/0.14.0/$SCIPY_VERSION.tar.gz"
+NOSE_URL="https://pypi.python.org/packages/source/n/nose/$NOSE_VERSION.tar.gz"
 
 # Install build dependencies
 sudo apt-get install build-essential libatlas-dev liblapack-dev libblas-dev gfortran
@@ -26,12 +28,12 @@ sudo apt-get install python3.4 python3.4-dev
 mkdir $TEMP_DIR
 cd $TEMP_DIR
 
-wget $SKLEARN_URL $NUMPY_URL $SCIPY_URL
+wget $SKLEARN_URL $NUMPY_URL $SCIPY_URL $NOSE_URL
 
-tar xvf "$SKLEARN_VERSION.tar.gz" "$NUMPY_VERSION.tar.gz" "$SCIPY_VERSION.tar.gz"
+tar xvf "$SKLEARN_VERSION.tar.gz" "$NUMPY_VERSION.tar.gz" "$SCIPY_VERSION.tar.gz" "$NOSE_VERSION.tar.gz"
 
 # Build and install
-for folder in $NUMPY_VERSION $SCIPY_VERSION $SKLEARN_VERSION
+for folder in $NUMPY_VERSION $SCIPY_VERSION $SKLEARN_VERSION $NOSE_VERSION
 do
   cd $folder
   python3.4 setup.py build
