@@ -2,9 +2,12 @@
 
 import csv
 
-def strip_ws(dir_path, infile_path, outfile_path):
-    """Reads an input CSV file and strips trailing whitespace, writing the
-    result to a new CSV file in the same directory.
+csv_defaults = {'delimiter': ',', 'quotechar': '"'}
+
+def strip_ws_normalise_headings(dir_path, infile_path, outfile_path):
+    """Reads an input CSV file and strips trailing whitespace, converts
+    all characters in heading names to lowercase, and replaces spaces with
+    underscores, writing the result to a new CSV file in the same directory.
     
     Takes a folder path, input file name, and output file name as strings.
     """
@@ -12,10 +15,17 @@ def strip_ws(dir_path, infile_path, outfile_path):
     output_path = dir_path + outfile_path
 
     with open(input_path) as infile:
-        csv_reader = csv.reader(infile, delimiter=',', quotechar='"')
+        csv_reader = csv.reader(infile, **csv_defaults)
         with open(output_path, 'w') as outfile:
-            csv_writer = csv.writer(outfile, delimiter=',', quotechar='"')
+            csv_writer = csv.writer(outfile, **csv_defaults)
+            headings = None
             for row in csv_reader:
+                if headings is None:
+                    # convert headings to lowercase and replace spaces and slashes
+                    row = map(str.lower, row)
+                    table = str.maketrans({' ': '_', '/': ''})
+                    row = [field.translate(table) for field in row]
+                    headings = row
                 # strip whitespace in each item of the row
                 row = map(str.strip, row)
                 # write to file
@@ -38,7 +48,7 @@ def separate_data(data_path, has_headings=True):
     headings = None
 
     with open(data_path) as datafile:
-        csv_reader = csv.reader(datafile, delimiter=',', quotechar='"')
+        csv_reader = csv.reader(datafile, **csv_defaults)
         for row in csv_reader:
             if headings is None:
                 headings = row
@@ -48,5 +58,5 @@ def separate_data(data_path, has_headings=True):
     return (feature_matrix, label_vector, headings)
 
 if __name__ == '__main__':
-    strip_ws('../../data/', 'trauma_los.csv', 'trauma_los_cleaned.csv')
+    strip_ws_normalise_headings('../../data', 'trauma_los.csv', 'trauma_los_cleaned.csv')
     X, y, headings = separate_data('../../data/trauma_los_cleaned.csv')
