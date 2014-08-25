@@ -55,8 +55,9 @@ def separate_data(has_headings, *data_path):
     with open(makepath(*data_path)) as datafile:
         csv_reader = csv.reader(datafile, **csv_defaults)
         for row in csv_reader:
-            if headings is None:
+            if headings is None and has_headings:
                 headings = row
+                continue
             feature_matrix.append(row[:-1])
             label_vector.append(row[-1])
 
