@@ -58,8 +58,9 @@ def separate_data(has_headings, *data_path):
             if headings is None and has_headings:
                 headings = row
                 continue
-            feature_matrix.append(row[:-1])
-            label_vector.append(row[-1])
+            if all(row): # if some fields are missing, exclude
+                feature_matrix.append(row[:-1])
+                label_vector.append(row[-1])
 
     return (feature_matrix, label_vector, headings)
 
