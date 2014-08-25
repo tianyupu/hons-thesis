@@ -11,3 +11,8 @@
 # Backup files created by some programs
 *~
 *.bak
+
+# Other files
+*.zip
+*.swp
+*.swo
