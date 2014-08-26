@@ -1,11 +1,16 @@
 #!/usr/bin/python3.4
 
 import numpy as np
+from util import extract_features, separate_data
+
 from sklearn import svm
+from sklearn import linear_model
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import BernoulliNB, GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+
 from sklearn.metrics import roc_auc_score
 from sklearn.cross_validation import StratifiedKFold, cross_val_score
-
-from util import extract_features, separate_data
 
 data_dir = '../../data'
 cleaned_file = 'trauma_los_cleaned.csv'
@@ -30,10 +35,29 @@ n_samples, n_features = X.shape
 cv = StratifiedKFold(y=y, n_folds=10, shuffle=True)
 
 # create a support vector machine classifier
-clf = svm.SVC(kernel='linear', probability=True)
+clf_svm = svm.SVC(kernel='linear', probability=True)
+
+# create a Gaussian naive Bayes classifier
+clf_gauss_nb = GaussianNB()
+
+# create a multivariate Bernoulli naive Bayes classifier
+clf_binom_nb = BernoulliNB()
+
+# create a logistic regression classifier
+clf_logistic = linear_model.LogisticRegression()
+
+# create a KNN classifier
+clf_knn = KNeighborsClassifier(n_neighbors=10, algorithm='auto')
+
+# create a decision tree classifier using CART
+clf_tree = DecisionTreeClassifier(max_depth=3)
+
+clfs = [clf_svm, clf_gauss_nb, clf_binom_nb, clf_logistic, clf_knn, clf_tree]
 
 # output the AUC scores after 10-fold stratified cross-validation
-print(cross_val_score(clf, X, y, cv=cv, scoring='roc_auc'))
+for clf in clfs:
+    scores = cross_val_score(clf, X, y, cv=cv, scoring='roc_auc')
+    print(clf, scores.mean())
 
 # manually compute the AUC from 10-fold CV as a check
 auc_scores = []
