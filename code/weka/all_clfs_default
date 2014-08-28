@@ -1,0 +1,7 @@
+weka.classifiers.bayes.NaiveBayes
+weka.classifiers.trees.J48
+weka.classifiers.functions.Logistic
+weka.classifiers.functions.SMO
+weka.classifiers.lazy.IBk -K 10
+weka.classifiers.lazy.KStar
+weka.classifiers.functions.MultilayerPerceptron
