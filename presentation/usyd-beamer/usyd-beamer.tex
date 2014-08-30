@@ -1,0 +1,69 @@
+% Template from https://bitbucket.org/silvo/usyd-beamer-template
+
+% Include this file with \input{usyd-beamer.tex}
+
+\usetheme{default}
+
+% Turn off navigation bar:
+\beamertemplatenavigationsymbolsempty
+
+% Colours:
+%\definecolor{sydneyred}{RGB}{206,17,38}
+\definecolor{sydneyred}{RGB}{240,17,38}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{structure}{fg=sydneyred}
+\setbeamercolor{section in head/foot}{fg=black}
+
+\defbeamertemplate*{footline}{usyd}
+{%
+	\begin{beamercolorbox}[ht=2.25ex,dp=3.75ex,center]{section in head/foot}
+		\insertnavigation{0.99\paperwidth}
+	\end{beamercolorbox}%
+}%
+
+% Default slide background:
+\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{usyd-beamer/normalslide.png}}
+
+% Macro for indenting a paragraph
+% Usage: \begin{leftindent}{20mm} paragraph \\ goes \\ here \end{leftindent}
+\newenvironment{leftindent}[1] { %
+	\begin{list}{}{ %
+		\setlength{\leftmargin}{#1} %
+	} %
+	\item[] %
+} { %
+	\end{list} %
+}
+
+
+% Move frame title to right hand side
+\setbeamertemplate{frametitle}{ %
+	\vspace{4mm}
+   	\hbox{ %
+   		\begin{beamercolorbox}[wd=\paperwidth]{frametitle}%
+  	    	\hfill \insertframetitle \hspace{9mm} %
+   		\end{beamercolorbox} %
+   		\vspace{4mm} % we don't want the main text overlapping the image
+   	} %
+}
+
+% Macro for including a title slide
+% Usage: \usydtitleframe{Title}{Subtitle}{Author info} 
+\newcommand{\usydtitleframe}[3] {{ %
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{usyd-beamer/titleslide.png}} %
+	\begin{frame}[t,plain]{} %
+		\vspace{10mm} %
+		\begin{leftindent}{10mm} %
+			{\LARGE #1 } \\ %
+			\vspace{3mm} %
+			{\large #2 } %
+		\end{leftindent} %
+		\vfill{} %
+		\begin{leftindent}{40mm} %
+			{\small #3 } %
+		\end{leftindent} %
+	\end{frame} %
+}}
+
+\newcommand{\group}[1]{\section{#1}\subsection{}}
+\renewcommand{\emph}[1]{\alert{#1}}
