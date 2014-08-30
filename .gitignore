@@ -5,7 +5,9 @@
 *.log
 *.lof
 *.lot
+*.nav
 *.out
+*.snm
 *.toc
 
 # Backup files created by some programs
