@@ -9,18 +9,6 @@
 # The classifiers to be tested are loaded in a separate file, whose name is
 # specified as the second filename on the command line.
 
-# Weka configuration
-weka_cp=~/Downloads/weka-3-7-11/weka.jar
-common_options="-t $1" # options common to all weka classifiers
-jvm_heapsize=1024m
-
-# Output file configuration
-prefix=weka_result
-suffix=`date +%Y%m%d%H%M%S`
-separator="########################################"
-outdir=../../data/results/
-outfile=$outdir$prefix$suffix
-
 # if we didn't specify an input file name to this script, exit
 if [ -z $1 ]; then
   echo "Please specify an input ARFF file. Exiting."
@@ -33,10 +21,24 @@ if [ -z $2 ]; then
   exit 2
 fi
 
+# Weka configuration
+weka_cp=~/Downloads/weka-3-7-11/weka.jar
+common_options="-t $1" # options common to all weka classifiers
+jvm_heapsize=1024m
+
+# Output file configuration
+prefix=weka_result
+timestamp=`date +%Y%m%d%H%M%S`
+suffix=$2 # indicates which config was used
+separator="########################################"
+outdir=../../data/results/
+outfile=$outdir$prefix$timestamp$suffix
+
 # read all lines of weka config
 declare -a clfs
 readarray -t clfs < $2
 
+echo $1 >> $outfile
 cat $2 >> $outfile
 
 # run all classifiers from a configuration file
