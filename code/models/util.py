@@ -32,9 +32,10 @@ def strip_ws_normalise_headings(dir_path, infile_path, outfile_path):
                     row = [field.translate(table) for field in row]
                     headings = row
                 # strip whitespace in each item of the row
-                row = map(str.strip, row)
-                # write to file
-                csv_writer.writerow(list(row))
+                row = list(map(str.strip, row))
+                # write to file if all fields are available
+                if all(row):
+                    csv_writer.writerow(row)
 
 def separate_data(has_headings, *data_path):
     """Returns three lists, one with n samples and m features from the original
