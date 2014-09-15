@@ -14,7 +14,14 @@
 *~
 *.bak
 
+# Folders
+data/
+pdfs/
+samples/
+__pycache__/
+
 # Other files
 *.zip
 *.swp
 *.swo
+*.sas7bdat
