@@ -46,7 +46,7 @@ LINENUM=0
 while [ $LINENUM -lt $NUM_LINES ]
 do
   echo "Training classifier $LINENUM: ${CLFS[LINENUM]}..."
-  java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE
+  eval "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE"
   LINENUM=$[$LINENUM+1]
 done
 
