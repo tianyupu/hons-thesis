@@ -3,7 +3,7 @@
 # A script to automate the running of Weka on a given dataset.
 #
 # Given an ARFF file, train and test different classifiers on it and write the
-# results to a file (whose filename contains the current timestamp) for closer
+# results to a file (whose filename contains the current TIMESTAMP) for closer
 # examination after the run.
 #
 # The classifiers to be tested are loaded in a separate file, whose name is
@@ -22,38 +22,32 @@ if [ -z $2 ]; then
 fi
 
 # Weka configuration
-weka_cp=~/Downloads/weka-3-7-11/weka.jar
-common_options="-t $1" # options common to all weka classifiers
-jvm_heapsize=1024m
+WEKA_CP=~/Downloads/weka-3-7-11/weka.jar
+COMMON_OPTIONS="-t $1" # options common to all weka classifiers
+JVM_HEAPSIZE=1024m
 
 # Output file configuration
-prefix=weka_result
-timestamp=`date +%Y%m%d%H%M%S`
-suffix=$2 # indicates which config was used
-separator="########################################"
-outdir=../../data/results/
-outfile=$outdir$prefix$timestamp$suffix
+PREFIX=weka_result
+TIMESTAMP=`date +%Y%m%d%H%M%S`
+CONFIG=$2 # indicates which config was used
+OUTDIR=../../data/results/
+OUTFILE=$OUTDIR$PREFIX$TIMESTAMP$CONFIG
 
 # read all lines of weka config
-declare -a clfs
-readarray -t clfs < $2
+declare -a CLFS
+readarray -t CLFS < $2
 
-echo $1 >> $outfile
-cat $2 >> $outfile
+echo $1 >> $OUTFILE
+cat $2 >> $OUTFILE
 
 # run all classifiers from a configuration file
-num_lines=${#clfs[@]}
-i=0
-while [ $i -lt $num_lines ]
+NUM_LINES=${#CLFS[@]}
+LINENUM=0
+while [ $LINENUM -lt $NUM_LINES ]
 do
-  echo "Training classifier $i: ${clfs[i]}..."
-  java -Xmx$jvm_heapsize -cp $weka_cp ${clfs[i]} $common_options >> $outfile
-  for j in {0..1}
-  do
-    echo $separator >> $outfile
-  done
-  i=$[$i+1]
+  echo "Training classifier $LINENUM: ${CLFS[LINENUM]}..."
+  java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE
+  LINENUM=$[$LINENUM+1]
 done
 
 echo "Complete."
-exit 0
