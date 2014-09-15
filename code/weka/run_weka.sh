@@ -7,7 +7,9 @@
 # examination after the run.
 #
 # The classifiers to be tested are loaded in a separate file, whose name is
-# specified as the second filename on the command line.
+# specified as the second filename on the command line. If they require using
+# one classifier in another, make sure <OPTS> is specified at the correct place
+# to include the training file commands in the right place.
 
 # if we didn't specify an input file name to this script, exit
 if [ -z $1 ]; then
@@ -33,20 +35,23 @@ CONFIG=$2 # indicates which config was used
 OUTDIR=../../data/results/
 OUTFILE=$OUTDIR$PREFIX$TIMESTAMP$CONFIG
 
-# read all lines of weka config
+# Read all lines of weka config into an array
 declare -a CLFS
 readarray -t CLFS < $2
 
 echo $1 >> $OUTFILE
 cat $2 >> $OUTFILE
 
-# run all classifiers from a configuration file
+# Run all classifiers from a configuration file, substituting the filename
+# in the correct place to overcome problems with supplying arguments to
+# weka classifiers via the command line.
+# sed is run twice to remove a possible double occurrence of $COMMON_OPTIONS
 NUM_LINES=${#CLFS[@]}
 LINENUM=0
 while [ $LINENUM -lt $NUM_LINES ]
 do
   echo "Training classifier $LINENUM: ${CLFS[LINENUM]}..."
-  eval "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE"
+  eval $(echo "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE" | sed "s:<OPTS>:$COMMON_OPTIONS:g" | sed "s:$COMMON_OPTIONS::2g")
   LINENUM=$[$LINENUM+1]
 done
 

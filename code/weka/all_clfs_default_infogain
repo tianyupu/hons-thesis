@@ -2,6 +2,6 @@ weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.In
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.trees.J48
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.functions.Logistic
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.functions.SMO
-weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.lazy.IBk -- -K 10
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.lazy.IBk -- -K 10
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.lazy.KStar
 weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T -1.797693E308 -N 20" -W weka.classifiers.functions.MultilayerPerceptron
