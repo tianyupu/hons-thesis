@@ -1,0 +1,4 @@
+weka.classifiers.meta.Stacking -X 10 -M "weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a" -S 1 -num-slots 2 -B "weka.classifiers.lazy.IBk -K 10" -B "weka.classifiers.functions.Logistic"
+weka.classifiers.meta.Stacking -X 10 -M "weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a" -S 1 -num-slots 2 -B "weka.classifiers.bayes.NaiveBayes" -B "weka.classifiers.functions.Logistic"
+weka.classifiers.meta.Stacking -X 10 -M "weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a" -S 1 -num-slots 2 -B "weka.classifiers.lazy.KStar" -B "weka.classifiers.functions.Logistic"
+weka.classifiers.meta.Stacking -X 10 -M "weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a" -S 1 -num-slots 2 -B "weka.classifiers.functions.MultilayerPerceptron" -B "weka.classifiers.functions.Logistic"
