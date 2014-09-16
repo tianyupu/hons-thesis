@@ -1,0 +1,1 @@
+weka.classifiers.trees.RandomForest -I 10 -K 0 -num-slots 2
