@@ -1,0 +1,7 @@
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.trees.J48
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.functions.SMO
+weka.classifiers.meta.Bagging <OPTS> -P 100 -I 10 -num-slots 2 -W weka.classifiers.lazy.IBk -- -K 10
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.Bagging -P 100 -I 10 -num-slots 2 -W weka.classifiers.functions.MultilayerPerceptron

@@ -1,0 +1,7 @@
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.trees.J48
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.functions.SMO
+weka.classifiers.meta.AdaBoostM1 <OPTS> -P 100 -I 10 -W weka.classifiers.lazy.IBk -- -K 10
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AdaBoostM1 -P 100 -I 10 -W weka.classifiers.functions.MultilayerPerceptron
