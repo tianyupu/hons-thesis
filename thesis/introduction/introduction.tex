@@ -1,9 +1,46 @@
 \chapter{Introduction}
 
 \section{Background}
+Suppose that we have a (perhaps large) data set. It could consist of
+demographic data taken from a census, details of transactions in a shopping
+centre, or simply a collection of text documents. The term used to describe
+the methods of analysis used to find unknown relationships and summarise
+information in these data sets is \textit{data mining}. Broadly speaking,
+data mining can be broken down into five areas (or \textit{tasks}) depending
+on the aims of the person analysing the data:
+
+\begin{enumerate}
+\item Exploratory data analysis (EDA), which consists of simply exploring some
+given data set without any particular goal or ideas of what to look for.
+Methods in EDA usually involve interaction and visualisation, but this can
+become difficult if there are too many data points;
+\item Descriptive modelling, as its name suggests, seeks to describe the data
+or the processes that generate it. The major areas here are clustering (finding
+partitions of the data) and density estimation (finding the probability
+distribution of the data);
+\item Predictive modelling aims to create models that will allow the value of
+some desired quantity or metric to be predicted based on some known or observed
+values in the data set. The two major sub-areas of predictive modelling are
+\textit{classification} and \textit{regression}, distinguished only by the
+nature of the quantity we want to predict. If we want to predict whether
+something belongs in a category, such as the disease of a patient, then we
+are dealing with classification; otherwise, if we wish to predict a numeric
+quantity, such as the value of the stock market at some future data, then
+it is a regression problem;
+\item Pattern and rule discovery, which covers anomaly detection (finding data
+points which do not fit an expected trend, like detecting credit card fraud)
+and association rule learning (discovering relationships between various items
+in transaction databases, such as the food items purchased frequently together
+in a supermarket);
+\item Content retrieval, where the user wishes to find patterns in a data set
+that are similar to the one he or she specifies. Search engines are a familiar
+application of this area of data mining.
+\end{enumerate}
 
 \subsection{Problem Statement}
 
 \subsection{Previous Work}
 
 \section{Contributions}
+
+\section{Results and Evaluation}
