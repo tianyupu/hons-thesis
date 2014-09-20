@@ -1,0 +1,5 @@
+weka.classifiers.meta.CVParameterSelection <OPTS> -P "N 2 10 9" -P "M 1 20 20" -X 10 -S 1 -W weka.classifiers.trees.J48 -- -R
+weka.classifiers.meta.CVParameterSelection <OPTS> -P "C 0.05 0.75 20" -P "M 1 20 20" -X 10 -S 1 -W weka.classifiers.trees.J48
+weka.classifiers.meta.CVParameterSelection <OPTS> -P "K 1 20 20" -X 10 -S 1 -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.CVParameterSelection <OPTS> -P "K 1 20 20" -X 10 -S 1 -W weka.classifiers.lazy.IBk -- -I
+weka.classifiers.meta.CVParameterSelection <OPTS> -P "K 1 20 20" -X 10 -S 1 -W weka.classifiers.lazy.IBk -- -F
