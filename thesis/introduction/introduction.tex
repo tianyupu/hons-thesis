@@ -37,7 +37,58 @@ that are similar to the one he or she specifies. Search engines are a familiar
 application of this area of data mining.
 \end{enumerate}
 
+Data mining overlaps substantially with machine learning, a sub-field of
+artificial intelligence (AI) dedicated to the study of systems that can learn
+from data rather than executing explicitly programmed instructions. The
+techniques and issues discussed in this thesis are equally relevant in both
+areas, so we will not attempt to define a clear distinction here.
+
+In this thesis we will focus on the task of predictive modelling. Specifically,
+our problem will be a classification one. We will introduce the necessary
+terminology in the next section as we describe the problem.
+
 \subsection{Problem Statement}
+Consider a data set of patients admitted to the trauma ward of a hospital.
+This data set looks like a very large table: there are many columns, each one
+describing some aspect of a patient (for example, age); there are also many
+rows, each corresponding to a particular patient that was admitted. We will
+refer to the columns as \textit{features} or \textit{attributes}, so-named
+because they describe some particular aspect of the rows, which we will call
+\textit{samples}. Concretely, as an example, our data set could contain
+two features (age and gender) for five patients: as a table, this means that
+we have two columns, one for age and another for gender, with five rows
+containing the age and gender data for each patient. Attributes can be numeric
+(such as age) and potentially take on an infinite number of different values,
+or categorical (such as gender) and can only have one of a limited, pre-defined
+list of values.
+
+In a general predictive modelling problem, we wish to predict a value for some
+desired quantity given some values for the attributes. In our problem, we wish
+to predict the length of stay (LOS) for a patient admitted to a hospital trauma
+ward. To do this, we use our data set of trauma patients with \textit{known}
+values for the LOS and apply various predictive modelling techniques to deduce
+an effective model that will be able to predict the LOS of patients in advance.
+Note that the LOS is simply another attribute of our data set; however, because
+it is the quantity that we are interested in predicting, it is also called the
+\textit{target} or \textit{outcome} variable.
+
+Like the other attributes, the target or outcome variable can also be numeric
+or categorical. This determines the sub-task of predictive modelling that we
+will subsequently be dealing with: regression if the target variable is
+numeric, and classification if it is categorical. The various values that the
+categorical target variable can take on are also called \textit{classes}.
+Our problem is one of classification, divided into two sub-problems:
+
+\begin{enumerate}
+\item The first problem is a \textit{binary} classification task in which we
+predict one of two possible outcomes (or classes) for the patient: LOS less
+than 2 days, or greater than 2 days. Given this, what model performs best?
+\item The second problem is a \textit{multi-class} classification in which we
+define several possible outcomes with different ranges for the LOS and predict
+which range the patient will fall into. An example of possible outcomes can be
+1-3 days, 4-10 days, and 11 or more days, giving us three classes for the
+target variable. The optimal division of LOS into ranges will be investigated
+as part of the problem.
 
 \subsection{Previous Work}
 
