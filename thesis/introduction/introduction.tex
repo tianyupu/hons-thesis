@@ -5,7 +5,8 @@ Suppose that we have a (perhaps large) data set. It could consist of
 demographic data taken from a census, details of transactions in a shopping
 centre, or simply a collection of text documents. The term used to describe
 the methods of analysis used to find unknown relationships and summarise
-information in these data sets is \textit{data mining}. Broadly speaking,
+information in these data sets is \textit{data mining} \citep{Hand2001}.
+Broadly speaking,
 data mining can be broken down into five areas (or \textit{tasks}) depending
 on the aims of the person analysing the data:
 
@@ -43,11 +44,12 @@ from data rather than executing explicitly programmed instructions. The
 techniques and issues discussed in this thesis are equally relevant in both
 areas, so we will not attempt to define a clear distinction here.
 
-In this thesis we will focus on the task of predictive modelling. Specifically,
+In this thesis we will focus on the task of predictive modelling, also
+commonly known as \textit{supervised learning}. Specifically,
 our problem will be a classification one. We will introduce the necessary
 terminology in the next section as we describe the problem.
 
-\subsection{Problem Statement}
+\section{Problem Statement}
 Consider a data set of patients admitted to the trauma ward of a hospital.
 This data set looks like a very large table: there are many columns, each one
 describing some aspect of a patient (for example, age); there are also many
@@ -89,9 +91,46 @@ which range the patient will fall into. An example of possible outcomes can be
 1-3 days, 4-10 days, and 11 or more days, giving us three classes for the
 target variable. The optimal division of LOS into ranges will be investigated
 as part of the problem.
+\end{enumerate}
 
-\subsection{Previous Work}
+The LOS is an important measure of resource utilisation in hospitals around
+the world \citep{Ng2006},
+and many studies have been carried out to investigate whether the
+LOS of a patient in various medical domains -- after surgery, burns, or
+intensive care treatment to name a few -- can be predicted accurately.
+Regardless of the
+specifics of the problem, accurate LOS prediction results in better planning
+and management of limited resources such as staff, equipment and medical
+supplies. This is particularly critical as hospitals often face the problem
+of limited funding \citep{Walczak2003}.
+As we will see in the next chapter, there has been limited
+application of a wide range of data mining techniques to predict the LOS in
+various medical domains, including trauma. Our work will aim to fill this
+gap by providing insights on the application of data mining techniques to
+LOS prediction.
 
 \section{Contributions}
+The work presented in this thesis aims to address several gaps in the current
+research into LOS prediction, by building upon the work of Dinh et. al.
+\citep{Dinh2013a}.
+We apply and assess a range of techniques from different data mining paradigms
+to a data set of trauma patients, and investigate whether formulating the LOS
+prediction problem differently yields different results. The insights gained
+from applying various data mining techniques will lead to a novel method of
+predicting the LOS which will yield reliable and accurate results and support
+the decision-making of medical professionals.
 
-\section{Results and Evaluation}
+\section{Thesis Outline}
+This thesis is structured as follows. Chapter \ref{chap:litreview} describes
+the major methods in predictive modelling, interweaved with an analysis of
+past work on LOS prediction. We explore in detail the major algorithms,
+summarise the current state of research, and identify where our work fits
+within this area.
+
+Chapter \ref{chap:experiments} describes the experimental setup, detailing
+each step in the process from data pre-processing to model creation and
+finally to performance evaluation.
+
+After the methods and setup are described, the results are presented and
+discussed in Chapter \ref{chap:results}. We conclude in Chapter
+\ref{chap:conclusion}, with indications for future work in this area.
