@@ -123,8 +123,8 @@ attributes as the most desirable. We then selected the top 20 attributes to
 use in the building of the model.
 \end{itemize}
 
-We used the WEKA \citep{Hall2009} implementation of the above methods, after
-converting the data into the Attribute-Relation File Format
+We used the WEKA 3.7.11 \citep{Hall2009} implementation of the above
+methods, after converting the data into the Attribute-Relation File Format
 (ARFF)\footnote{\url{http://weka.wikispaces.com/ARFF+\%28developer+version\%29}}
 most suitable for the program.
 \todo{give more details, ie specifying binary/numeric
@@ -140,15 +140,58 @@ thought were most indicative of the target variable from experience. The
 second set was obtained from the work of Dinh et. al. \citep{Dinh2013a} that
 we are building on, giving us a baseline to compare our results to.
 
+Altogether, the various feature selection methods resulted in a total of
+7 data sets (4 automated, 2 expert selected, and 1 with all features) which
+we used in the model construction phase.
+
 \section{Model construction}
+Here we present the various classification schemes we used in order to find
+the best model for the trauma LOS data.
 
 \subsection{Single classifier}
+First we sought to compare the suitability and performance of various
+classifiers by themselves (later we looked at \textit{ensembles} of
+classifiers, when more than one is involved in making a prediction).
+These are the
+classifiers studied: \todo{expand a bit more here, maybe list the
+configuration parameters}
+\begin{itemize}
+\item Na\"{i}ve Bayes
+\item Decision tree (C4.5)
+\item Logistic regression
+\item Support vector machine
+\item $K$-nearest neighbour
+\item Feed-forward neural network (multilayer perceptron)
+\end{itemize}
+
+Each classifier was trained using ten-fold cross-validation for each of the
+7 data sets obtained from the various feature selection methods described
+above. This was repeated 30 times for each classifier and the reasons for
+this, as well as the metrics used to assess the performance of these
+classifiers, are described in Section \ref{sec:perfeval} of this chapter.
+
+In addition to the feature selection methods, we also used the WEKA 3.7.11
+\citep{Hall2009} implementation of the above classifiers for our experiments.
+Training was automated using a Bash shell script (whose source can be found
+in the appendix) that programmatically read in a list of classifiers to
+train and repeated the procedure any specified number of times, writing the
+results to a specified directory for later reference.
 
 \subsubsection{Parameter tuning}
+It is difficult in data mining to apply an algorithm out-of-the-box and have
+it perform optimally on a given data set \citep{Witten2005}. Therefore, time
+must be spent tweaking and tuning the parameters of a classifier in order to
+improve classification performance. This was the next step we took. We
+considered a range of values for various parameters of each classification
+scheme, and tried some of these new configurations by hand and some by using
+WEKA's cross-validation parameter selection class. The configurations tested,
+as well as how they were executed, are listed in this table:
+\todo{insert table!}
 
 \subsection{Ensemble classifiers}
 
 \section{Performance evaluation} % don't forget cross-validation
+\label{sec:perfeval}
 
 \subsection{Metrics}
 
