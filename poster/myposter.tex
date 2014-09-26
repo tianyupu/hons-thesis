@@ -1,5 +1,4 @@
-\documentclass[portrait]{usydposter}
-\usepackage{LI}
+\documentclass[landscape]{usydposter}
 \usepackage{xspace}
 
 \newcommand{\acronym}[1]{\textsc{#1}\xspace}
@@ -19,16 +18,18 @@
 
 \flushbottom
 
-\title{CCG Parsing with One Structure per n-gram}
-\author{Tim Dawborn}
+\title{Improved Prediction of Hospital Length of Stay for Severe Injury}
+\author{Tianyu Pu \texttt{tianyu.pu@sydney.edu.au}}
 
 \begin{document}
+
 \makeheader
 
 \begin{multicols}{3}
 
 % =============================================================================
-\section{Heading RGB 206, 17, 38 -- Arial 28}
+\section{Heading RGB 0, 152, 219 -- Arial 28}
+\subsection{Subheading black -- Arial 24}
 \noindent This is some text here...
 
 \begin{itemize}
@@ -41,175 +42,24 @@
 
 % =============================================================================
 \section{Background}
-\begin{itemize}
-  \item \cky is a $O(n^3)$ parsing algorithm which uses a chart data structure, illustrated in Figure~1. A chart is a hierarchical triangular structure  which stores the parse trees for all substrings of the sentence being parsed
-\end{itemize}
-
-\begin{figure}
-  \pgfimage[width=0.7\columnwidth]{images/chart}
-  \caption{An illustration of the chart data structure used in parsing algorithms such as \cky}
-\end{figure}
-
-\begin{itemize}
-  \item Combinatory Categorial Grammar (\ccg) \cite{steedman:00} is a \emph{lexicalised grammar formalism}
-  \item Each word in a sentence is assigned a composite object that reflects its role within the sentence
-  \item The following is an example derivation using \ccg, where the lexical categories for each token are shown
-\end{itemize}
-
-\begin{center}
-  \small
-  \deriv{4}{
-    \rm I & \rm like & \rm the & \rm cat \\
-    \uline{1} & \uline{1} & \uline{1} & \uline{1} \\
-    \mc{1}{\cf{NP}} & \mc{1}{\cf{(S[dcl]\bs NP)/NP}} & \mc{1}{\cf{NP[nb]/N}} & \mc{1}{\cf{N}} \\
-    & & \fapply{2} \\
-    & & \mc{2}{\cf{NP[nb]}} \\
-    & \bapply{3}\\
-    & \mc{3}{\cf{S[dcl]\bs NP}}\\
-    \bapply{4}\\
-    \mc{4}{\cf{S[dcl]}}\\
-  }
-\end{center}
-
 
 % =============================================================================
 \section{Problems with Pizza}
-\emph{Syntactic ambiguity} is a problem when parsing, and is a particular problem for our one structure per \ngram problem. Consider the sentence
-
-\begin{center}
-  \small
-  \deriv{5}{
-    \rm I & \rm ate & \rm pizza & \rm with & \rm anchovies \\
-    \uline{1} & \uline{1} & \uline{1} & \uline{1} & \uline{1} \\
-    \mc{1}{\cf{NP}} & \mc{1}{\cf{(S\bs NP)/NP}} & \mc{1}{\cf{NP}} & \mc{1}{\cf{(NP\bs NP)/NP}} & \mc{1}{\cf{NP}} \\
-    & & & \fapply{2} \\
-    & & & \mc{2}{\cf{NP\bs NP}} \\
-    & & \bapply{3}\\
-    & & \mc{3}{\cf{NP}}\\
-    & \fapply{4} \\
-    & \mc{4}{\cf{S\bs NP}} \\
-    \bapply{5}\\
-    \mc{5}{\cf{S}}\\
-  }
-\end{center}
-
-and compare it to the sentence
-
-\begin{center}
-  \small
-  \deriv{5}{
-    \rm I & \rm ate & \rm pizza & \rm with & \rm cutlery \\
-    \uline{1} & \uline{1} & \uline{1} & \uline{1} & \uline{1} \\
-    \mc{1}{\cf{NP}} & \mc{1}{\cf{(S\bs NP)/NP}} & \mc{1}{\cf{NP}} & \mc{1}{\cf{((S\bs NP)\bs(S\bs NP))/NP}} & \mc{1}{\cf{NP}} \\
-    & \fapply{2} & \fapply{2} \\
-    & \mc{2}{\cf{S\bs NP}} & \mc{2}{\cf{(S\bs NP)\bs(S\bs NP)}} \\
-    & \bapply{4} \\
-    & \mc{4}{\cf{S\bs NP}} \\
-    \bapply{5}\\
-    \mc{5}{\cf{S}}\\
-  }
-\end{center}
-
-These two sentences differ by only one word, yet they have two completely different derivations due to the different roles the word \textrm{with} plays in each sentence. 
-
-The word \textrm{with} thus is syntactically ambiguous. Without knowing the surrounding context, it is unknown which grammatical role the word is undertaking.
-
 
 % =============================================================================
 \section{Non-constituent-forming \ngrams}
 Memoisation of \ngrams which do not form constituents can be achieved through the use of {\ccg}'s \emph{composition} and \emph{type raising} combinators.
 
-\begin{center}
-  \small
-  \deriv{3}{
-    \rm of & \rm the & \rm potato \\
-    \uline{1} & \uline{1} & \uline{1} \\
-    \mc{1}{\cf{(NP\bs NP)/NP}} & \mc{1}{\cf{NP/N}} & \mc{1}{\cf{N}} \\
-    & \fapply{2}\\
-    & \mc{2}{\cf{NP}} \\
-    \fapply{3}\\
-    \mc{3}{\cf{NP\bs NP}}\\
-  }
-\end{center}
-
 \textrm{The} is joined to \textrm{potato} before \textrm{of} can be joined with \textrm{the}. Instead, we could construct the following derivation and insert it into the pre-constructed database:
-
-\begin{center}
-  \small
-  \deriv{2}{
-    \rm of & \rm the \\
-    \uline{1} & \uline{1} \\
-    \mc{1}{\cf{(NP\bs NP)/NP}} & \mc{1}{\cf{NP/N}} \\
-    \fcomp{2} \\
-    \mc{2}{\cf{(NP\bs NP)/N}} \\
-  }
-\end{center}
 
 Here we use \ccg forwards composition to combine \textrm{of} and \textrm{the} into a constituent-forming analysis. This chart structure could be reused to construct a span of the original phrase in the following manner:
 
-\begin{center}
-  \small
-  \deriv{3}{
-    \rm of & \rm the & \rm potato \\
-    \uline{1} & \uline{1} & \uline{1} \\
-    \mc{1}{\cf{(NP\bs NP)/NP}} & \mc{1}{\cf{NP/N}} & \mc{1}{\cf{N}} \\
-    \fcomp{2} & \\
-    \mc{2}{\cf{(NP\bs NP)/N}} & \\
-    \fapply{3}\\
-    \mc{3}{\cf{NP\bs NP}}\\
-  }
-\end{center}
-
 One situation where this technique does not work is is with \emph{prepositional phrase attachment}. The correct \ccg derivation for the phrase \textrm{on the king of England} is
-
-\begin{center}
-  \small
-  \deriv{6}{
-    \rm X & \rm on & \rm the & \rm king & \rm of & \rm England \\
-    \uline{1} & \uline{1} & \uline{2} & \uline{2}  \\
-    \mc{1}{\cf{NP}} & \mc{1}{\cf{(NP\bs NP)/NP}} & \mc{2}{\cf{NP[nb]}} & \mc{2}{\cf{NP\bs NP}} \\
-    & & \bapply{4}\\
-    & & \mc{4}{\cf{NP}}\\
-    & \fapply{5} \\
-    & \mc{5}{\cf{NP\bs NP}} \\
-    \bapply{6} \\
-    \mc{6}{\cf{NP}} \\
-  }
-\end{center}
 
 If we were to use in this example the same forward composed derivation of the bigram \textrm{of the} as described earlier for the bigram \textrm{on the}, the wrong analysis would be constructed.
 
-\begin{center}
-  \small
-  \deriv{6}{
-    \rm X & \rm on & \rm the & \rm king & \rm of & \rm England \\
-    \uline{1} & \uline{2} & \uline{1} & \uline{2}  \\
-    \mc{1}{\cf{NP}} & \mc{2}{\cf{(NP\bs NP)/N}} & \mc{1}{\cf{N}} & \mc{2}{\cf{NP\bs NP}} \\
-    & \fapply{3} & & \\
-    & \mc{3}{\cf{NP\bs NP}} & & \\
-    \bapply{4} & & \\
-    \mc{4}{\cf{NP}} & & \\
-    \bapply{6} \\
-    \mc{6}{\cf{NP}} \\
-  }
-\end{center}
-
-
 % =============================================================================
 \section{Implementation}
-The \candc parser \cite{clark-curran:07} is a state of the art \ccg parser which uses \cky. The \candc parser was used to memoise constituent-forming \ngrams into databases (Figure~2). When parsing sentences in the future, the memoised databases can be used to insert pre-constructed parses straight into the chart (Figure~3).
-
-\begin{figure}
-  \pgfimage[width=0.5\columnwidth]{images/prebuilt1}
-  \caption{When creating the trigram database, a trigram is added to the database if it forms a constituent in the chart}
-  \label{fig:prebuilt1}
-\end{figure}
-
-\begin{figure}
-  \pgfimage[width=0.7\columnwidth]{images/prebuilt2}
-  \caption{Illustration of using the \ngram databases. The trigram {\tt B~C~D} is loaded from the pre-constructed database, and blocks the corresponding cells}
-\end{figure}
-
 
 % =============================================================================
 \section{Results}
@@ -221,44 +71,9 @@ Empirical results for the memoisation of constituent-forming \ngrams can be seen
   \item These results backup the theoretical hypothesis that persisting only constituent-forming \ngrams would not be enough to get the one structure per \ngram idea to work in practice
 \end{itemize}
 
-\begin{table}
-  \small
-  \begin{tabular}{cc||c|cc}
-    \hline
-    Model & & Baseline & 2-gram & 3-gram \\
-    \hline \hline
-           &  Time  & 82.82   & 82.83   & 82.57  \\
-    \wsj   &   LF   & 85.26   & 85.26   & 85.26  \\
-    derivs &   UF   & 92.01   & 92.01   & 92.01  \\
-           &   Cov  & 98.64   & 98.64   & 98.64  \\
-%%%    \hline
-%%%           &  Time  & 84.15   & 83.83   & 83.87  \\
-%%%    \wsj   &   LF   & 87.40   & 87.40   & 87.40  \\
-%%%    hybrid &   UF   & 93.10   & 93.10   & 93.10  \\
-%%%           &   Cov  & 98.64   & 98.64   & 98.64  \\
-%%%    \hline
-%%%           &  Time  & 84.10   & 83.96   & 84.26  \\
-%%%    \np    &   LF   & 83.60   & 83.60   & 83.60  \\
-%%%    derivs &   UF   & 90.48   & 90.48   & 90.48  \\
-%%%           &   Cov  & 98.54   & 98.54   & 98.54  \\
-%%%    \hline
-%%%           &  Time  & 84.82   & 84.88   & 85.32  \\
-%%%    \np    &   LF   & 85.88   & 85.88   & 85.88  \\
-%%%    hybrid &   UF   & 91.63   & 91.63   & 91.63  \\
-%%%           &   Cov  & 98.54   & 98.54   & 98.54  \\
-    \hline
-  \end{tabular}
-  \caption{The speed versus performance trade-off for varying sized \ngrams on \ccgbank 02 to 21}
-  \label{tab:results}
-\end{table}
-
-%%%Experiments were also conducted using only non-constituent-forming \ngrams over the same datasets. However the outcome of these experiments were the same; no statistically significant change was observed.
-
-
 % =============================================================================
 \section{Conclusion}
 Thorough analysis of this one structure per \ngram idea using \ccg as a grammar formalism combined with a set of empirical results has shown that this one structure per \ngram idea does not work in the general when using token based \ngrams. 
-
 
 % =============================================================================
 \section{Future work}
@@ -267,10 +82,9 @@ Thorough analysis of this one structure per \ngram idea using \ccg as a grammar 
   \item The initial results for this new direction are positive, showing show a 10\% parser speedup being achieved with minimal loss of F-score
 \end{itemize}
 
-
 % =============================================================================
 \references
-\bibliography{references}
+\bibliography{../thesis/references}
 
 \end{multicols}
 \end{document}

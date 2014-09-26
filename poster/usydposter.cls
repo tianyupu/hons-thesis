@@ -2,6 +2,7 @@
 %% This is file `usydposter.cls'
 %% 
 %% Author: Tim Dawborn <tim.dawborn@sydney.edu.au>
+%% Revised: 26/09/2014 by Tianyu Pu <tianyu.pu@sydney.edu.au>
 %%
 \ProvidesClass{usydposter}[2010/05/08]
 \NeedsTeXFormat{LaTeX2e}
@@ -13,6 +14,7 @@
 \newlength{\poster@right}
 
 \newlength{\poster@logopad}
+\newlength{\poster@blueboxheight} % adjustment factor for height of blue box
 \newlength{\poster@sydoffset}
 \newlength{\poster@logowidth}
 \newlength{\poster@logoheight}
@@ -29,6 +31,9 @@
 \setlength{\poster@right}{42mm}
 
 \setlength{\poster@logopad}{15mm}
+
+% update this to adjust the height of the blue heading box
+\setlength{\poster@blueboxheight}{1cm}
 
 \setlength{\poster@sydoffset}{28mm}
 \setlength{\poster@logowidth}{85mm}
@@ -64,7 +69,9 @@
 \usepackage{pgf}
 \usepackage{multicol}
 
-\usepackage{colours}
+%\usepackage{colours}
+\definecolor{usydblue}{RGB}{0,152,219}
+\definecolor{usydred}{RGB}{206,17,38}
 
 % page style
 \pagestyle{empty}
@@ -90,7 +97,7 @@
 \renewcommand{\huge}{\fontsize{51.6}{64}\selectfont}
 \renewcommand{\Huge}{\fontsize{61.92}{77}\selectfont}
 
-\pgfdeclareimage[width=\poster@logowidth]{logo}{usyd-primary-colour-reversed}
+\pgfdeclareimage[width=\poster@logowidth]{logo}{usyd-primary-colour}
 \settoheight{\poster@logoheight}{\pgfuseimage{logo}}
 
 % page numbering
@@ -108,7 +115,7 @@
     {subsection}{2}{0mm}%
     {-0.5\baselineskip}%
     {0.3\baselineskip}%
-    {\fontsize{25}{27}\selectfont\bfseries\color{usydblue}}}
+    {\fontsize{24}{27}\selectfont\bfseries\color{black}}}
 \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}.}
 
 % figures
@@ -137,10 +144,10 @@
   \def\titlefont  {\color{white}\fontsize{54}{60}\selectfont}
   \def\authorfont {\color{white}\fontsize{40}{40}\selectfont\itshape}
   \def\facultyfont{\color{white}\fontsize{28}{32}\selectfont}
-  \noindent\begin{pgfpicture}{0cm}{0cm}{\textwidth}{9.5cm}
+  \noindent\begin{pgfpicture}{0cm}{-\poster@blueboxheight}{\textwidth}{\poster@blueboxheight+9.5cm}
     % blue rectangle
     \color{usydblue}
-    \pgfrect[fill]{\pgfpoint{\poster@sydoffset}{0cm}}{\pgfpoint{\textwidth - \poster@sydoffset + \poster@logopad}{9.5cm}}
+    \pgfrect[fill]{\pgfpoint{\poster@sydoffset}{-\poster@blueboxheight}}{\pgfpoint{\textwidth - \poster@sydoffset + \poster@logopad}{\poster@blueboxheight+9.5cm}}
     % red rectangle
     \color{usydred}
     \pgfrect[fill]{\pgfpoint{-\poster@logopad}{4.2cm}}{\pgfpoint{\poster@logowidth + 2\poster@logopad}{5.3cm}}
@@ -153,12 +160,12 @@
       \parbox{\poster@titlewidth}{\raggedright\MakeUppercase{\postertitle}}}
     }
     % poster author
-    \pgfputat{\pgfpoint{11cm}{3.2cm}}{\pgfbox[left,bottom]{%
+    \pgfputat{\pgfpoint{11cm}{2.8cm}}{\pgfbox[left,bottom]{%
       \authorfont
       \parbox{\poster@titlewidth}{\posterauthor}
     }}
     % poster faculty
-    \pgfputat{\pgfpoint{11cm}{0.5cm}}{\pgfbox[left,bottom]{%
+    \pgfputat{\pgfpoint{11cm}{-0.4cm}}{\pgfbox[left,bottom]{%
       \facultyfont
       \parbox{\poster@titlewidth}{\posterschool\newline\posterfaculty}
     }}
@@ -168,7 +175,7 @@
 % macros which users should redefine
 \newcommand{\postertitle}{Title of your talk}
 \newcommand{\posterauthor}{Joe Blogs}
-\newcommand{\posterschool}{School of Information Technologies}
+\newcommand{\posterschool}{\textit{Irena Koprinska} \\ School of Information Technologies}
 \newcommand{\posterfaculty}{Faculty of Engineering and Information Technologies}
 
 \renewcommand{\title}[1]{\renewcommand{\postertitle}{#1}}
