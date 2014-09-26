@@ -97,7 +97,7 @@
 \renewcommand{\huge}{\fontsize{51.6}{64}\selectfont}
 \renewcommand{\Huge}{\fontsize{61.92}{77}\selectfont}
 
-\pgfdeclareimage[width=\poster@logowidth]{logo}{usyd-primary-colour}
+\pgfdeclareimage[width=\poster@logowidth]{logo}{usyd-primary-reversed.png}
 \settoheight{\poster@logoheight}{\pgfuseimage{logo}}
 
 % page numbering
