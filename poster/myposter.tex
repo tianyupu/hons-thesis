@@ -1,4 +1,4 @@
-\documentclass[landscape]{usydposter}
+\documentclass[portrait]{usydposter}
 \usepackage{xspace}
 
 \newcommand{\acronym}[1]{\textsc{#1}\xspace}
@@ -28,59 +28,24 @@
 \begin{multicols}{3}
 
 % =============================================================================
-\section{Heading RGB 0, 152, 219 -- Arial 28}
-\subsection{Subheading black -- Arial 24}
+\section{Aims}
 \noindent This is some text here...
-
-\begin{itemize}
-  \item Parsing is the process of deriving the grammatical structure for a given sentence
-  \item Natural language parsing is currently slow, with the best algorithms running in $O(n^3)$ with respect to the length of the sentence
-  \item There is an inherent \emph{redundancy} in natural languages where certain common phrases (or \ngrams) appear frequently in text, each time with the same grammatical structure
-  \item We explore the idea of exploiting this redundancy through the construction and \emph{memoisation} of the parse structures for these frequent \ngrams
-\end{itemize}
-
+\cite{Dinh2013a}
 
 % =============================================================================
-\section{Background}
+\section{Introduction}
 
 % =============================================================================
-\section{Problems with Pizza}
-
-% =============================================================================
-\section{Non-constituent-forming \ngrams}
-Memoisation of \ngrams which do not form constituents can be achieved through the use of {\ccg}'s \emph{composition} and \emph{type raising} combinators.
-
-\textrm{The} is joined to \textrm{potato} before \textrm{of} can be joined with \textrm{the}. Instead, we could construct the following derivation and insert it into the pre-constructed database:
-
-Here we use \ccg forwards composition to combine \textrm{of} and \textrm{the} into a constituent-forming analysis. This chart structure could be reused to construct a span of the original phrase in the following manner:
-
-One situation where this technique does not work is is with \emph{prepositional phrase attachment}. The correct \ccg derivation for the phrase \textrm{on the king of England} is
-
-If we were to use in this example the same forward composed derivation of the bigram \textrm{of the} as described earlier for the bigram \textrm{on the}, the wrong analysis would be constructed.
-
-% =============================================================================
-\section{Implementation}
+\section{Method}
 
 % =============================================================================
 \section{Results}
-Empirical results for the memoisation of constituent-forming \ngrams can be seen in the table below.
-
-\begin{itemize}
-  \item Different grammar models were used over varying sized \ngrams, with the  parsing time, F-score, and coverage figures being recorded
-  \item No statistically significant change was observed in the F-scores or parsing times
-  \item These results backup the theoretical hypothesis that persisting only constituent-forming \ngrams would not be enough to get the one structure per \ngram idea to work in practice
-\end{itemize}
 
 % =============================================================================
-\section{Conclusion}
-Thorough analysis of this one structure per \ngram idea using \ccg as a grammar formalism combined with a set of empirical results has shown that this one structure per \ngram idea does not work in the general when using token based \ngrams. 
+\section{Discussion}
 
 % =============================================================================
-\section{Future work}
-\begin{itemize}
-  \item Recent work has been undertaken to explore the one structure per \ngram idea using \ngrams constructed of supertags instead of tokens
-  \item The initial results for this new direction are positive, showing show a 10\% parser speedup being achieved with minimal loss of F-score
-\end{itemize}
+\section{Conclusions and Future work}
 
 % =============================================================================
 \references
