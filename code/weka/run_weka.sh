@@ -14,15 +14,24 @@
 # An optional third argument to the script is to specify the number of runs
 # of the classifiers. This must be a positive integer, and defaults to 1.
 
+# Define a function that prints out usage information for various missing
+# argument cases
+usage_msg ()
+{
+  echo "Usage: ./run_weka.sh <input arff file> <filename with list of weka commands> [<number of runs>]"
+}
+
 # If we didn't specify an input file name to this script, exit
 if [ -z $1 ]; then
   echo "Please specify an input ARFF file. Exiting."
+  usage_msg
   exit 1
 fi
 
 # If we didn't specify a config file
 if [ -z $2 ]; then
   echo "Please specify a list of weka classifiers. Exiting."
+  usage_msg
   exit 2
 fi
 
