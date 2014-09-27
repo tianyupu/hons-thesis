@@ -48,41 +48,42 @@ fi
 
 # Weka configuration
 WEKA_CP=~/Downloads/weka-3-7-11/weka.jar
-COMMON_OPTIONS="-t $1" # options common to all weka classifiers
+# options common to all weka classifiers; -v suppresses training data output
+COMMON_OPTIONS="-v -t $1"
 JVM_HEAPSIZE=1024m
 
 # Output file base configuration
 PREFIX=weka_result
 CONFIG=$2 # indicates which config was used
 OUTDIR=../../data/results/
+TIMESTAMP=`date +%Y%m%d%H%M%S`
+OUTFILE=$OUTDIR$PREFIX$TIMESTAMP${CONFIG}_$RUNS # use a single file for all runs
+
+# Record what training file and classifiers (and their options) we used and
+# how many runs were performed
+echo $RUNS >> $OUTFILE
+echo $1 >> $OUTFILE
+cat $2 >> $OUTFILE
 
 # Read all lines of weka config into an array
 declare -a CLFS
 readarray -t CLFS < $2
 
-# Run the classifiers $RUNS times
-for RUN in $(seq 1 $RUNS)
+# Run all classifiers from a configuration file, substituting the filename
+# in the correct place to overcome problems with supplying arguments to
+# weka classifiers via the command line.
+# sed is run twice to remove a possible double occurrence of $COMMON_OPTIONS
+NUM_LINES=${#CLFS[@]}
+LINENUM=0
+while [ $LINENUM -lt $NUM_LINES ]
 do
-  echo "Executing run $RUN..."
-  # Create the output file based on the current timestamp of the run
-  TIMESTAMP=`date +%Y%m%d%H%M%S`
-  OUTFILE=$OUTDIR$PREFIX$TIMESTAMP$CONFIG
-  # Record what data file and classifiers we are using in the results file
-  # for later reference
-  echo $1 >> $OUTFILE
-  cat $2 >> $OUTFILE
-  # Run all classifiers from a configuration file, substituting the filename
-  # in the correct place to overcome problems with supplying arguments to
-  # weka classifiers via the command line.
-  # sed is run twice to remove a possible double occurrence of $COMMON_OPTIONS
-  NUM_LINES=${#CLFS[@]}
-  LINENUM=0
-  while [ $LINENUM -lt $NUM_LINES ]
+  for RUN in $(seq 1 $RUNS)
   do
-    echo "Training classifier $LINENUM: ${CLFS[LINENUM]}..."
-    eval $(echo "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $COMMON_OPTIONS >> $OUTFILE" | sed "s:<OPTS>:$COMMON_OPTIONS:g" | sed "s:$COMMON_OPTIONS::2g")
-    LINENUM=$[$LINENUM+1]
+    SEED=$RANDOM
+    echo "Training classifier $[$LINENUM+1] run #$RUN with seed $SEED: ${CLFS[LINENUM]}"
+    eval $(echo "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} -s $SEED $COMMON_OPTIONS >> $OUTFILE" | sed "s:<OPTS>:$COMMON_OPTIONS:g" | sed "s:$COMMON_OPTIONS::2g")
   done
+  LINENUM=$[$LINENUM+1]
 done
 
 echo "Complete."
