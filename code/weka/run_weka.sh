@@ -126,7 +126,7 @@ readarray -t CLFS < "$WEKACONFIG"
 # Run all classifiers from a configuration file, substituting the filename
 # in the correct place to overcome problems with supplying arguments to
 # weka classifiers via the command line.
-# sed is run twice to remove a possible double occurrence of $COMMON_OPTIONS
+# sed is run twice to remove a possible double occurrence of $OPTIONS
 NUM_LINES=${#CLFS[@]}
 LINENUM=0
 while [ $LINENUM -lt $NUM_LINES ]; do
@@ -138,7 +138,8 @@ while [ $LINENUM -lt $NUM_LINES ]; do
       ROC_FILE="${LINENUM}_$(echo ${CLFS[LINENUM]} | awk '{print $1}')_$run.arff"
       ROC_OPTION="-threshold-file $ROC_FOLDER/$ROC_FILE"
     fi
-    eval $(echo "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $ROC_OPTION -s $SEED $COMMON_OPTIONS >> $RESULTFILE" | sed "s:<OPTS>:$COMMON_OPTIONS:g" | sed "s:$COMMON_OPTIONS::2g")
+    OPTIONS="$ROC_OPTION -s $SEED $COMMON_OPTIONS"
+    eval $(echo "java -Xmx$JVM_HEAPSIZE -cp $WEKA_CP ${CLFS[LINENUM]} $OPTIONS >> $RESULTFILE" | sed "s:<OPTS>:$OPTIONS:g" | sed "s:$OPTIONS::2g")
   done
   LINENUM=$[$LINENUM+1]
 done
