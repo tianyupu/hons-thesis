@@ -1,9 +1,19 @@
 #!/usr/bin/env bash
 
+# A script to get certain parts of result files and either summarise them
+# or output them for summarising by compute_ci.py.
+
 usage_msg () {
-  echo "Usage: ./summarise_results.sh -n <num groups> -x <num runs> -f <input file>"
+  echo "Usage: ./summarise_results.sh -n <num groups> -x <num runs> -f <input file> [-v] [-a]"
+  echo "If -a is specified, then -v is turned on as well as it is assumed the output won't
+    be piped into compute_ci.py"
 }
 
+# Default behaviour
+VERBOSE=false
+FIND_AVGS=false
+
+# Process command line arguments
 while [[ $# > 0 ]]; do
   key=$1
   shift
@@ -20,12 +30,19 @@ while [[ $# > 0 ]]; do
       RESULTFILE="$1"
       shift
       ;;
+    -v)
+      VERBOSE=true
+      ;;
+    -a)
+      FIND_AVGS=true
+      ;;
     *)
       echo "Unknown option: $key"
       ;;
   esac
 done
 
+# Check that the inputs make sense
 if [ -z $NUMGROUPS ] || [ -z $NUMRUNS ] || [ -z $RESULTFILE ]; then
   echo "Please specify all arguments."
   usage_msg
@@ -42,19 +59,45 @@ if [[ ! $NUMGROUPS =~ $NUMBER ]] || [[ ! $NUMRUNS =~ $NUMBER ]]; then
   exit 3
 fi
 
-echo "NUMGROUPS: $NUMGROUPS"
-echo "NUMRUNS: $NUMRUNS"
-echo "RESULTFILE: $RESULTFILE"
-echo "TRAINING FILE: $(head $RESULTFILE -n 2 | tail -n 1)"
+# Special output for verbose mode
+verbose () {
+  echo "NUMGROUPS: $NUMGROUPS"
+  echo "NUMRUNS: $NUMRUNS"
+  echo "RESULTFILE: $RESULTFILE"
+  echo "TRAINING FILE: $(head $RESULTFILE -n 2 | tail -n 1)"
+}
 
+# If -a is set, assume manual mode and set verbose on
+if [ $FIND_AVGS = true ]; then
+  VERBOSE=true
+fi
+
+# If -v set, then print verbose output, otherwise print terse output for
+# compute_ci.py
+if [ $VERBOSE = true ]; then
+  verbose
+else
+  echo "$NUMGROUPS"
+  echo "$NUMRUNS"
+fi
+
+# Build the chain of commands that will get us the numbers we want. At least
+# reduces code in the section below
 build_cmd () {
   search_string=$1
   fields_to_retrieve=$2
   awk_main=$3
-  cat $RESULTFILE | grep -E "$search_string" | tail -n+$(($group*$NUMRUNS+1)) | \
-    head -n $NUMRUNS | awk "$fields_to_retrieve" | awk -v runs=$NUMRUNS "$awk_main"
+  if [ $FIND_AVGS = true ]; then
+    cat $RESULTFILE | grep -E "$search_string" | tail -n+$(($group*$NUMRUNS+1)) | \
+      head -n $NUMRUNS | awk "$fields_to_retrieve" | awk -v runs=$NUMRUNS "$awk_main"
+  else
+    cat $RESULTFILE | grep -E "$search_string" | tail -n+$(($group*$NUMRUNS+1)) | \
+      head -n $NUMRUNS | awk "$fields_to_retrieve" 
+  fi
 }
 
+# Output for each desired group of metrics
+# TODO: remove spaghetti.
 echo "avg_correct"
 for group in $(seq 0 $(($NUMGROUPS-1)))
 do
