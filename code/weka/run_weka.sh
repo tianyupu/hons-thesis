@@ -109,7 +109,7 @@ RESULTFILE=$OUT_FOLDER$OUTFILE
 if [ ! -d "$OUT_FOLDER" ]; then
   mkdir -p "$OUT_FOLDER"
 fi
-if [ ! -d "$ROC_FOLDER" ] && [ $OUTPUT_ROC ]; then
+if [ ! -d "$ROC_FOLDER" ] && [ $OUTPUT_ROC = true ]; then
   mkdir -p "$ROC_FOLDER"
 fi
 
