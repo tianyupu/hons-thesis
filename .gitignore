@@ -19,6 +19,7 @@ data/
 pdfs/
 samples/
 __pycache__/
+.vagrant/
 
 # Other files
 *.zip
