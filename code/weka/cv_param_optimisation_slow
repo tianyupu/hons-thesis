@@ -1,5 +1,0 @@
-weka.classifiers.meta.CVParameterSelection <OPTS> -P "C 0.1 2 10" -P "L 0.0001 1 25" -P "P 1.0e-12 0.01 25" -X 10 -S 1 -W weka.classifiers.functions.SMO
-weka.classifiers.meta.CVParameterSelection <OPTS> -P "C 0.1 2 10" -P "L 0.0001 1 25" -P "P 1.0e-12 0.01 25" -X 10 -S 1 -W weka.classifiers.functions.SMO -- -K "weka.classifiers.functions.supportVector.PolyKernel -E 2 -L"
-weka.classifiers.meta.CVParameterSelection <OPTS> -P "C 0.1 2 10" -P "L 0.0001 1 25" -P "P 1.0e-12 0.01 25" -X 10 -S 1 -W weka.classifiers.functions.SMO -- -K "weka.classifiers.functions.supportVector.PolyKernel -E 3 -L"
-weka.classifiers.meta.CVParameterSelection <OPTS> -P "L 0 1 10" -P "M 0 1 10" -P "N 500 5000 10" -P "H 5 100 20" -X 10 -S 1 -W weka.classifiers.functions.MultilayerPerceptron
-weka.classifiers.meta.CVParameterSelection <OPTS> -P "L 0 1 10" -P "M 0 1 10" -P "N 500 5000 10" -P "H 5 100 20" -X 10 -S 1 -W weka.classifiers.functions.MultilayerPerceptron -- -D
