@@ -1,0 +1,55 @@
+weka.classifiers.functions.SMO <OPTS> -M
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5
+weka.classifiers.functions.SMO <OPTS> -M -C 2
+weka.classifiers.functions.SMO <OPTS> -M -C 8
+weka.classifiers.functions.SMO <OPTS> -M -C 32
+weka.classifiers.functions.SMO <OPTS> -M -C 128
+weka.classifiers.functions.SMO <OPTS> -M -C 512
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 2 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 8 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 32 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 128 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 512 -K "weka.classifiers.functions.supportVector.PolyKernel -E 2"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 2 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 8 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 32 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 128 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 512 -K "weka.classifiers.functions.supportVector.PolyKernel -E 3"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 2 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 8 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 32 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 128 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 512 -K "weka.classifiers.functions.supportVector.PolyKernel -E 4"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 2 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 8 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 32 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 128 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 512 -K "weka.classifiers.functions.supportVector.PolyKernel -E 5"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.0078125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.03125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.125 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 0.5 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 2 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 8 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 32 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 128 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
+weka.classifiers.functions.SMO <OPTS> -M -C 512 -K "weka.classifiers.functions.supportVector.PolyKernel -E 6"
