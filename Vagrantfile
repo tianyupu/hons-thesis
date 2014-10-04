@@ -10,4 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # Provision!
   config.vm.provision :shell, path: "vagrant/provision.sh"
+
+  # Provider-specific options.
+  config.vm.provider "virtualbox" do |vbox|
+    vbox.memory = 1024
+  end
 end
