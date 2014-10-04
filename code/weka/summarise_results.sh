@@ -107,7 +107,7 @@ done
 echo "avg_tp avg_fp avg_prec avg_rec avg_auc"
 for group in $(seq 0 $(($NUMGROUPS-1)))
 do
-  build_cmd "^[ ]{15,}0.*0$" '{print $1, $2, $3, $4, $7}' '
+  build_cmd "^[ ]{15,}[01].*0$" '{print $1, $2, $3, $4, $7}' '
       BEGIN {tp = 0; fp = 0; prec = 0; rec = 0; auc = 0;}
       {tp += $1; fp += $2; prec += $3; rec += $4; auc += $5}
       END {print tp/runs, fp/runs, prec/runs, rec/runs, auc/runs}'
@@ -116,7 +116,7 @@ done
 echo "avg_tp avg_fp avg_prec avg_rec avg_auc"
 for group in $(seq 0 $(($NUMGROUPS-1)))
 do
-  build_cmd "^[ ]{15,}0.*1$" '{print $1, $2, $3, $4, $7}' '
+  build_cmd "^[ ]{15,}[01].*1$" '{print $1, $2, $3, $4, $7}' '
       BEGIN {tp = 0; fp = 0; prec = 0; rec = 0; auc = 0;}
       {tp += $1; fp += $2; prec += $3; rec += $4; auc += $5}
       END {print tp/runs, fp/runs, prec/runs, rec/runs, auc/runs}'
