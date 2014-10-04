@@ -16,7 +16,8 @@ def compute_ci(sample):
     stdev = 0
     for x in sample:
         stdev += (x-mean)**2
-    stdev *= 1.0 / (n-1)
+    if n > 1:
+        stdev *= 1.0 / (n-1)
     stdev **= 0.5
 
     uncertainty = z95 * stdev / n**0.5
