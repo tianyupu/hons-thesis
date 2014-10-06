@@ -21,17 +21,20 @@ pyparsing_url="http://downloads.sourceforge.net/project/pyparsing/pyparsing/pypa
 pydot_url="https://bitbucket.org/prologic/pydot/get/ac76697320d6.zip"
 
 # Install build dependencies and extras
-sudo apt-get install -y build-essential libatlas-dev liblapack-dev libblas-dev gfortran graphviz wget
+echo "=== INSTALLING PYTHON BUILD DEPENDENCIES"
+sudo apt-get install -y build-essential libatlas-dev liblapack-dev libblas-dev gfortran graphviz wget > /dev/null
 
 # Install Python 3.4 and dev headers from PPA
+echo "=== INSTALLING PYTHON 3.4"
 sudo apt-add-repository ppa:fkrull/deadsnakes -y
-sudo apt-get update
-sudo apt-get install -y python3.4 python3.4-dev
+sudo apt-get update > /dev/null
+sudo apt-get install -y python3.4 python3.4-dev > /dev/null
 
 # Download the packages
 mkdir $temp_dir
 cd $temp_dir
 
+echo "=== DOWNLOADING PACKAGES FOR SCIKIT-LEARN, NUMPY, SCIPY AND DEPENDENCIES"
 wget $sklearn_url $numpy_url $scipy_url $nose_url $pyparsing_url $pydot_url
 
 # Extract, build and install tars
@@ -39,6 +42,7 @@ for package in $numpy_name $scipy_name $sklearn_name $nose_name
 do
   tar xvf "$package.tar.gz"
   cd $package
+  echo "=== BUILDING AND INSTALLING $package FROM SOURCE"
   python3.4 setup.py build
   sudo python3.4 setup.py install
   cd ..
@@ -49,6 +53,7 @@ for package in $pyparsing_name $pydot_name
 do
   unzip "$package.zip"
   cd $package
+  echo "=== INSTALLING $package FROM SOURCE"
   sudo python3.4 setup.py install
   cd ..
 done
