@@ -5,11 +5,12 @@ cd /vagrant/vagrant
 echo "=== UPDATING PACKAGE MANAGER"
 apt-get update > /dev/null
 
-# OpenJDK 6 (for WEKA)
-apt-get install -y default-jdk
 echo "=== INSTALLING TOOLS"
 apt-get install -y curl python-software-properties unzip git vim tmux > /dev/null
 
+# OpenJDK 7 (for WEKA)
+echo "=== INSTALLING OPENJDK 7 JRE"
+apt-get install -y openjdk-7-jre > /dev/null
 
 # TeX Live
 source setup-texlive.sh
