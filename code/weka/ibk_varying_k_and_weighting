@@ -1,0 +1,60 @@
+weka.classifiers.lazy.IBk <OPTS> -K 1
+weka.classifiers.lazy.IBk <OPTS> -K 2
+weka.classifiers.lazy.IBk <OPTS> -K 3
+weka.classifiers.lazy.IBk <OPTS> -K 4
+weka.classifiers.lazy.IBk <OPTS> -K 5
+weka.classifiers.lazy.IBk <OPTS> -K 6
+weka.classifiers.lazy.IBk <OPTS> -K 7
+weka.classifiers.lazy.IBk <OPTS> -K 8
+weka.classifiers.lazy.IBk <OPTS> -K 9
+weka.classifiers.lazy.IBk <OPTS> -K 10
+weka.classifiers.lazy.IBk <OPTS> -K 11
+weka.classifiers.lazy.IBk <OPTS> -K 12
+weka.classifiers.lazy.IBk <OPTS> -K 13
+weka.classifiers.lazy.IBk <OPTS> -K 14
+weka.classifiers.lazy.IBk <OPTS> -K 15
+weka.classifiers.lazy.IBk <OPTS> -K 16
+weka.classifiers.lazy.IBk <OPTS> -K 17
+weka.classifiers.lazy.IBk <OPTS> -K 18
+weka.classifiers.lazy.IBk <OPTS> -K 19
+weka.classifiers.lazy.IBk <OPTS> -K 20
+weka.classifiers.lazy.IBk <OPTS> -K 1 -F
+weka.classifiers.lazy.IBk <OPTS> -K 2 -F
+weka.classifiers.lazy.IBk <OPTS> -K 3 -F
+weka.classifiers.lazy.IBk <OPTS> -K 4 -F
+weka.classifiers.lazy.IBk <OPTS> -K 5 -F
+weka.classifiers.lazy.IBk <OPTS> -K 6 -F
+weka.classifiers.lazy.IBk <OPTS> -K 7 -F
+weka.classifiers.lazy.IBk <OPTS> -K 8 -F
+weka.classifiers.lazy.IBk <OPTS> -K 9 -F
+weka.classifiers.lazy.IBk <OPTS> -K 10 -F
+weka.classifiers.lazy.IBk <OPTS> -K 11 -F
+weka.classifiers.lazy.IBk <OPTS> -K 12 -F
+weka.classifiers.lazy.IBk <OPTS> -K 13 -F
+weka.classifiers.lazy.IBk <OPTS> -K 14 -F
+weka.classifiers.lazy.IBk <OPTS> -K 15 -F
+weka.classifiers.lazy.IBk <OPTS> -K 16 -F
+weka.classifiers.lazy.IBk <OPTS> -K 17 -F
+weka.classifiers.lazy.IBk <OPTS> -K 18 -F
+weka.classifiers.lazy.IBk <OPTS> -K 19 -F
+weka.classifiers.lazy.IBk <OPTS> -K 20 -F
+weka.classifiers.lazy.IBk <OPTS> -K 1 -I
+weka.classifiers.lazy.IBk <OPTS> -K 2 -I
+weka.classifiers.lazy.IBk <OPTS> -K 3 -I
+weka.classifiers.lazy.IBk <OPTS> -K 4 -I
+weka.classifiers.lazy.IBk <OPTS> -K 5 -I
+weka.classifiers.lazy.IBk <OPTS> -K 6 -I
+weka.classifiers.lazy.IBk <OPTS> -K 7 -I
+weka.classifiers.lazy.IBk <OPTS> -K 8 -I
+weka.classifiers.lazy.IBk <OPTS> -K 9 -I
+weka.classifiers.lazy.IBk <OPTS> -K 10 -I
+weka.classifiers.lazy.IBk <OPTS> -K 11 -I
+weka.classifiers.lazy.IBk <OPTS> -K 12 -I
+weka.classifiers.lazy.IBk <OPTS> -K 13 -I
+weka.classifiers.lazy.IBk <OPTS> -K 14 -I
+weka.classifiers.lazy.IBk <OPTS> -K 15 -I
+weka.classifiers.lazy.IBk <OPTS> -K 16 -I
+weka.classifiers.lazy.IBk <OPTS> -K 17 -I
+weka.classifiers.lazy.IBk <OPTS> -K 18 -I
+weka.classifiers.lazy.IBk <OPTS> -K 19 -I
+weka.classifiers.lazy.IBk <OPTS> -K 20 -I
