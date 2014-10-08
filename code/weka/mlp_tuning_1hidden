@@ -5,11 +5,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.1 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.2
 weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 10
@@ -17,11 +12,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.2 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.3
 weka.classifiers.functions.MultilayerPerceptron -H 5
 weka.classifiers.functions.MultilayerPerceptron -H 10
@@ -29,11 +19,6 @@ weka.classifiers.functions.MultilayerPerceptron -H 20
 weka.classifiers.functions.MultilayerPerceptron -H 30
 weka.classifiers.functions.MultilayerPerceptron -H 40
 weka.classifiers.functions.MultilayerPerceptron -H 50
-weka.classifiers.functions.MultilayerPerceptron -H 60
-weka.classifiers.functions.MultilayerPerceptron -H 70
-weka.classifiers.functions.MultilayerPerceptron -H 80
-weka.classifiers.functions.MultilayerPerceptron -H 90
-weka.classifiers.functions.MultilayerPerceptron -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.4
 weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 10
@@ -41,11 +26,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.4 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.5
 weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 10
@@ -53,11 +33,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.5 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.6
 weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 10
@@ -65,11 +40,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.6 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.7
 weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 10
@@ -77,11 +47,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.7 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.8
 weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 10
@@ -89,11 +54,6 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.8 -H 100
 weka.classifiers.functions.MultilayerPerceptron -L 0.9
 weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 5
 weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 10
@@ -101,8 +61,3 @@ weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 20
 weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 30
 weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 40
 weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 50
-weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 60
-weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 70
-weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 80
-weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 90
-weka.classifiers.functions.MultilayerPerceptron -L 0.9 -H 100
