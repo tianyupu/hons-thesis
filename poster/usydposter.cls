@@ -137,7 +137,7 @@
   }
 
 % references
-\newcommand{\references}{\fontsize{20}{22}\selectfont \bibliographystyle{plain}}
+\newcommand{\references}{\fontsize{20}{22}\selectfont \bibliographystyle{abbrv}}
 
 % make the header
 \newcommand{\makeheader}{%
