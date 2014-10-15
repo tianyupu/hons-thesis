@@ -35,7 +35,8 @@ mkdir $temp_dir
 cd $temp_dir
 
 echo "=== DOWNLOADING PACKAGES FOR SCIKIT-LEARN, NUMPY, SCIPY AND DEPENDENCIES"
-wget $sklearn_url $numpy_url $scipy_url $nose_url $pyparsing_url $pydot_url
+wget $sklearn_url $numpy_url $scipy_url $nose_url $pyparsing_url
+wget -O $pydot_name.zip $pydot_url
 
 # Extract, build and install tars
 for package in $numpy_name $scipy_name $sklearn_name $nose_name
