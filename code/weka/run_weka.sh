@@ -16,18 +16,23 @@
 #
 # Another optional fourth argument to the script is to specify whether or not
 # to save ROC curve data for the model. Specify the -r flag to do so.
+#
+# Another optional argument is to specify whether or not to use a random
+# number seed that varies. The default is to use the same seed for all runs,
+# namely 1.
 
 # Define a function that prints out usage information for various missing
 # argument cases
 usage_msg ()
 {
-  echo "Usage: ./run_weka.sh -i <input arff file> -w <filename with list of weka commands> [-n <number of runs>] [-r]"
+  echo "Usage: ./run_weka.sh -i <input arff file> -w <filename with list of weka commands> [-n <number of runs>] [-r] [-s]"
 }
 
 # Initialise some variables
 TRAINING_FILE=
 WEKACONFIG=
 OUTPUT_ROC=false
+USE_RANDOM=false
 
 # Process command line arguments
 while [[ $# > 0 ]]; do
@@ -49,6 +54,9 @@ while [[ $# > 0 ]]; do
     -r)
       OUTPUT_ROC=true
       ;;
+    -s)
+      USE_RANDOM=true
+      ;;
     *)
       echo "Unknown option: $key"
       usage_msg
@@ -60,6 +68,7 @@ echo "TRAINING_FILE: $TRAINING_FILE"
 echo "WEKACONFIG: $WEKACONFIG"
 echo "RUNS: $RUNS"
 echo "OUTPUT_ROC: $OUTPUT_ROC"
+echo "USE_RANDOM: $USE_RANDOM"
 
 # Sanity check for the input files
 if [ -z "$TRAINING_FILE" ] || [ -z "$WEKACONFIG" ]; then
@@ -132,7 +141,11 @@ LINENUM=0
 while [ $LINENUM -lt $NUM_LINES ]; do
   for run in $(seq 1 $RUNS)
   do
-    SEED=$RANDOM
+    if [ $USE_RANDOM = true ]; then
+      SEED=$RANDOM
+    else
+      SEED=1
+    fi
     echo "Training classifier $[$LINENUM+1] run #$run with seed $SEED: ${CLFS[LINENUM]}"
     if [ $OUTPUT_ROC ]; then
       ROC_FILE="${LINENUM}_$(echo ${CLFS[LINENUM]} | awk '{print $1}')_$run.arff"
