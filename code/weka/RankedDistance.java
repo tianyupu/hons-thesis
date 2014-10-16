@@ -29,22 +29,22 @@ implements TechnicalInformationHandler {
 	private static final long serialVersionUID = 1068606253458807903L;
 
 	/** Holds the ranked attributes */
-	private int[] m_RankedAttributes;
+	protected int[] m_RankedAttributes;
 
 	/** Holds the "merit" of the ranked attributes. */
-	private double[] m_RankedMerits;
+	protected double[] m_RankedMerits;
 	
 	/** Holds the weighting of the ranked attributes used by this distance function */
-	private double[] m_RankWeights;
+	protected double[] m_RankWeights;
 
 	/** The actual ranker that performs attribute ranking */
-	private ASSearch m_AttributeRanker;
+	protected ASSearch m_AttributeRanker;
 
 	/** The class that evaluates the goodness of the feature set. */
 	protected ASEvaluation m_AttributeEvaluator;
 	
 	/** How much to update a weight if we find it important. */
-	protected static double m_WeightUpdateFactor = 0.001;
+	protected static double m_WeightUpdateFactor = 0.0001;
 
 	/**
 	 * 
@@ -84,26 +84,19 @@ implements TechnicalInformationHandler {
 				double attributeMerit = tempRanked[i][1];
 				m_RankedAttributes[i] = attributeIndex;
 				m_RankedMerits[attributeIndex] = attributeMerit;
-				m_RankWeights[attributeIndex] = 1.0 / Math.pow(i+1, 2.0/3.0);
+				m_RankWeights[attributeIndex] = decayFunction(i);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-/*
-		int rankedAttributeIndex;
-
-		for (int i=0; i<m_RankWeights.length; i++) {
-			if (i < m_RankedAttributes.length) {
-				rankedAttributeIndex = m_RankedAttributes[i]; // the index of a ranked attribute
-				// if m_RankedAttributes = [13, 23 ...], then m_RankWeights = [...0...1] at the 13th and 23rd indices
-				m_RankWeights[rankedAttributeIndex] = 1.0 / Math.pow(i+1, 2.0/3.0);
-				//m_RankWeights[rankedAttributeIndex] = m_RankedMerits[rankedAttributeIndex];
-			} else {
-				m_RankWeights[i] = 0;
-			}
-		}
-*/
+	}
+	
+	/**
+	 * Given an attribute index, describes the decay of the ranking as it decreases.
+	 */
+	protected double decayFunction(int index) {
+		return 1.0 / Math.pow(index+1, 2.0/3.0);
 	}
 
 	/* (non-Javadoc)
@@ -231,12 +224,13 @@ implements TechnicalInformationHandler {
 			// so we should increase the importance of this attribute but also
 			// return a non-zero difference
 			if (diff == 0 && first.classValue() != second.classValue()) {
-				//m_RankWeights[index] *= (1 + m_WeightUpdateFactor); // increase weighting of attr
-				return m_RankWeights[index]; // return a small, non-zero distance
+				//return m_RankWeights[index]; // return a small, non-zero distance
+				return 0.5 * (1 + m_RankWeights[index]);
 			// difference is not zero but class values are the same, so we should decrease the
 			// weight of this attribute
 			} else if (diff != 0 && first.classValue() == second.classValue()) {
-				return diff - m_RankWeights[index];
+				//return diff - m_RankWeights[index]
+				return 0.5 / (1 + m_RankWeights[index]);
 			}
 			return diff;
 			
@@ -269,7 +263,7 @@ implements TechnicalInformationHandler {
 		for (int i=0; i<5; i++) {
 			testArray[i] = i+1;
 		}
-		System.out.println(testArray.length);
+		System.out.println(((float) 1)/2);
 	}
 
 	@Override
