@@ -147,7 +147,7 @@ while [ $LINENUM -lt $NUM_LINES ]; do
       SEED=1
     fi
     echo "Training classifier $[$LINENUM+1] run #$run with seed $SEED: ${CLFS[LINENUM]}"
-    if [ $OUTPUT_ROC ]; then
+    if [ $OUTPUT_ROC = true ]; then
       ROC_FILE="${LINENUM}_$(echo ${CLFS[LINENUM]} | awk '{print $1}')_$run.arff"
       ROC_OPTION="-threshold-file $ROC_FOLDER/$ROC_FILE"
     fi
