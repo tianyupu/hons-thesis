@@ -1,0 +1,92 @@
+\chapter{Evaluation} \label{chap:evaluation}
+
+\section{Data Sets}
+\subsection{Collection}
+The data set used consisted of trauma registry data from the trauma centre
+at the Royal Prince Alfred Hospital, a major trauma centre in New South Wales,
+Australia. It covered all adult (age 15 and over) inpatient admissions to the
+trauma centre from 2007--2011. 
+
+All patients were first admitted to the trauma ward until discharged
+or transferred to an appropriate unit within the hospital. A single trained
+data manager recorded a variety of attributes about the admitted patient,
+such as age, gender, blood pressure, mechanism of injury and body regions
+that were injured. We received this data in a Microsoft Excel spreadsheet.
+
+\subsection{Characteristics}
+There were 2546 patient records in the data set we received, comprising of 74
+features, one of which was the target variable \textbf{LOS48}. LOS48 was a
+binary variable -- that is, it could only take two values, 0 or 1 -- with 1
+indicating that the patient stayed two days or less, and 0 indicating a stay
+of greater than 2 days.
+
+\todo{Perhaps insert some more information about the data itself, such
+as the various attributes and their data types? Not sure if that should go
+here, in the results, or in an appendix -- it is relevant but can disturb
+the flow of the main text.}
+
+\section{Performance evaluation} % don't forget cross-validation
+\label{sec:perfeval}
+Here we describe the methods used in order to assess the performance of the
+models constructed through single classifiers and ensemble methods described
+above.
+
+\subsection{Metrics}
+There are many available and commonly used metrics that we can use when
+evaluating and comparing the performance of prediction models. The ones that
+we use are: \todo{maybe put these in a table}
+\begin{itemize}
+  \item Accuracy
+  \item Specificity
+  \item Sensitivity
+  \item Area under the receiver-operating characteristic (ROC) curve, or AUC
+\end{itemize}
+
+Since we only have one data set, we use ten-fold stratified cross-validation
+to obtain values for the above metrics. We run the ten-fold cross-validation
+40 times for each classifier (single or ensemble) for each of the 7 data sets
+produced from feature selection. 40 runs was necessary in order for us to
+compute confidence intervals for each of the metrics, which makes use of the
+Central Limit Theorem from statistics.
+
+\subsubsection{Confidence intervals}
+In order to compare our results with that of Dinh et. al. \citep{Dinh2013a},
+we are especially interested in the mean cross-validated AUC of our
+classifiers as well as
+the upper and lower bounds of the 95\% confidence interval associated with this
+mean. The intervals are constructed using this argument:
+
+For each classifier, let the population of all of its ten-fold cross-validated
+AUC scores be some random variable $X$, which follows a distribution whose
+parameters (such as mean and standard deviation) we do not know.
+The Central Limit Theorem states that given a random
+sample of $n$ items from $X$, namely $X_1,X_2,\dots,X_n$, the sample mean
+$\bar{x}$
+is approximately normally distributed when $n$ is at least roughly around 30
+and the $X_i$'s are independent and identically distributed.
+Consequently, we can construct a $(1-\alpha)$\% confidence interval for
+$\bar{x}$ -- where $\alpha$ is commonly called the
+\textit{significance level} -- as follows:
+\begin{equation}
+  \left[\bar{x} - z_{1-\alpha/2}\dfrac{s}{\sqrt{n}},
+    \bar{x} + z_{1-\alpha/2}\dfrac{s}{\sqrt{n}}\right]
+\end{equation}
+where $\bar{x}$ is the sample mean, $\alpha$ is the significance level
+(5\% or $0.05$ in our case), $s$ is the sample standard deviation, $n$
+is the number of observations in our sample, and $z_{1-\alpha/2}$ is the value
+of the standard normal variable $Z \sim \mathcal{N}(0,1)$ with cumulative
+probability $1-\alpha/2$. Since we have taken 40 independent samples of the
+ten-fold cross-validated AUC, the Central Limit Theorem holds and we can
+compute the mean and standard deviation of our 40 samples in order to
+construct a 95\% confidence interval for the mean AUC of each classifier.
+
+\subsection{Statistical tests}
+To decide whether or not the difference in values of each metric between
+classifiers was statistically significant, paired $t$-tests were conducted for
+a subset of the results: \todo{elaborate}
+\begin{itemize}
+  \item Some feature set vs other feature set
+  \item Single classifier vs other single classifier
+  \item Ensemble vs single
+  \item Our best method vs Dinh2013's method
+\end{itemize}
