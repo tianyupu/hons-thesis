@@ -20,6 +20,7 @@ pdfs/
 samples/
 __pycache__/
 .vagrant/
+misc/
 
 # Other files
 *.zip
