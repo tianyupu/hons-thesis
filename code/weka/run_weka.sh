@@ -107,12 +107,14 @@ JVM_HEAPSIZE=1024m
 
 # Output file base configuration
 PREFIX=weka_result
-CONFIG="$WEKACONFIG" # indicates which config was used
+CONFIG=`basename $WEKACONFIG` # indicates which config was used
 OUT_FOLDER=../../data/results/
 TIMESTAMP=`date +%Y%m%d%H%M%S`
 OUTFILE=$PREFIX$TIMESTAMP${CONFIG}_$RUNS # use a single file naming scheme for all runs
 ROC_FOLDER=${OUT_FOLDER}roc/$OUTFILE # sub folder for roc threshold outputs
 RESULTFILE=$OUT_FOLDER$OUTFILE
+
+echo "RESULTFILE: $RESULTFILE"
 
 # Create the output folders if they don't exist
 if [ ! -d "$OUT_FOLDER" ]; then
