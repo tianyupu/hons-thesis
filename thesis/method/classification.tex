@@ -1,67 +1,48 @@
-\chapter{Classification and Supervised Learning Algorithms}
+\chapter{LOS Classification and Supervised Learning}
   \label{chap:classification}
 
-\section{Model construction}
-Here we present the various classification schemes we used in order to find
-the best model for the trauma LOS data.
+In order to use a supervised learning algorithm to identify objects with
+a particular classification, we first need \textit{feature vectors} to
+describe these objects. In our case, each patient is converted into one
+feature vector, where each \textit{feature} in this vector tells us
+something about the
+patient that can help us decide which LOS category he or she should be
+placed in. The features comprising each feature vector must be the same,
+but with different values. By comparing feature values between different
+vectors, we are able to decide which \textit{class} or category a patient
+belongs in. For example, if we wanted to classify the weather on a given
+day as ``good'' or ``bad'', we could use two features -- temperature and
+the amount of rain -- which are likely to be key indicators. Classifying
+several days simply involves creating a feature vector that corresponds
+to each day, with differing values for the temperature and the amount of
+rain, and using these values to decide whether or not a day had good or
+bad weather.
 
-\subsection{Single classifier}
-First we sought to compare the suitability and performance of various
-classifiers by themselves (later we looked at \textit{ensembles} of
-classifiers, when more than one is involved in making a prediction).
-These are the
-classifiers studied: \todo{expand a bit more here, maybe list the
-configuration parameters}
-\begin{itemize}
-  \item Na\"{i}ve Bayes
-  \item Decision tree (C4.5)
-  \item Logistic regression
-  \item Support vector machine
-  \item $K$-nearest neighbour
-  \item Feed-forward neural network (multilayer perceptron)
-\end{itemize}
+Since we will be using supervised learning techniques, we need
+\textit{training examples}, which consist of a set of feature vectors
+that are already labelled with the class that it belongs in. These
+training examples are then used by a classifier to ``learn'' the
+relationship linking the feature vectors to their class labels. In this
+chapter we describe each of the learning algorithms we used to model the
+relationship between the feature vectors and the LOS.
 
-Each classifier was trained using ten-fold cross-validation for each of the
-7 data sets obtained from the various feature selection methods described
-above. This was repeated 30 times for each classifier and the reasons for
-this, as well as the metrics used to assess the performance of these
-classifiers, are described in Section \ref{sec:perfeval} of this chapter.
+\section{ZeroR and OneR}
 
-In addition to the feature selection methods, we also used the WEKA 3.7.11
-\citep{Hall2009} implementation of the above classifiers for our experiments.
-Training was automated using a Bash shell script (whose source can be found
-in the appendix) that programmatically read in a list of classifiers to
-train and repeated the procedure any specified number of times, writing the
-results to a specified directory for later reference.
+\section{Na\"{i}ve Bayes}
 
-\subsubsection{Parameter tuning}
-It is difficult in data mining to apply an algorithm out-of-the-box and have
-it perform optimally on a given data set \citep{Witten2005}. Therefore, time
-must be spent tweaking and tuning the parameters of a classifier in order to
-improve classification performance. This was the next step we took. We
-considered a range of values for various parameters of each classification
-scheme, and tried some of these new configurations by hand and some by using
-WEKA's cross-validation parameter selection class. The configurations tested,
-as well as how they were executed, are listed in this table:
-\todo{insert table!}
+\section{Decision Tree (C4.5)}
 
-\subsection{Ensemble classifiers}
-In order to improve upon the performance of individual classifiers, we also
-tested the performance of ensembles of classifiers -- that is, combining the
-predictions of several different classifiers, or several of the same
-classifier. Specifically, the ensemble methods used were:
-\begin{itemize}
-  \item Random Forests
-  \item Bagging
-  \item Stacked generalisation (stacking)
-  \item Boosting (AdaBoostM1)
-\end{itemize}
+\section{Logistic Regression}
 
-Again, we were able to create predictive models using the implementations of
-these ensemble methods in WEKA 3.7.11. Since ensemble classifiers are not
-actual classifiers but a way to train and combine the predictive power of more
-than one classifier, we list the combinations of classifiers used in our
-ensemble methods:
-\todo{insert table!}
+\section{Support Vector Machine (SVM)}
 
+\section{$k$-Nearest Neighbour}
+\subsection{Basic Algorithm}
+
+\subsection{Extensions}
+\subsubsection{K*: an Entropy-Based Distance Function}
+
+\subsubsection{Ranked Distance}
+
+\section{Feed-forward Neural Network}
 
