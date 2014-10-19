@@ -1,0 +1,63 @@
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 75.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 76.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 77.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 78.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 80.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 83.137" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 85.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 90.637" -W weka.classifiers.functions.MultilayerPerceptron
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.bayes.NaiveBayes
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.trees.J48
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.functions.Logistic
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.functions.SMO -- -M
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.lazy.IBk
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.lazy.KStar
+weka.classifiers.meta.AttributeSelectedClassifier -E "weka.attributeSelection.OneRAttributeEval -S 1 -F 10 -B 6" -S "weka.attributeSelection.Ranker -T 95.637" -W weka.classifiers.functions.MultilayerPerceptron
