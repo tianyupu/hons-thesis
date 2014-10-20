@@ -52,7 +52,7 @@ For each of the values of the
 feature, 1R finds the class with the highest frequency and creates a rule
 from this observation. If the feature is numeric (that is, its values are
 continuous rather than discrete), then 1R will partition the spectrum of
-values into discrete buckets. \todo{describe buckets more}
+values into discrete buckets. This is known as \textit{discretisation}.
 The error rate, expressed as the ratio of correct predictions to the total
 number of examples in the data set,
 is calculated for each rule that is generated
@@ -69,7 +69,7 @@ all patients into discrete categories
 (such as \textit{0-20, 21-40, 41-65, 66+}). It
 will then check the class labels for all training examples in the data set
 that have \textit{age} in the 0-20 category
-(as that is the first value for the partitioned \textit{age} feature) and
+(as that is the first value for the discretised \textit{age} feature) and
 note the most common class, proceeding similarly for the rest of the
 categories of \textit{age}. Then it will consider \textit{gender}, which has
 two possible values $\{$\textit{male, female}$\}$, and finally \textit{has\_cancer}
@@ -79,23 +79,141 @@ An example of a rule is that \textit{age 0-20} most commonly
 has ``LOS $\leq$ 2 days''. For each of these rules, 1R will attempt to
 use only that rule to predict the LOS class for each example in the data set,
 noting down the error rate. 1R then chooses the feature that produces rules
-with the lowest total error rate. \todo{maybe add a table}
+with the lowest total error rate.
 
 \section{Na\"{i}ve Bayes (NB)}
-Unlike 1R, which considers only one feature in the 
+Unlike 1R, which considers only one feature in the feature vector, Na\"{i}ve
+Bayes (NB) classifiers allows all features to contribute equally to the
+classification decision. Such classifiers apply Bayes' theorem with the
+(unrealistic) assumption of independence between features, hence the
+description \textit{na\"{i}ve}. This means that we
+calculate the probability that a particular feature value belongs in a class
+without considering the effect of other features on this probability. This
+probability can be computed by
+counting the frequency with which the value is associated with a class in the
+training data. After these probabilities are computed, classifying a feature
+vector simply involves multiplying the probabilities of each feature belonging
+to each possible class. The predicted class for that feature vector is then the
+class with the highest probability.
+
+Speaking mathematically, Bayes' theorem states that:
+\begin{equation*}
+\mathbb{P}(Class_i|F_1,F_2,\ldots,F_n) =
+  \dfrac{\mathbb{P}(F_1,F_2,\ldots,F_n|Class_i)\mathbb{P}(Class_i)}{\mathbb{P}(F_1,F_2,\ldots,F_n)}
+\end{equation*}
+Since we assume that the features are independent, we can simplify the above as:
+\begin{equation*}
+\mathbb{P}(Class_i|F_1,F_2,\ldots,F_n) =
+\dfrac{\mathbb{P}(F_1|Class_i)\mathbb{P}(F_2|Class_i)\ldots \mathbb{P}(F_n|Class_i)\mathbb{P}(Class_i)}{\mathbb{P}(F_1,F_2,\ldots,F_n)}
+\end{equation*}
+This gives us the probability that the feature vector $(F_1,F_2,\ldots,F_n)$
+belongs in the $i$-th class. Classifying the feature vector involves
+calculating this probability for each for each class and choosing the class
+with the highest probability.
+
+Since we compute the probability of each feature value belonging in a
+particular class by counting the frequency of each value's occurrence with
+respect to the class, it is sometimes possible that a feature value has zero
+probability of being in a certain class. This would make the numerator of the
+above equation zero. A feature vector that could otherwise have been highly
+likely to belong in class $i$ is now counted as having zero probability of
+belonging in the class. In order to ensure that each probability is non-zero,
+a small constant is added to all probabilities in a process called
+\textit{Laplace smoothing}, which is commonly used for NB classifiers.
+
+Like 1R, numeric features also need to be handled separately from nominal ones.
+The typical approach is to assume that the values of a numeric feature follow a
+normal (or Gaussian) distribution with mean and standard deviation calculated
+from the values that the feature takes with respect to each class.
+This allows us to use the probability
+density function of the normal distribution to calculate the probabilty of the
+feature belonging to a particular class:
+\begin{equation*}
+\mathbb{P}(F_i=x_i|Class_i) =
+  \dfrac{1}{\sqrt{2\pi}\sigma}e^\frac{(x_i-\mu)^2}{2\sigma^2}
+\end{equation*}
+
+Despite the na\"{i}ve independence assumption of the NB classifier, it often
+works surprisingly well in practice and is relatively fast to train. We use it
+in our work both as a simple classifier in its own right, and also as a more
+sophisticated baseline to 0R and 1R.
 
 \section{C4.5 Decision Tree (DT)}
 
 \section{Logistic Regression (LR)}
+Logistic regression is a regression technique used for when the dependent
+variable is dichotomous or two-valued, and thus it is a suitable candidate to
+use for our LOS classification problem.
+Previous work on trauma LOS prediction by
+Dinh et. al. \cite{Dinh2013a}, as well as many attempts at modelling the LOS
+in various medical domains, have all used logistic regression, often as a
+starting point.
+
+For a class variable with two possible values that occur with
+probability $p$ and $1-p$ respectively, and a feature vector
+$(F_1,F_2,\ldots,F_n)$, the logistic regression model is:
+\begin{equation*}
+\mathrm{logit}(p) &=& \mathrm{log} \left(\dfrac{p}{1-p}\right) \\
+  &=& \beta_0 + \beta_1F_1 + \beta_2F_2 + \ldots + \beta_nF_n
+\end{equation*}
+This can be rearranged to:
+\begin{equation*}
+p &=& \mathbb{P}(Class=\mathrm{LOS }>2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
+  &=& \dfrac{e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}{1 + e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}
+\end{equation*}
+
+Training the logistic regression classifier, then, is a matter of finding the
+$\beta_i$s that will maximise the likelihood (conditional probability of the
+data given the values for $\beta_i$) of the given data set. This is done using
+numerical methods, where estimates of the $\beta_i$s are chosen, the likelihood
+computed, and the $\beta_i$ are updated, and so on: this process is repeated
+until parameter estimates converge or do not change more than a given threshold
+value.
 
 \section{Support Vector Machine (SVM)}
 
-\section{$k$-Nearest Neighbour (kNN)}
+\section{$k$-Nearest Neighbour ($k$-NN)}
+In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
+and discuss some extensions which we use in our work. Additionally, we will
+describe our contribution, which is an extension of the distance metric for
+finding the nearest neighbours.
+
 \subsection{Basic Algorithm}
+The $k$-nearest neighbour classifier is an example of an
+\textit{instance-based} learning algorithm. This is because it does not, unlike
+the other classifiers described in this section, attempt to deduce or
+generalise a relationship between the features and the class: it simply stores
+all training examples and classifies an unseen example by finding the $k$
+``nearest'' examples (or \textit{instances}) and assigning the majority class
+to the new example. In the simplest form of the algorithm, $k$ is chosen to be
+1 and the Euclidean distance is used to measure the closeness of neighbours:
+\begin{equation*}
+\mathrm{Distance} = \sqrt{(x_1-y_1)^2 + (x_2-y_2)^2 + \ldots + (x_n-y_n)^2}
+\end{equation*}
+where $x_i,y_i$ are the values of the $i$-th feature for two different feature
+vectors (or instances).
+
+Like the Na\"{i}ve Bayes classifier, $k$-NN allows all features to be taken
+into account equally when classifying a new example. However, since feature
+values often span different ranges and units of measurement, a particularly
+large range of values for a feature would contribute much more to the distance
+than another feature that spans a lower set of values.
+To avoid this, it is important to \textit{normalise} the
+values of each numeric feature before using $k$-NN: for each feature $i$, we
+calculate the normalised value of the feature for each training example. This
+is done using the following relationship:
+\begin{equation*}
+a_i = \dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}
+\end{equation*}
+where $a_i$ is the normalised value, $v_i$ is the actual value in the data
+set, and max $v_i$ and min $v_i$ are taken over all training examples.
 
 \subsection{Extensions}
+There have been many extensions proposed to the $k$-NN algorithm described
+above.
+
 \subsubsection{K*: an Entropy-Based Distance Function}
 
 \subsubsection{Ranked Distance}
 
-\section{Feed-Forward Neural Network}
+\section{Multi-layer Perceptron (MLP)}
