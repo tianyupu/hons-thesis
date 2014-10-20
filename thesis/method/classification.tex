@@ -22,21 +22,75 @@ Since we will be using supervised learning techniques, we need
 \textit{training examples}, which consist of a set of feature vectors
 that are already labelled with the class that it belongs in. These
 training examples are then used by a classifier to ``learn'' the
-relationship linking the feature vectors to their class labels. In this
+relationship linking the feature vectors to their class labels. Once we have
+``trained'' the classifier to learn this relationship with the pre-labelled
+data, it will then be able to predict the class of any feature vector that we
+give it.
+
+In this
 chapter we describe each of the learning algorithms we used to model the
 relationship between the feature vectors and the LOS.
 
-\section{ZeroR and OneR}
+\section{0R and 1R}
+Short for ``0-rule'' and ``1-rule'' respectively, 0R and 1R are
+very simple classifiers. 0R uses no features to predict the class, and
+1R only uses one.
 
-\section{Na\"{i}ve Bayes}
+Given a data set, the 0R classification algorithm will find the class that
+occurs the most often, and predict this class for all new examples. For LOS
+classification, if one class in a data set was ``LOS $\leq$ 2 days'' and
+the other was
+``LOS $>$ 2 days'', and feature vectors (which represent patients in this
+scenario) were more commonly labelled ``LOS $\leq$ 2 days'', then 0R will
+predict all unseen patients with ``LOS $\leq$ 2 days''.
+The prediction decision of 0R is very easy to understand,
+and its results also provide an apt baseline for evaluating the more
+sophisticated classifiers used in this work.
 
-\section{Decision Tree (C4.5)}
+1R works by considering each feature individually.
+For each of the values of the
+feature, 1R finds the class with the highest frequency and creates a rule
+from this observation. If the feature is numeric (that is, its values are
+continuous rather than discrete), then 1R will partition the spectrum of
+values into discrete buckets. \todo{describe buckets more}
+The error rate, expressed as the ratio of correct predictions to the total
+number of examples in the data set,
+is calculated for each rule that is generated
+in this way. The rule with the lowest error rate is then chosen as the 1-rule
+for this classifier,
+and if there is a tie, it is broken randomly. As with 0R, the prediction
+decision of 1R is transparent and it provides another baseline upon which
+more sophisticated classifiers can be evaluated.
 
-\section{Logistic Regression}
+Concretely, given a feature
+vector of the form \textit{(age, gender, has\_cancer)},
+1R will split the ages of
+all patients into discrete categories
+(such as \textit{0-20, 21-40, 41-65, 66+}). It
+will then check the class labels for all training examples in the data set
+that have \textit{age} in the 0-20 category
+(as that is the first value for the partitioned \textit{age} feature) and
+note the most common class, proceeding similarly for the rest of the
+categories of \textit{age}. Then it will consider \textit{gender}, which has
+two possible values $\{$\textit{male, female}$\}$, and finally \textit{has\_cancer}
+with two values $\{$\textit{true, false}$\}$. This results in 8 rules,
+corresponding to three features.
+An example of a rule is that \textit{age 0-20} most commonly
+has ``LOS $\leq$ 2 days''. For each of these rules, 1R will attempt to
+use only that rule to predict the LOS class for each example in the data set,
+noting down the error rate. 1R then chooses the feature that produces rules
+with the lowest total error rate. \todo{maybe add a table}
+
+\section{Na\"{i}ve Bayes (NB)}
+Unlike 1R, which considers only one feature in the 
+
+\section{C4.5 Decision Tree (DT)}
+
+\section{Logistic Regression (LR)}
 
 \section{Support Vector Machine (SVM)}
 
-\section{$k$-Nearest Neighbour}
+\section{$k$-Nearest Neighbour (kNN)}
 \subsection{Basic Algorithm}
 
 \subsection{Extensions}
@@ -44,5 +98,4 @@ relationship between the feature vectors and the LOS.
 
 \subsubsection{Ranked Distance}
 
-\section{Feed-forward Neural Network}
-
+\section{Feed-Forward Neural Network}
