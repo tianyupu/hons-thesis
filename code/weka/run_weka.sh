@@ -140,6 +140,9 @@ readarray -t CLFS < "$WEKACONFIG"
 # sed is run twice to remove a possible double occurrence of $OPTIONS
 NUM_LINES=${#CLFS[@]}
 LINENUM=0
+PREV_LINE=`tput cuu1`
+CLEAR_LINE=`tput el`
+echo "Begin training..."
 while [ $LINENUM -lt $NUM_LINES ]; do
   for run in $(seq 1 $RUNS)
   do
@@ -148,6 +151,8 @@ while [ $LINENUM -lt $NUM_LINES ]; do
     else
       SEED=1
     fi
+    # clear the previous line and write over it so that the output is more readable
+    echo -en "${PREV_LINE}\r${CLEAR_LINE}"
     echo "Training classifier $[$LINENUM+1] run #$run with seed $SEED: ${CLFS[LINENUM]}"
     if [ $OUTPUT_ROC = true ]; then
       ROC_FILE="${LINENUM}_$(echo ${CLFS[LINENUM]} | awk '{print $1}')_$run.arff"
