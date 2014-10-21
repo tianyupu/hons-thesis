@@ -1,4 +1,4 @@
-\chapter{LOS Classification and Supervised Learning}
+\chapter{LOS Classification Using Supervised Learning}
   \label{chap:classification}
 
 In order to use a supervised learning algorithm to identify objects with
@@ -60,7 +60,9 @@ in this way. The rule with the lowest error rate is then chosen as the 1-rule
 for this classifier,
 and if there is a tie, it is broken randomly. As with 0R, the prediction
 decision of 1R is transparent and it provides another baseline upon which
-more sophisticated classifiers can be evaluated.
+more sophisticated classifiers can be evaluated. Studies have also found that
+1R performs quite well in terms of accuracy relative to other classifiers
+\cite{Holte1993}.
 
 Concretely, given a feature
 vector of the form \textit{(age, gender, has\_cancer)},
@@ -152,15 +154,15 @@ starting point.
 For a class variable with two possible values that occur with
 probability $p$ and $1-p$ respectively, and a feature vector
 $(F_1,F_2,\ldots,F_n)$, the logistic regression model is:
-\begin{equation*}
-\mathrm{logit}(p) &=& \mathrm{log} \left(\dfrac{p}{1-p}\right) \\
-  &=& \beta_0 + \beta_1F_1 + \beta_2F_2 + \ldots + \beta_nF_n
-\end{equation*}
-This can be rearranged to:
-\begin{equation*}
-p &=& \mathbb{P}(Class=\mathrm{LOS }>2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
-  &=& \dfrac{e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}{1 + e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}
-\end{equation*}
+\begin{align*}
+\mathrm{logit}(p) &= \mathrm{log} \left(\dfrac{p}{1-p}\right) \\
+  &= \beta_0 + \beta_1F_1 + \beta_2F_2 + \ldots + \beta_nF_n
+\end{align*}
+For LOS classification, this can be rearranged to:
+\begin{align*}
+p &= \mathbb{P}(Class=\mathrm{LOS }\leq2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
+  &= \dfrac{e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}{1 + e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}
+\end{align*}
 
 Training the logistic regression classifier, then, is a matter of finding the
 $\beta_i$s that will maximise the likelihood (conditional probability of the
@@ -169,6 +171,12 @@ numerical methods, where estimates of the $\beta_i$s are chosen, the likelihood
 computed, and the $\beta_i$ are updated, and so on: this process is repeated
 until parameter estimates converge or do not change more than a given threshold
 value.
+
+To classify a feature vector $x = (x_1,x_2,\ldots,x_n)$, we substitute the
+$x_i$'s into the above equation in place of the $F_i$'s, which gives us a
+probability. If this probability is above a particular threshold, then we
+classify the example as belonging to the class ``LOS $\leq$ 2 days'', otherwise
+it is classified as ``LOS $>$ 2 days''. Usually this threshold is 0.5.
 
 \section{Support Vector Machine (SVM)}
 
@@ -210,10 +218,71 @@ set, and max $v_i$ and min $v_i$ are taken over all training examples.
 
 \subsection{Extensions}
 There have been many extensions proposed to the $k$-NN algorithm described
-above.
+above. These usually seek to find a more suitable distance metric for the
+problem domain at hand, or to reduce the storage requirements of the original
+$k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
+K* and our contribution, Ranked Distance.
 
-\subsubsection{K*: an Entropy-Based Distance Function}
+\subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
 
 \subsubsection{Ranked Distance}
+\paragraph{Intuition}
+As we mentioned earlier, all features are considered equally in a $k$-NN
+classifier, which implies that all features are equally important in predicting
+the class. In practice, however, this is not always the case: to predict the
+LOS of a trauma patient, the severity of their injury should affect the final
+LOS more than whether or not they can speak English (which could be just two
+of many features that are recorded about a patient). Our contribution is thus
+a modified distance function to take the relative importance of attributes into
+account. 
+
+\paragraph{Mathematical formulation}
+Given two instances $x = (x_1,x_2,\ldots,x_n)$ and $y = (y_1,y_2,\ldots,y_n)$,
+the distance between them is given by:
+\begin{equation*}
+\mathrm{Distance} = \sum_{i=1}^n w_i |x_i-y_i|
+\end{equation*}
+where the $w_i$s weight the contribution of the $i$-th feature to the overall
+distance that is computed by the $k$-NN algorithm. We assume that all feature
+values have been normalised, as described above.
+
+\paragraph{Assignment of weights}
+The weights $w_i$ can be tuned to match the particular problem that is being
+investigated. For our LOS classification problem, we will consider two ways
+of weighting features:
+\begin{enumerate}
+\item The weight of each feature is the magnitude of the correlation
+coefficient
+between it and the class, meaning that features that are more highly correlated
+with the class will contribute more to the distance. The correlation
+coefficient $r_i$ for feature $i$ with the class $c$ can be computed by:
+\begin{equation*}
+r_i = \dfrac{\sum_{i=1}^m (x_i-\bar{x})(c-\bar{c})}{\sqrt{(\sum_{i=1}^m x_i-\bar{x})(\sum_{i=1}^m c-\bar{c})}}
+\end{equation*}
+where $m$ is the number of training examples, $x_i$ is the value of feature
+$i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
+values and the class values respectively. 
+\item We compute the correlation coefficients as described in the point above.
+This gives us a ranking of the importance of each feature to the prediction of
+the class, with 1 being the highest rank (indicating the most importance) and
+$n$ being the lowest rank (indicating the least importance).
+Instead of using the values of the correlation directly to weight
+the distance contribution of each feature, we specify a function:
+\begin{equation*}
+f : \mathrm{Rank} \rightarrow \mathbb{R}, \mathrm{Rank} \in \{1,2,\ldots,n\}
+\end{equation*}
+that describes
+how the weights of the features vary with the rank. This function should
+inituitively be non-increasing and should produce lower values when the rank
+number is greater, meaning that less important features have a lower weight
+in the distance calculation.
+Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
+results in all features contributing equally to the distance calculation.
+
+\noindent We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}}$ and
+$f(\mathrm{Rank}) = n-\mathrm{Rank}$.
+\end{enumerate}
 
 \section{Multi-layer Perceptron (MLP)}
+
+\section{Conclusion}
