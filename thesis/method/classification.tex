@@ -203,15 +203,19 @@ starting point.
 For a class variable with two possible values that occur with
 probability $p$ and $1-p$ respectively, and a feature vector
 $(F_1,F_2,\ldots,F_n)$, the logistic regression model is:
-\begin{align*}
+\begin{equation*}
+\begin{aligned}
 \mathrm{logit}(p) &= \mathrm{log} \left(\dfrac{p}{1-p}\right) \\
   &= \beta_0 + \beta_1F_1 + \beta_2F_2 + \ldots + \beta_nF_n
-\end{align*}
+\end{aligned}
+\end{equation*}
 For LOS classification, this can be rearranged to:
-\begin{align*}
+\begin{equation*}
+\begin{aligned}
 p &= \mathbb{P}(Class=\mathrm{LOS }\leq2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
   &= \dfrac{e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}{1 + e^{\beta_0 + \sum^n_{i=1}\beta_i F_i}}
-\end{align*}
+\end{aligned}
+\end{equation*}
 
 Training the logistic regression classifier, then, is a matter of finding the
 $\beta_i$s that will maximise the likelihood (conditional probability of the
