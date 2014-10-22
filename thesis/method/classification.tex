@@ -141,6 +141,55 @@ in our work both as a simple classifier in its own right, and also as a more
 sophisticated baseline to 0R and 1R.
 
 \section{C4.5 Decision Tree (DT)}
+Decision trees (DT) can be specified recursively and are an example of a
+``divide-and-conquer'' approach to learning. First, we choose a feature to
+place at the root node and then create one branch for each possible value.
+This partitions the data set into subsets, one for every value that the
+feature takes. We repeat this for each branch, choosing different features
+each time and continuing to divide the data set into progressively smaller
+subsets, growing the tree.
+If all examples in a subset have the same class at any point during
+this process, we stop splitting that subset.
+
+The only thing left to specify
+now is how to decide which attribute to split on. Note that when splitting,
+we would like to create subsets that are as ``pure''
+-- that is, containing as many
+instances of the same class -- as possible, so that the splitting may
+terminate earlier. Since we would like our trees to be as small as possible to
+prevent overfitting and allow the best generalisation ability,
+we would therefore like to choose the feature to split on such that the
+created subsets were as pure as possible. The measure of purity used in
+learning decision trees is the \textit{information}, and is measured in
+\textit{bits}. At any node (or subset) of the tree, this measure represents
+the expected amount of information that would be needed to classify a new
+example, given that the example reached the node. The information at each
+node is calculated using the \textit{entropy} function:
+\begin{equation*}
+\mathrm{entropy}(p_1,p_2,\ldots,p_n) = -p_1\mathrm{log}p_1 -p_2\mathrm{log}p_2 \ldots -p_n\mathrm{log}p_n
+\end{equation*}
+Given $k$ classes, $c_1,\ldots,c_k$ is the number of instances in each
+class at a node, and $\sum_{i=1}^k c_i = c$ is the total number of instances
+at that node, the information of that node is then:
+\begin{equation*}
+\mathrm{info}(c_1,\ldots,c_k) = \mathrm{entropy}\left(\frac{c_1}{c},\frac{c_2}{c},\ldots,\frac{c_k}{c}\right)
+\end{equation*}
+
+To find the attribute to split on, we assume we are splitting on a particular
+attribute, and calculate the information at the node given the split. We do
+this for each attribute, and compute the \textit{information gain} from
+splitting on that attribute:
+\begin{equation*}
+\mathrm{gain}(feature) = \mathrm{info}(\text{child node}) - \mathrm{info}(\text{parent node})
+\end{equation*}
+The feature that is chosen is therefore the one with the highest information
+gain.
+
+Decision trees are fast to train and produce models that are straightforward
+for humans to interpret, the latter of which is particularly valuable in a
+clinical environment. We will use the C4.5 tree induction algorithm, which is
+considered the state-of-the-art and handles different types of feature values
+as well as missing values.
 
 \section{Logistic Regression (LR)}
 Logistic regression is a regression technique used for when the dependent
