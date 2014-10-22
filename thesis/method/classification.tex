@@ -438,5 +438,105 @@ $f(\mathrm{Rank}) = n-\mathrm{Rank}$.
 \end{enumerate}
 
 \section{Multi-layer Perceptron (MLP)}
+Multi-layer perceptrons (MLPs) are a generalised form of the
+\textit{perceptron}, first
+studied extensively by Rosenblatt \todo{add citation entry}. The original
+motivation of the perceptron 
+was to develop a very simple artificial neural network to model the
+behaviour of neurons in the brain. The perceptron model for a two-class
+problem is a linear combination of the features: that is,
+$h(\mathbf{x}) = \sum w_i x_i$ where the $w_i$ are the weights of the model.
+There is an input node, called a \textit{neuron}, for each feature, and the
+weights are applied to the connections between these input neurons to the
+output.
+Usually, a constant term of 1 called the \textit{bias} is also added to the
+model for an additional trainable input. To classify an item, we substitute it
+into $h(\mathbf{x})$; if the value is above a particular threshold, we label it
+as class 1, else it belongs in class 2. For convenience, we can let this
+threshold be 0. Training the perceptron involves the following steps:
+\begin{enumerate}
+\item Start with random numbers for the weights $w_i$.
+\item For each training example $\mathbf{x_i}$: calculate $h(\mathbf{x_i})$.
+If it is correctly classified, do not update the weights.
+If it is incorrectly classified, add a multiple of the misclassified
+instance to the current weights using
+$\mathbf{w} = \mathbf{w} + \lambda \mathbf{x_i}$, where $\lambda$ is a small
+constant.
+\item Repeat the previous step until all training examples are correctly
+classified.
+\end{enumerate}
+If the data are linearly separable, the perceptron is guaranteed to find a
+hyperplane that separates the two classes. However, it is not able to do this
+when there is a non-linear decision boundary -- for that we will need the
+multi-layer perceptron.
+
+The \textit{multi-layer perceptron}, also known as a
+\textit{feed-forward neural network}, is a type of artificial neural network
+that generalises the perceptron model outlined above. Instead of only one layer
+of inputs, MLPs consist of more than one layer, with the outputs from previous
+layers serving as inputs to the next layer. At each layer, the inputs are
+combined linearly and then transformed nonlinearly for input into the next
+layer. For a network with one layer of transformations between the input and
+output layers -- that is, one ``hidden'' layer -- the mathematical description
+is:
+\begin{equation*}
+y = \sum_j w^{(2)}_j f_j \left(\sum_i w^{(1)}_i x_i\right)
+\end{equation*}
+The $w$ and the $f_j$ represent the linear combinations and the nonlinear
+transformations respectively, and $y$ is the predicted outcome.
+The nonlinearity of the transformations ensures
+that we can classify data which are not linearly separable. Figure
+\ref{fig:mlp} shows an MLP with one hidden layer.
+
+\begin{figure}[h]
+\label{fig:mlp}
+\caption{}
+\centering
+%\includegraphics[scale=0.95]{images/a2-nn}
+\end{figure}
+
+MLPs can be trained in a number of ways, the most common of which is
+\textit{backpropagation}. Suppose that we have the network above, with one
+input, hidden and output layer respectively. From the perceptron learning
+algorithm, we can update the weights of the hidden neurons leading to the
+output neuron, but we do not know what the outputs of these hidden neurons are.
+Backpropagation solves this problem by updating the weights of the various
+connections to the hidden units based on the strength of the unit's
+contribution to the final prediction, using a mathematical optimisation
+algorithm called \textit{gradient descent}. This requires taking derivatives,
+so the threshold function we used for the perceptron is usually replaced with
+the sigmoid function $f(x) = \frac{1}{1+e^{-x}}$. We also define an error
+function $E=\frac{1}{2}(\text{actual} - \text{predicted})^2$ -- the one most
+commonly used -- which is
+minimised in the gradient descent process. Updating the weights for each
+connection in the network now involves finding the value of the derivative,
+multiplying it by a small constant between 0 and 1 called the
+\textit{learning rate}, and subtracting this value from the current weight
+value, until the minimum for the error function is reached. Note that the
+error function is quadratic, so it is guaranteed to have a minimum. The
+updating of the weights is continued until the minimum is reached or if we
+are ``close enough'' to the minimum.
+
+It can be shown that MLPs with a single hidden layer are powerful enough to
+model any continuous function, provided there are enough neurons in that
+hidden layer \cite{Hand2001}. However, as they must iterate over the entire
+data set many times, and due to the sometimes slow convergence of gradient
+descent, MLPs are often slower to train than other learning algorithms we
+have described, such as decision trees. We use them in this work on LOS
+classification as we would like to see how they perform in modelling the
+complex relationships between various medical attributes.
 
 \section{Conclusion}
+In this chapter we have outlined all of the learning algorithms that we will
+be evaluating with respect to our classification problem, from the simple
+0R and 1R to Na\"{i}ve Bayes, decision trees, logistic regression,
+$k$-nearest neighbour (and extensions K* and Ranked Distance), to the more
+sophisticated support vector machines and multi-layer perceptrons. The reason
+for our inclusion of so many algorithms is two-fold. Firstly, many of
+these algorithms have not been extensively applied in various medical settings
+to the problem of LOS prediction. Using a wide range of algorithms from various
+paradigms will enable us to see what algorithms perform better than others.
+Secondly, evaluating several classifiers will allow us to make comparisons
+between different feature selection methods that are independent of the
+classifier and give us more insight into the nature of the data set and of the
+problem.
