@@ -348,6 +348,36 @@ $k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
 K* and our contribution, Ranked Distance.
 
 \subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
+Cleary and Trigg developed K*, an instance-based classifier that uses entropy
+to measure the distances between instances \cite{Cleary1995}. They consider
+the distance between two instances to be the complexity of transforming one
+into another. Define a sequence of transformations on an instance:
+\begin{equation*}
+\bar{t}(a) = t_n(t_{n-1}(\ldots t_1(a)\ldots)), \bar{t} \in T
+\end{equation*}
+where $\bar{t} = t_1,\ldots,t_n$. We can define a probability function $p$
+that gives the probabilities of these transformations occurring, and then we
+can define a probability function that gives the probabilities of all paths
+(transformations) from example $a$ to $b$:
+\begin{equation*}
+P^*(b|a) = \sum_{\bar{t}\in T:\bar{t}(a)=b} p(\bar{t})
+\end{equation*}
+Within this framework, we can define transformations for both real-valued and
+categorical features, which allows K* to work with all types of features.
+The K* function is then defined as:
+\begin{equation*}
+K^*(b|a) = -\mathrm{log}_2P^*(b|a)
+\end{equation*}
+
+To calculate the probability of an instance $a$ being in a class $C$, we sum
+the probabilities from $a$ to each instance of $C$, and repeat for each class.
+The predicted class will be the one with the highest probability:
+\begin{equation*}
+P^*(C|a) = \sum_{b\in C} P^*(b|a)
+\end{equation*}
+
+We use K* as a comparison to the basic NN algorithm and also as a comparison
+to $k$-NN with our distance function.
 
 \subsubsection{Ranked Distance}
 \paragraph{Intuition}
