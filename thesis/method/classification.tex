@@ -232,6 +232,77 @@ classify the example as belonging to the class ``LOS $\leq$ 2 days'', otherwise
 it is classified as ``LOS $>$ 2 days''. Usually this threshold is 0.5.
 
 \section{Support Vector Machine (SVM)}
+Support vector machines (SVMs) are an example of a supervised learning algorithm
+capable of classifying training examples into two classes. They are one of the
+best algorithms in terms of predictive accuracy \cite{Bellazzi2008}. Despite
+this, they have not been widely applied to predicting the LOS, which gives us
+an opportunity to evaluate their performance in our LOS classification problem.
+
+Given a set of $n$-feature vectors, we can represent each vector as a point in
+$n$-dimensional space, where each feature is a dimension. The SVM will try to
+find a \textit{hyperplane} that separates the two classes. Usually there are
+many such hyperplanes; the distinguishing aspect of an SVM is that it will
+find the hyperplane that maximises the distance between the two nearest points
+in each class. This distance is called the \textit{margin}, and the intuition
+is that maximising it will give us the greatest possible separation between the
+classes -- the classifier comes no closer to either class than it needs to.
+This gives the SVM the best generalising ability to classify new examples.
+
+Figure \ref{fig:svm} shows an example of a two-dimensional feature space, with
+two classes of points (black and white). We can see the hyperplane, in this
+case a line since we are only in two dimensions, separating the two classes
+with as much margin as possible. In
+this case, the points are linearly separable: all white points lie on one side
+of the hyperplane, and all black points lie on the other. In practice, this is
+not common, and often data cannot be separated cleanly by a hyperplane.
+Note that the points closest to the margin are those that are most likely to be
+ambiguous when the data cannot be cleanly separated. The SVM will progressively
+remove more and more of these ambiguous points from consideration when it
+cannot find a hyperplane until it finds a suitable one.
+
+\begin{figure}[h]
+\label{fig:svm}
+\caption{}
+\centering
+%\includegraphics[scale=0.95]{images/a2-nn}
+\end{figure}
+
+Instead of removing points from consideration by the SVM, we can also specify
+a \textit{kernel function}, which transforms the original feature space into
+some other non-linear space. Commonly, polynomial functions of degree 2 or
+greater are used, and theoretically they can approximate non-linear boundaries
+between classes to any arbitrary accuracy. However, this is usually not
+practically possible with data sets containing even a modest number of features
+(around 10), due to the computational complexity of estimating a large number
+of coefficients that are introduced by the transformation.
+
+SVMs can be specified mathematically as a type of optimisation problem known
+as \textit{constrained quadratic optimisation}. Given $m$ training vectors
+$\mathbf{x_i} \in \mathbb{R}^n, i=1,\ldots,m$ and their labels
+$y_i \in \{-1,+1\}, i=1,\ldots,m$, the optimisation problem can be written as:
+\begin{equation}
+\label{eqn:svm1}
+\begin{aligned}
+& \underset{\mathbf{w},b}{\mathrm{minimise}}
+  && ||\mathbf{w}|| + C\sum_{i=1,\ldots,m} s_i \\
+& \text{subject to}
+  && y_i(\mathbf{w}^T\phi(\mathbf{x_i})+b) \geq 1 \\
+& && s_i \geq 0, i = 1,\ldots,m
+\end{aligned}
+\end{equation}
+where $\phi(\mathbf{x})$ is the kernel function, and
+$\mathbf{w}\cdot\mathbf{x_i} + b = 0$ is the hyperplane that the SVM finds.
+The $s_i$'s allow the SVM to ignore some examples if it cannot find a suitable
+hyperplane, and $C$ (sometimes called the SVM's complexity constant) is a
+constant specified by the user that controls how much we want to balance
+finding the best possible margin with allowing misclassified examples.
+Note that for a linear kernel, $\phi(\mathbf{x}) = \mathbf{x}$. Training the
+SVM involves solving this optimisation problem and obtaining values for
+$\mathbf{w}$ and $b$.
+
+To classify an instance $\mathbf{x_{new}}$, we simply find the sign of
+$\mathbf{w}\cdot\mathbf{x_{new}}+b$. This will tell us which one of the
+two classes the new example belongs to.
 
 \section{$k$-Nearest Neighbour ($k$-NN)}
 In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
