@@ -1,6 +1,31 @@
 \chapter{Feature Preprocessing and Selection} \label{chap:features}
 
-\section{Data preparation}
+In the previous chapter we began by describing each training example as a
+vector of feature values, and then described how a range of different
+learning algorithms used those feature vectors to learn a way to
+distinguish examples of one class from another. Ideally, all features given
+in a data set should be relevant and useful in not only describing the training
+example but also predicting the class.
+In practice, and particularly
+in medicine, a large number of attributes about a patient is usually recorded.
+This is detrimental for two reasons: the training time is significantly
+increased because the classifier must incorporate irrelevant information, and
+this irrelevant information tends to degrade the performance
+of even state-of-the-art classifiers such as C4.5 decision trees
+\cite{Witten2005}. Clearly, there is an advantage in considering only a subset
+of the most relevant features; to find them, we will use feature selection.
+
+It is also common for data to require preprocessing before a classifier can
+be trained upon it -- indeed, even before feature selection is performed.
+Otherwise, it will be hard to know if the results we see are reflective of
+the algorithms we use or simply a case of lucky data. Preprocessing involves
+cleaning and transforming the data, and is critical to the performance of
+learning algorithms that will be used to learn from it.
+
+In this chapter we describe the various preprocessing steps performed on
+the data, as well as the feature selection methods we evaluate in our work.
+
+\section{Preprocessing}
 In any data mining task, adequately preparing the data ensures the best
 chance of success: this includes deciding how to deal with missing and
 inaccurate values, as well as appropriately transforming the data
@@ -9,7 +34,20 @@ for the task \citep{Kotsiantis2006}.
 In this section we describe how we addressed each of
 the major issues and the reasons for our choice.
 
-\subsection{Cleaning and normalisation} % missing values, irrelevant features
+\subsection{Cleaning} % missing values, irrelevant features
+The exact steps involved in \textit{cleaning} the data will vary between data
+sets, but the overall process is similar. Common issues to deal with include:
+\begin{itemize}
+\item Incorrect spelling or punctuation, perhaps as a result of mistakes in
+data entry
+\item Leading or trailing whitespace, and other garbage characters,
+perhaps as a result of data entry or
+the system that stores the data
+\item Missing values for various features or for the class label
+\item Values for features that do not make sense (such as a patient age of
+-1)
+\end{itemize}
+
 Since the data was initially in an Excel spreadsheet, we explored the data
 by hand using Microsoft Excel's filter function on each column and
 consolidated many categorical values simply
@@ -40,23 +78,29 @@ removed with a few lines of Python code (see appendix \todo{[add reference
 to appendix]}). All attribute names were converted to lowercase. In the case
 where attribute names consisted of several words, the spaces were replaced
 with underscores (\_) to ensure that the full attribute name was read.
-\todo{Include a list of these converted attribute names? In the appendix?}
+For example, ``Any Cancer'' was converted into ``any\_cancer''.
 
 In order for our results to be comparable to that of Dinh
 et. al. \citep{Dinh2013a}, we removed all instances with missing values,
 leaving 2517 instances with which to use to create our prediction models.
 
+\subsection{Normalisation}
 All numeric attributes were normalised into the range $[-1,+1]$ 
 
-\subsection{Feature selection}
+\subsection{Discretisation}
+
+\section{Feature Selection}
 After data preparation, selecting a subset of features or attributes to use
 in a model is also important, and helps to reduce noise and redundant
-attributes from becoming part of the final model. Experiments have found that
+attributes from becoming part of the final model. As we mentioned earlier,
+experiments have found that
 the performance of various classification methods such as decision trees
 \textit{deteriorates} in the presence of useless attributes.
 Our data set contains 73
 non-target attributes, which is a fairly high number. Many of these attributes
-are derived from others in the set, such as \textbf{age} and \textbf{age65}.
+are derived from others in the set: for example, whether or not a patient is
+over 65 years of age (the \textit{age65} feature) is directly dependent on the
+value of their \textit{age} attribute.
 
 We began the process of feature selection by removing attributes that were
 not available upon admission, as these tended to be highly related to the
@@ -69,7 +113,7 @@ The work of actually selecting the attributes out of the 67 available was
 carried out in two ways: automated using feature selection methods, and
 manually using advice from a domain expert.
 
-\subsubsection{Automated feature selection methods}
+\subsection{Automatic Methods}
 There are a number of methods that are commonly used to automate the selection
 of a subset of features for the final classifier. The methods we used were:
 \begin{itemize}
@@ -91,6 +135,7 @@ of a subset of features for the final classifier. The methods we used were:
   involves first ranking attributes based on their error, with the lowest error
   attributes as the most desirable. We then selected the top 20 attributes to
   use in the building of the model.
+  \item Wrapper feature evaluation \todo{explain}
 \end{itemize}
 
 We used the WEKA 3.7.11 \citep{Hall2009} implementation of the above
@@ -100,7 +145,7 @@ most suitable for the program.
 \todo{give more details, ie specifying binary/numeric
 attributes, maybe specify in appendix?}
 
-\subsubsection{Expert selection}
+\subsection{Manual Selection}
 We also wanted to compare the feature selection of an expert in the domain
 of the data set, namely trauma, with the models obtained from the features
 selected using the automated methods described above. This resulted in two
@@ -113,5 +158,4 @@ we are building on, giving us a baseline to compare our results to.
 Altogether, the various feature selection methods resulted in a total of
 7 data sets (4 automated, 2 expert selected, and 1 with all features) which
 we used in the model construction phase.
-
 
