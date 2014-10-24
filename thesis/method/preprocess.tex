@@ -1,0 +1,185 @@
+\chapter{Feature Preprocessing} \label{chap:preprocess}
+
+In the previous chapter we began by describing each training example as a
+vector of feature values, and then described how a range of different
+learning algorithms used those feature vectors to learn a way to
+distinguish examples of one class from another. However, it is uncommon that
+data can be used in a learning algorithm without first being preprocessed.
+Preprocessing involves cleaning and transforming the data, and is critical
+to the performance of learning algorithms that are applied to it. Without
+preprocessing, it will be difficult to evaluate the true performance of
+our classifiers on the data set and to draw meaningful conclusions from
+comparisons between classifiers.
+
+In this chapter give an overview of preprocessing and describe the steps we
+took on our data.
+
+\section{Cleaning} % missing values, irrelevant features
+In any data mining task, adequately \textit{cleaning} the data ensures the best
+chance of success: this includes deciding how to deal with missing and
+inaccurate values, as well as appropriately transforming the data
+\citep{Witten2005}.
+The exact steps involved in data cleaning will vary between data
+sets, but the overall process is similar. Common issues to deal with include:
+\begin{itemize}
+\item Incorrect spelling or punctuation, perhaps as a result of mistakes in
+data entry
+\item Leading or trailing whitespace, and other garbage characters,
+perhaps as a result of data entry or
+the system that stores the data
+\item Missing values for various features or for the class label
+\item Values for features that do not make sense (such as a patient age of
+-1)
+\end{itemize}
+The following paragraphs address how we dealt with the issues that were
+applicable to our data.
+
+\paragraph{Incorrect spelling and punctuation.}
+Since the data was initially in Excel spreadsheet format, we explored the data
+by hand using Microsoft Excel's filter on each column. This allowed us to see
+the range of possible values for each feature and easily detect anomalous
+selling and punctuation:
+\begin{itemize}
+  \item In the \texttt{sex} attribute, there were values of `Female' and
+  `Femal' which were consolidated into `Female'.
+  \item In the \texttt{mechanism} attribute, which was textual and indicated
+  the category of how the patient was injured, there were such categories as
+  `Other Vehi' and `Other Vehicle' as well as `Pedal Cycl' and `Pedal Cyclist'.
+  Such categories were combined into `Other Vehicle' and `Pedal Cyclist'
+  respectively.
+  \item Some categories in \texttt{mechanism} were also divided into whether or
+  not the mechanism of injury was self-inflicted, such as `Shooting' and
+  `Shooting-selfinflicted'. At the suggestion of a domain expert, we combined
+  them into one category: in this case, simply
+  `Shooting'; this was done for all the categories in this attribute.
+  \item \texttt{disp from ED} indicated the section of the hospital that the
+  patient was discharged to. This was also a textual categorical attribute.
+  There were redundancies like `G. ICU' and `G.ICU' and even `GICU', which we
+  all combined into one category, `GICU'.
+\end{itemize}
+
+\paragraph{Extraneous whitespace or other characters.}
+After correcting for spelling and punctuation errors,
+the data was then exported into CSV (comma-separated value) format, so that
+we could continue to process it programmatically rather than manually without
+having to use Excel. Many
+fields in the data set contained leading or trailing whitespace, which was
+removed with a few lines of Python code (see appendix \todo{[add reference
+to appendix]}). All attribute names were converted to lowercase. In the case
+where attribute names consisted of several words, the spaces were replaced
+with underscores (\_) to ensure that the full attribute name was read.
+For example, \texttt{Any Cancer} was converted into \texttt{any\_cancer}.
+
+\paragraph{Missing values.}
+There has been a varied treatment of missing values in the work of other
+researchers, from discarding examples with missing values for any feature
+to \textit{imputing} or ``filling in'' the missing values. We remove all
+examples with missing feature values from consideration in all further
+investigations, in line with the work of other research in LOS prediction
+in the same domain \cite{Dinh2013a}.
+
+\section{Normalisation}
+Features represent different pieces of information about a training example.
+Therefore, it is not surprising that not all features will have the same range
+of values: a patient can have an \texttt{age} feature with a value of 20, but
+their \texttt{heart rate} feature cannot possibly be 20. Learning algorithms
+such as $k$-nearest neighbour (Chapter \ref{chap:classification})
+are sensitive to the scales of feature values -- features with a larger range
+of values will dominate a distance calculation. Therefore, we
+\textit{normalise} all numeric (that is, continuous-valued)
+feature values into the $[-1,1]$ range so that they are all expressed on the
+same scale. Typically, values are normalised in the $[0,1]$ or the $[-1,1]$
+ranges.
+The formula to do this, also discussed in Chapter \ref{chap:classification},
+is:
+\begin{equation*}
+a_i = 2\left[\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right] - 1
+\end{equation*}
+where we have used $s=2$ and $t=-1$ to transform values into the $[-1,1]$
+range. This transformation was applied to each value of all numeric features,
+and was performed after all cleaning steps.
+
+\section{Discretisation}
+Not all classification algorithms can handle numeric features, and some of the
+ones that do require assumptions to be made about the underlying distribution
+of the feature values that is not always satisfied -- recall the normality
+assumption of the Na\"{i}ve Bayes classifier
+from Chapter \ref{chap:classification}. This requires us
+to \textit{discretise} the numeric features, which is a process of splitting
+the continuous data into a small number of discrete, distinct ranges.
+Additionally, there has been no work examining the use of discretisation to
+improve the performance of LOS prediction models, so our work provides a
+valuable guideline on what other researchers looking at a similar problem can
+expect.
+
+Two basic approaches to the discretisation problem exist: unsupervised and
+supervised. \textit{Unsupervised} discretisation involves splitting each
+feature without considering any class information, whereas \textit{supervised}
+discretisation accounts for the class when discretising.
+Unsupervised discretisation uses simple methods such as splitting the data into
+fixed-width intervals -- each interval spans the same width of values,
+but can contain different numbers of feature values depending on the
+distribution of underlying data -- which
+can often partition the continuous feature into unhelpful categories due to its
+ignorance of class labels. Supervised discretisation, on the
+other hand, is commonly performed using the entropy minimisation heuristic
+described by Fayyad and Irani \cite{Fayyad1993}. Since we have labelled
+data, we are able to use both approaches. However, we will focus on evaluating
+the effect of supervised discretisation, as it is generally preferred to
+unsupervised discretisation when class information about the training examples
+is known. And the method proposed by Fayyad and Irani is one of the best known
+general supervised discretisation techniques \cite{Witten2005}.
+
+\subsection{Entropy-based Discretisation}
+In Chapter \ref{chap:classification} we outlined the induction of a decision
+tree on a data set, using the information gain as the criterion for deciding
+the attribute to split on at each step. A similar approach is used in Fayyad
+and Irani's entropy-based method of discretisation \cite{Fayyad1993}:
+to discretise an attribute,
+each possible split point is considered and the information gain from that
+split is computed. The split point with the highest information gain is
+therefore chosen. Once the first split is determined, the algorithm continues
+recursively in the newly created upper and lower ranges.
+
+The \textit{minimum description length (MDL)} principle is used to determine
+the stopping criterion. The MDL value is calculated by adding the information
+values from two cases: split or do not split. If we split, then we can encode
+the split point in $\mathrm{log}_2(N-1)$ bits (where $N$ is the number of
+instances), then the classes of those above and below it. If we do not split,
+then each instance's label must be encoded. Mathematically, given $N$ examples
+with entropy $E$, sub-intervals $k_1$ and $k_2$ with the entropy of examples
+in each sub-interval denoted $E_1$ and $E_2$:
+\begin{equation*}
+\mathrm{MDL} = \dfrac{\mathrm{log}_2(N-1)}{N} + \dfrac{\mathrm{log}_2(3^k-2) - kE + k_1E_1 + k_2E_2}{N}
+\end{equation*}
+The first term is the information needed for the splitting point, and the
+second is a correction necessary for encoding which classes belong to which
+sub-interval. The decision rule is then to split if the information gain for
+that split exceeds the MDL value: $\mathrm{gain} > \mathrm{MDL}$.
+
+Since this requires exhaustive searching of the full range of feature values
+to find potential split points, this method of supervised discretisation can
+be time-consuming given large enough data sets. However, it has been proven
+that any potential split that minimises the information value will never occur
+between two examples of the same class. This means that we only need to
+consider splits between regions of different classes, reducing the number of
+possible points to consider.
+
+\section{Conclusion}
+In this chapter we discussed various issues encountered during the
+preprocessing stage and how these were addressed. These steps are critical to
+the success of our learning algorithms: without cleaned data, any subsequent
+work is meaningless and difficult to draw valid conclusions from. By outlining
+our steps, we hope to provide an example of how one can conduct the cleaning
+process.
+
+We then discussed normalisation, an important transformation of
+continuous-valued data that ensures all features take on the same range of
+values. This is important for ensuring that classifiers sensitive to the
+relative range of values between features give valid outputs.
+
+We concluded with outlining discretisation, in particular Fayyad and Irani's
+entropy-based method. Such a technique has not been used in LOS prediction
+and by including it in our work, we can evaluate its effectiveness in this
+domain and let our results serve
+as a baseline and reference for future work.
