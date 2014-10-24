@@ -335,10 +335,12 @@ values of each numeric feature before using $k$-NN: for each feature $i$, we
 calculate the normalised value of the feature for each training example. This
 is done using the following relationship:
 \begin{equation*}
-a_i = \dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}
+a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
 \end{equation*}
 where $a_i$ is the normalised value, $v_i$ is the actual value in the data
-set, and max $v_i$ and min $v_i$ are taken over all training examples.
+set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is a
+scaling factor $t$ indicates how much to translate the range by. If $s=1$
+and $t=0$, then the range of normalised values will be in $[0,1]$.
 
 \subsection{Extensions}
 There have been many extensions proposed to the $k$-NN algorithm described
@@ -440,7 +442,7 @@ $f(\mathrm{Rank}) = n-\mathrm{Rank}$.
 \section{Multi-layer Perceptron (MLP)}
 Multi-layer perceptrons (MLPs) are a generalised form of the
 \textit{perceptron}, first
-studied extensively by Rosenblatt \todo{add citation entry}. The original
+studied extensively by Rosenblatt \cite{Rosenblatt1962}. The original
 motivation of the perceptron 
 was to develop a very simple artificial neural network to model the
 behaviour of neurons in the brain. The perceptron model for a two-class
