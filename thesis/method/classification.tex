@@ -32,6 +32,7 @@ chapter we describe each of the learning algorithms we used to model the
 relationship between the feature vectors and the LOS.
 
 \section{0R and 1R}
+\label{sec:zeror}
 Short for ``0-rule'' and ``1-rule'' respectively, 0R and 1R are
 very simple classifiers. 0R uses no features to predict the class, and
 1R only uses one.
@@ -141,6 +142,7 @@ in our work both as a simple classifier in its own right, and also as a more
 sophisticated baseline to 0R and 1R.
 
 \section{C4.5 Decision Tree (DT)}
+\label{sec:c45}
 Decision trees (DT) can be specified recursively and are an example of a
 ``divide-and-conquer'' approach to learning. First, we choose a feature to
 place at the root node and then create one branch for each possible value.
@@ -165,9 +167,10 @@ learning decision trees is the \textit{information}, and is measured in
 the expected amount of information that would be needed to classify a new
 example, given that the example reached the node. The information at each
 node is calculated using the \textit{entropy} function:
-\begin{equation*}
+\begin{equation}
+\label{eqn:entropy}
 \mathrm{entropy}(p_1,p_2,\ldots,p_n) = -p_1\mathrm{log}p_1 -p_2\mathrm{log}p_2 \ldots -p_n\mathrm{log}p_n
-\end{equation*}
+\end{equation}
 Given $k$ classes, $c_1,\ldots,c_k$ is the number of instances in each
 class at a node, and $\sum_{i=1}^k c_i = c$ is the total number of instances
 at that node, the information of that node is then:
@@ -280,8 +283,7 @@ SVMs can be specified mathematically as a type of optimisation problem known
 as \textit{constrained quadratic optimisation}. Given $m$ training vectors
 $\mathbf{x_i} \in \mathbb{R}^n, i=1,\ldots,m$ and their labels
 $y_i \in \{-1,+1\}, i=1,\ldots,m$, the optimisation problem can be written as:
-\begin{equation}
-\label{eqn:svm1}
+\begin{equation*}
 \begin{aligned}
 & \underset{\mathbf{w},b}{\mathrm{minimise}}
   && ||\mathbf{w}|| + C\sum_{i=1,\ldots,m} s_i \\
@@ -289,7 +291,7 @@ $y_i \in \{-1,+1\}, i=1,\ldots,m$, the optimisation problem can be written as:
   && y_i(\mathbf{w}^T\phi(\mathbf{x_i})+b) \geq 1 \\
 & && s_i \geq 0, i = 1,\ldots,m
 \end{aligned}
-\end{equation}
+\end{equation*}
 where $\phi(\mathbf{x})$ is the kernel function, and
 $\mathbf{w}\cdot\mathbf{x_i} + b = 0$ is the hyperplane that the SVM finds.
 The $s_i$'s allow the SVM to ignore some examples if it cannot find a suitable
