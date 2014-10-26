@@ -78,6 +78,14 @@ examples with missing feature values from consideration in all further
 investigations, in line with the work of other research in LOS prediction
 in the same domain \cite{Dinh2013a}.
 
+At the end of the cleaning process, the data was converted into the
+Attribute-Relation File Format (ARFF)
+\footnote{\url{http://www.cs.waikato.ac.nz/ml/weka/arff.html}} for use in
+WEKA, a suite of machine learning algorithms implemented in Java
+\cite{Hall2009}. Each feature was carefully checked to ensure that their
+type was specified correctly -- that is, the nominal attributes were
+distinguished from the numeric.
+
 \section{Normalisation}
 Features represent different pieces of information about a training example.
 Therefore, it is not surprising that not all features will have the same range
@@ -96,8 +104,8 @@ is:
 a_i = 2\left[\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right] - 1
 \end{equation*}
 where we have used $s=2$ and $t=-1$ to transform values into the $[-1,1]$
-range. This transformation was applied to each value of all numeric features,
-and was performed after all cleaning steps.
+range. This transformation was applied to each value of all numeric features
+using WEKA, and was performed after all cleaning steps described above.
 
 \section{Discretisation}
 Not all classification algorithms can handle numeric features, and some of the
@@ -185,5 +193,4 @@ relative range of values between features give valid outputs.
 We concluded with outlining discretisation, in particular Fayyad and Irani's
 entropy-based method. Such a technique has not been used in LOS prediction
 and by including it in our work, we can evaluate its effectiveness in this
-domain and let our results serve
-as a baseline and reference for future work.
+domain and let our results serve as a baseline and reference for future work.
