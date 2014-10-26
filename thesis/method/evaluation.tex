@@ -247,9 +247,15 @@ ten-fold cross-validated AUC, the Central Limit Theorem holds and we can
 compute the mean and standard deviation of our 40 samples in order to
 construct a 95\% confidence interval for the mean AUC of each classifier.
 
-\subsection{Statistical Tests}
+\subsection{Tests for Statistical Significance}
 To decide whether or not the difference in values of each measure between
 classifiers and feature selection methods was statistically significant,
 paired $t$-tests at a significance level of 0.05 were conducted.
+\todo{elaborate}
 
 \section{Summary}
+In this section we described our method of evaluating the performance of each
+classifier and feature selection method that we use. We used accuracy and the
+area under the curve to measure two different aspects of our classifiers, and
+we obtained these figures using stratified ten-fold cross-validation. Paired
+$t$-tests were conducted to test for statistical significance.
