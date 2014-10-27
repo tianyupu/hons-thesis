@@ -84,7 +84,7 @@ correlate perfectly with the class and also with each other -- the numerator
 becomes $n$ and the denominator $\sqrt{n^2}$ if the subset has $n$ features.
 \todo{elaborate a bit more}
 
-\subsection{Pearson Correlation Coefficient}
+\subsection{Pearson Correlation Coefficient (PCC)}
 The Pearson correlation coefficient measures the degree of linear correlation
 between two variables. It is always in the range $[-1,1]$, where -1 is total
 negative correlation, 0 is no (linear) correlation, and 1 is total positive
@@ -103,6 +103,27 @@ A higher value for $r_i$ indicates higher correlation with the class. We
 rank all features according to their $r_i$ from highest to lowest, and select
 some subset of these either by selecting a fixed number, or selecting all
 features that have a correlation above a specified threshold.
+
+\subsection{Information Gain (IG)}
+Recall from our discussion of decision trees in in Section \ref{sec:c45} that
+the information gain (IG) is used to decide which attribute to split on at each
+step of the tree. We can also measure the IG of each feature as follows.
+If we have a class $C$ and a feature $F$, the entropy of the
+class before and after observing the feature is:
+\begin{equation*}
+\begin{aligned}
+& \mathrm{entropy}(C) = - \sum_{c \in C} p(c) \mathrm{log}_2 p(c) \\
+& \mathrm{entropy}(C|F) = - \sum_{f \in F} p(f) \sum_{c \in C} p(c|f) \mathrm{log}_2 p(c|f)
+\end{aligned}
+\end{equation*}
+The decrease in entropy reflects the gain in information provided by the
+feature and is given by:
+\begin{equation*}
+IG(C|F) = \mathrm{entropy}(C) - \mathrm{entropy}(C|F)
+\end{equation*}
+
+We can compute the IG for each feature and then select subsets of features that
+are greater than some threshold we specify.
 
 \subsection{1R}
 Another way to evaluate the relevance of features is to use the idea behind the
