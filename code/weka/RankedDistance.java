@@ -3,6 +3,9 @@
  */
 package weka.core;
 
+import java.util.Enumeration;
+import java.util.Vector;
+
 import weka.attributeSelection.ASEvaluation;
 import weka.attributeSelection.ASSearch;
 import weka.attributeSelection.CorrelationAttributeEval;
@@ -45,6 +48,9 @@ implements TechnicalInformationHandler {
 	
 	/** How much to update a weight if we find it important. */
 	protected static double m_WeightUpdateFactor = 0.0001;
+	
+	/** The degree of the decay function. */
+	protected static double m_DecayDegree = 1;
 
 	/**
 	 * 
@@ -61,6 +67,21 @@ implements TechnicalInformationHandler {
 		super(data);
 	}
 
+	/**
+	 * Sets the decay degree.
+	 */
+	protected void setDecayDegree(double decayDegree) {
+		m_DecayDegree = decayDegree;
+	}
+	
+	/**
+	 * Gets the decay degree.
+	 * @return the decay degree as a double
+	 */
+	protected double getDecayDegree() {
+		return m_DecayDegree;
+	}
+	
 	/**
 	 * initializes the ranges and the attributes being used.
 	 */
@@ -95,8 +116,8 @@ implements TechnicalInformationHandler {
 	/**
 	 * Given an attribute index, describes the decay of the ranking as it decreases.
 	 */
-	protected double decayFunction(int index) {
-		return 1.0 / Math.pow(index+1, 2.0/3.0);
+	protected static double decayFunction(int index) {
+		return 1.0 / Math.pow(index+1, m_DecayDegree);
 	}
 
 	/* (non-Javadoc)
@@ -121,6 +142,88 @@ implements TechnicalInformationHandler {
 				+ "is low.\n\n"
 				+ "For more information, see:\n\n"
 				+ getTechnicalInformation().toString();
+	}
+	/**
+	 * Returns an enumeration describing the available options.
+	 * 
+	 * @return an enumeration of all the available options.
+	 */
+	@Override
+	public Enumeration<Option> listOptions() {
+		Vector<Option> result = new Vector<Option>();
+
+		result.add(new Option("\tTurns off the normalization of attribute \n"
+				+ "\tvalues in distance calculation.", "D", 0, "-D"));
+
+		result.addElement(new Option(
+				"\tSpecifies list of columns to used in the calculation of the \n"
+						+ "\tdistance. 'first' and 'last' are valid indices.\n"
+						+ "\t(default: first-last)", "R", 1, "-R <col1,col2-col4,...>"));
+
+		result.addElement(new Option("\tInvert matching sense of column indices.",
+				"V", 0, "-V"));
+
+		result.addElement(new Option("\tSpecify the degree of the polynomial to decay with.",
+				"P", 1, "-P"));
+
+		return result.elements();
+	}
+
+	/**
+	 * Gets the current settings. Returns empty array.
+	 * 
+	 * @return an array of strings suitable for passing to setOptions()
+	 */
+	@Override
+	public String[] getOptions() {
+		Vector<String> result;
+
+		result = new Vector<String>();
+
+		if (getDontNormalize()) {
+			result.add("-D");
+		}
+
+		result.add("-R");
+		result.add(getAttributeIndices());
+
+		if (getInvertSelection()) {
+			result.add("-V");
+		}
+
+		result.add("-P");
+		result.add(String.valueOf(getDecayDegree()));
+
+		return result.toArray(new String[result.size()]);
+	}
+
+	/**
+	 * Parses a given list of options.
+	 * 
+	 * @param options the list of options as an array of strings
+	 * @throws Exception if an option is not supported
+	 */
+	@Override
+	public void setOptions(String[] options) throws Exception {
+		String tmpStr;
+
+		setDontNormalize(Utils.getFlag('D', options));
+
+		tmpStr = Utils.getOption('R', options);
+		if (tmpStr.length() != 0) {
+			setAttributeIndices(tmpStr);
+		} else {
+			setAttributeIndices("first-last");
+		}
+
+		tmpStr = Utils.getOption('P', options);
+		if (tmpStr.length() != 0) {
+			setDecayDegree(Double.parseDouble(tmpStr));
+		} else {
+			setDecayDegree(1);
+		}
+
+		setInvertSelection(Utils.getFlag('V', options));
 	}
 
 	/**
