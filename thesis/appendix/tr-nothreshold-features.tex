@@ -1,0 +1,23 @@
+\begin{table}[hbp]
+\caption{}
+\begin{tabular}{|l|r|r|p{8.5cm}|}
+\hline
+\multicolumn{ 4}{|c|}{Discretisation} \\ \hline
+Method & \multicolumn{1}{l|}{Num selected} & \multicolumn{1}{l|}{\% of total} & Features \\ \hline
+CFS & 9 & 11.54\% & icu, iss, traumatier, bodyregions, lower3, lower\_limbop, triss, upperlimbonly, any\_cancer \\ \hline
+C4.5 Wrapper & 11 & 14.10\% & age, bp, icu, iss, faceany, lowerlimbany, ext3, operation, upperlimboponly, lowerlimbnopelvis, any\_cancer \\ \hline
+Baseline & 19 & 24.36\% & normalvitals, gcs1, iss8, age65, penetrating, headany, chestany, abdoany, spineany, upperlimbany, lowerlimbany, mentalhealth, operation, anymedical, mva, mba, pedestrian, fallsonly, cyclist \\ \hline
+Expert Selection & 11 & 14.10\% & age, normalvitals, gcs1, icu1, iss, transfer, mechcode, upperlimbany, lowerlimbany, head3, charlson \\ \hline
+\end{tabular}
+\vspace{1cm}
+\vfill
+\begin{tabular}{|l|r|r|p{8.5cm}|}
+\hline
+\multicolumn{ 4}{|c|}{No discretisation} \\ \hline
+Method & \multicolumn{1}{l|}{Num selected} & \multicolumn{1}{l|}{\% of total} & Features \\ \hline
+CFS & 9 & 11.54\% & icu, iss, traumatier, bodyregions, lower3, lower\_limbop, triss, upperlimbonly, any\_cancer \\ \hline
+C4.5 Wrapper & 10 & 12.82\% & gcs, iss, abdo3, ext3, laparotomy, upper\_limbop, lower\_limbop, charlson, triss, any\_kidney \\ \hline
+Baseline & 19 & 24.36\% & normalvitals, gcs1, iss8, age65, penetrating, headany, chestany, abdoany, spineany, upperlimbany, lowerlimbany, mentalhealth, operation, anymedical, mva, mba, pedestrian, fallsonly, cyclist \\ \hline
+Expert Selection & 11 & 14.10\% & age, normalvitals, gcs1, icu1, iss, transfer, mechcode, upperlimbany, lowerlimbany, head3, charlson \\ \hline
+\end{tabular}
+\end{table}

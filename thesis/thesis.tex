@@ -17,6 +17,7 @@
 \usepackage{alltt}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{booktabs}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,filecolor=blue,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
 \usepackage[all]{hypcap}
 \usepackage[utf8]{inputenc}
@@ -140,10 +141,10 @@
 }
 
 %%%% Appendices
-%%%\appendix
-%%%\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
-%%%\input{wikifeats/wikifeats.tex}
-%%%\input{candcner/candcner.tex}
+\appendix
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+\input{appendix/paper.tex}
+\input{appendix/allresults.tex}
 %%%\input{comparedata/comparedata.tex}
 
 \end{document}
