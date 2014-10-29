@@ -1,0 +1,10 @@
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.001" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.005" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.01" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.05" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.1" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.15" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.2" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.3" -W weka.classifiers.lazy.IBk -- -K 20
+weka.classifiers.meta.AttributeSelectedClassifier <OPTS> -E "weka.attributeSelection.InfoGainAttributeEval" -S "weka.attributeSelection.Ranker -T 0.5" -W weka.classifiers.lazy.IBk -- -K 20
