@@ -6,7 +6,7 @@ echo "=== UPDATING PACKAGE MANAGER"
 apt-get update > /dev/null
 
 echo "=== INSTALLING TOOLS"
-apt-get install -y curl python-software-properties unzip git vim tmux > /dev/null
+apt-get install -y curl python-software-properties unzip git vim tmux gnuplot > /dev/null
 
 # OpenJDK 7 (for WEKA)
 echo "=== INSTALLING OPENJDK 7 JRE"
