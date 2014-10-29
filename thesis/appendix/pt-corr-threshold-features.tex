@@ -1,0 +1,39 @@
+\begin{table}[htbp]
+\caption{}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|r|r|r|p{9.5cm}|}
+\hline
+\multicolumn{ 4}{|c|}{Pearson Correlation - Discretisation} \\ \hline
+\multicolumn{1}{|l|}{Threshold} & \multicolumn{1}{l|}{Num selected} & \multicolumn{1}{l|}{\% of total} & Features \\ \hline
+0 & 13 & 92.86\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age, AdmissionMonth \\ \hline
+0.01 & 13 & 92.86\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age, AdmissionMonth \\ \hline
+0.05 & 12 & 85.71\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age \\ \hline
+0.1 & 10 & 71.43\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus \\ \hline
+0.125 & 7 & 50.00\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex \\ \hline
+0.15 & 6 & 42.86\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure \\ \hline
+0.2 & 4 & 28.57\% & EpisodeType, MainDiagnosis, Education, InpatientService \\ \hline
+0.3 & 1 & 7.14\% & EpisodeType \\ \hline
+0.5 & 1 & 7.14\% & EpisodeType \\ \hline
+0.75 & 1 & 7.14\% & EpisodeType \\ \hline
+\end{tabular}}
+\end{table}
+
+\begin{table}[htbp]
+\caption{}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|r|r|r|p{11cm}|}
+\hline
+\multicolumn{ 4}{|c|}{Pearson Correlation - No discretisation} \\ \hline
+\multicolumn{1}{|l|}{Threshold} & \multicolumn{1}{l|}{Num selected} & \multicolumn{1}{l|}{\% of total} & Features \\ \hline
+0 & 14 & 100.00\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age, prev\_adm, AdmissionMonth \\ \hline
+0.01 & 14 & 100.00\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age, prev\_adm, AdmissionMonth \\ \hline
+0.05 & 12 & 85.71\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus, AdmissionDay, Age \\ \hline
+0.1 & 10 & 71.43\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex, MedicalSpecialty, AdmissionHour, MaritalStatus \\ \hline
+0.125 & 7 & 50.00\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure, Sex \\ \hline
+0.15 & 6 & 42.86\% & EpisodeType, MainDiagnosis, Education, InpatientService, OriginEpisodeType, MainProcedure \\ \hline
+0.2 & 4 & 28.57\% & EpisodeType, MainDiagnosis, Education, InpatientService \\ \hline
+0.3 & 1 & 7.14\% & EpisodeType \\ \hline
+0.5 & 1 & 7.14\% & EpisodeType \\ \hline
+0.75 & 1 & 7.14\% & EpisodeType \\ \hline
+\end{tabular}}
+\end{table}
