@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Comparison of accuracy (\%) between all feature selection methods for each classifier with and without discretisation, on the trauma data set. The best accuracy for each feature selection method is highlighted in bold, and the best accuracy for each classifier is italicised.}
+\label{tab:features-tr-acc}
+\resizebox{!}{11cm}{%
+\begin{tabular}{|l|cccccccc|}
+\hline
+ & \multicolumn{1}{l}{None} & Baseline & Expert & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
+\textit{1R} &  &  &  &  &  &  &  &  \\
+Discretised & 69.74 & 66.91 & \textit{70.64} & 69.63 & 70.64 & \textit{\begin{tabular}[c]{@{}c@{}}70.64\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}69.9\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}69.77\\ t=67.905\end{tabular} \\
+Not discretised & 71.95 & 66.91 & 70.61 & \textit{72.01} & 71.93 & \begin{tabular}[c]{@{}c@{}}71.91\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}71.95\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}71.97\\ t=66.905\end{tabular} \\
+\textit{NB} &  &  &  &  &  &  &  &  \\
+Discretised & 73.83 & 74.62 & 73.19 & 73.4 & \textit{75.8} & \begin{tabular}[c]{@{}c@{}}74.85\\ t=0.125\end{tabular} & \begin{tabular}[c]{@{}c@{}}74.45\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}72.37\\ t=69.905\end{tabular} \\
+Not discretised & 67.25 & \textit{74.62} & 68.31 & 64.77 & 62.66 & \begin{tabular}[c]{@{}c@{}}71.91\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}67.65\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}66.91\\ t=71.905\end{tabular} \\
+\textit{DT} &  &  &  &  &  &  &  &  \\
+Discretised & 75 & 74.38 & 76.39 & 74.12 & \textit{77.52} & \begin{tabular}[c]{@{}c@{}}76.05\\ t=0.125\end{tabular} & \begin{tabular}[c]{@{}c@{}}76.17\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}72.71\\ t=69.905\end{tabular} \\
+Not discretised & 74.58 & 74.38 & 76.04 & 75.4 & 75.79 & \textit{\begin{tabular}[c]{@{}c@{}}75.93\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}75.74\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.49\\ t=66.905\end{tabular} \\
+\textit{LR} &  &  &  &  &  &  &  &  \\
+Discretised & \textbf{77.62} & \textbf{75.06} & \textbf{76.45} & 73.99 & 76.3 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}77.7\\ t=0\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}77.65\\ t=0\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}74.4\\ t=66.905\end{tabular}} \\
+Not discretised & 77.1 & \textbf{75.06} & 74.53 & 74.14 & 73.66 & \begin{tabular}[c]{@{}c@{}}77.09\\ t=0.01\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}77.13\\ t=0\end{tabular}} & \begin{tabular}[c]{@{}c@{}}73.57\\ t=66.905\end{tabular} \\
+\textit{SVM} &  &  &  &  &  &  &  &  \\
+Discretised & 77.39 & 74.47 & 75.67 & 72.57 & 75.26 & \begin{tabular}[c]{@{}c@{}}77.42\\ t=0.05\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}77.53\\ t=0.005\end{tabular}} & \begin{tabular}[c]{@{}c@{}}73.83\\ t=66.905\end{tabular} \\
+Not discretised & 76.72 & 74.47 & 74.48 & 70.59 & 73.58 & \begin{tabular}[c]{@{}c@{}}76.8\\ t=0.01\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}76.83\\ t=0\end{tabular}} & \begin{tabular}[c]{@{}c@{}}72.27\\ t=66.905\end{tabular} \\
+\textit{1NN} &  &  &  &  &  &  &  &  \\
+Discretised & 71.22 & 70.28 & 72.56 & 73.84 & \textit{\textbf{77.81}} & \begin{tabular}[c]{@{}c@{}}74.75\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.26\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}72.72\\ t=69.905\end{tabular} \\
+Not discretised & 67.4 & 70.28 & 68.77 & 74.44 & \textit{74.94} & \begin{tabular}[c]{@{}c@{}}72.94\\ t=0.2\end{tabular} & \begin{tabular}[c]{@{}c@{}}71.44\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.78\\ t=68.905\end{tabular} \\
+\textit{20NN} &  &  &  &  &  &  &  &  \\
+Discretised & 75.9 & 73.59 & 75.51 & 73.76 & 76.48 & \begin{tabular}[c]{@{}c@{}}76.26\\ t=0.125\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}76.56\\ t=0.005\end{tabular}} & \begin{tabular}[c]{@{}c@{}}73.52\\ t=66.905\end{tabular} \\
+Not discretised & 73.48 & 73.59 & 72.11 & \textit{75.3} & 74.59 & \begin{tabular}[c]{@{}c@{}}74.99\\ t=0.2\end{tabular} & \begin{tabular}[c]{@{}c@{}}74.42\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.56\\ t=68.905\end{tabular} \\
+\textit{RD} &  &  &  &  &  &  &  &  \\
+Discretised & 76.92 & 69.68 & 76.19 & 73.39 & \textit{77.22} & \begin{tabular}[c]{@{}c@{}}76.87\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}76.82\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.82\\ t=66.905\end{tabular} \\
+Not discretised & 74.97 & 69.68 & 74.58 & 74.38 & 75.35 & \begin{tabular}[c]{@{}c@{}}76.05\\ t=0.1\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}76.16\\ t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}73.71\\ t=68.905\end{tabular} \\
+\textit{K*} &  &  &  &  &  &  &  &  \\
+Discretised & 71.4 & 72.2 & 75.08 & 74.43 & \textit{77.27} & \begin{tabular}[c]{@{}c@{}}75.07\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}74.08\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}72.61\\ t=67.905\end{tabular} \\
+Not discretised & 67.34 & 72.2 & 72.6 & \textit{\textbf{75.58}} & 75.48 & \begin{tabular}[c]{@{}c@{}}74.77\\ t=0.2\end{tabular} & \begin{tabular}[c]{@{}c@{}}71.15\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}73.45\\ t=68.905\end{tabular} \\
+\textit{MLP} &  &  &  &  &  &  &  &  \\
+Discretised & 73.79 & 73.03 & 73.45 & 73.38 & \textit{76.66} & \begin{tabular}[c]{@{}c@{}}74.41\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}74.03\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}71.94\\ t=66.905\end{tabular} \\
+Not discretised & 71.87 & 73.03 & 72.31 & 73.04 & 73.35 & \textit{\begin{tabular}[c]{@{}c@{}}74.65\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}72.63\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}70.99\\ t=66.905\end{tabular} \\ \hline
+ \end{tabular}
+}
+\end{table}

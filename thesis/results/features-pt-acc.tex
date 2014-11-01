@@ -1,0 +1,41 @@
+\begin{table}[htbp]
+\caption{Comparison of accuracy (\%) between all feature selection methods for each classifier with and without discretisation, on the general hospital data set. The best accuracy for each feature selection method is highlighted in bold, and the best accuracy for each classifier is italicised.}
+\label{tab:features-pt-acc}
+\resizebox{!}{11cm}{%
+\begin{tabular}{|l|cccccc|}
+\hline
+ & None & CFS & C4.5 Wrapper & Correlation & IG & 1R \\
+\hline
+ \textit{1R} &  &  &  &  &  &  \\
+ Discretised & 92.88 & 92.88 & 92.88 & 92.88 & 92.88 & 92.88 \\
+ Not discretised & 92.88 & 92.88 & 92.88 & 92.88 & 92.88 & 92.88 \\
+ \textit{NB} &  &  &  &  &  &  \\
+ Discretised & 93.66 & 93.06 & 93 & \textit{\begin{tabular}[c]{@{}c@{}}93.72\\ t=0.125\end{tabular}} & \begin{tabular}[c]{@{}c@{}}93.66\\ t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}93.66\\ t=74.405\end{tabular} \\
+ Not discretised & 93.66 & 93.06 & 93 & \textit{\begin{tabular}[c]{@{}c@{}}93.72\\ t=0.125\end{tabular}} & \begin{tabular}[c]{@{}c@{}}93.66\\ t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}93.66\\ t=74.405\end{tabular} \\
+ \textit{DT} &  &  &  &  &  &  \\
+ Discretised & \textit{\textbf{98.23}} & 96.45 & \textbf{97.43} & \begin{tabular}[c]{@{}c@{}}97.75\\ t=0.125\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.76\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.74\\ t=74.405\end{tabular} \\
+ Not discretised & \textit{\textbf{98.23}} & 96.45 & \textbf{97.43} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}98.23\\ t=0\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}98.23\\ t=0.001\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}98.23\\ t=74.405\end{tabular}}} \\
+ \textit{LR} &  &  &  &  &  &  \\
+ Discretised & \textit{97.93} & \textbf{96.46} & 97.19 & \begin{tabular}[c]{@{}c@{}}97.86\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.86\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.83\\ t=71.905\end{tabular} \\
+ Not discretised & \textit{97.93} & \textbf{96.46} & 97.19 & \textit{\begin{tabular}[c]{@{}c@{}}97.93\\ t=0.01\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}97.93\\ t=0.001\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}97.93\\ t=74.405\end{tabular}} \\
+ \textit{SVM} &  &  &  &  &  &  \\
+ Discretised & \textit{98.01} & \textbf{96.46} & 97.14 & \begin{tabular}[c]{@{}c@{}}97.97\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.97\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.96\\ t=74.405\end{tabular} \\
+ Not discretised & \textit{98.01} & \textbf{96.46} & 97.14 & \textit{\begin{tabular}[c]{@{}c@{}}98.01\\ t=0.01\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}98.01\\ t=0.001\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}98.01\\ t=74.405\end{tabular}} \\
+ \textit{1NN} &  &  &  &  &  &  \\
+ Discretised & 96.93 & 96.45 & 97.36 & \textit{\begin{tabular}[c]{@{}c@{}}97.59\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.57\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.43\\ t=76.905\end{tabular} \\
+ Not discretised & 96.77 & 96.45 & 97.36 & \textit{\begin{tabular}[c]{@{}c@{}}97.59\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.57\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.43\\ t=76.905\end{tabular} \\
+ \textit{20NN} &  &  &  &  &  &  \\
+ Discretised & 96.53 & 96.24 & 97.15 & \textit{\begin{tabular}[c]{@{}c@{}}97.28\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.14\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}96.54\\ t=74.405\end{tabular} \\
+ Not discretised & 96.85 & 96.24 & 97.15 & \textit{\begin{tabular}[c]{@{}c@{}}97.3\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.15\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}96.86\\ t=68.905\end{tabular} \\
+ \textit{RD} &  &  &  &  &  &  \\
+ Discretised & 97.27 & 79.1 & 95.45 & \begin{tabular}[c]{@{}c@{}}97.28\\ t=0.01\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}97.3\\ t=0\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}97.3\\ t=66.905\end{tabular}} \\
+ Not discretised & 97.34 & 79.1 & 95.45 & \begin{tabular}[c]{@{}c@{}}97.3\\ t=0\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}97.36\\ t=0\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.34\\ t=68.905\end{tabular} \\
+ \textit{K*} &  &  &  &  &  &  \\
+ Discretised & 97.22 & 92.94 & 96.53 & \textit{\begin{tabular}[c]{@{}c@{}}97.46\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}97.46\\ t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.22\\ t=74.405\end{tabular} \\
+ Not discretised & 97.36 & 92.94 & 96.53 & \textit{\begin{tabular}[c]{@{}c@{}}97.46\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}97.46\\ t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.36\\ t=74.405\end{tabular} \\
+ \textit{MLP} &  &  &  &  &  &  \\
+ Discretised & 98.14 & 96.45 & 97.35 & \textit{\begin{tabular}[c]{@{}c@{}}98.22\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}98.22\\ t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}98.14\\ t=74.405\end{tabular} \\
+ Not discretised & 98.16 & 96.45 & 97.35 & \textit{\begin{tabular}[c]{@{}c@{}}98.22\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}98.22\\ t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}98.16\\ t=74.405\end{tabular} \\ \hline
+ \end{tabular}
+}
+\end{table}

@@ -2,14 +2,256 @@
 
 \section{Overall Performance}
 \subsection{Trauma Data Set}
-\input{results/overall-trauma-acc.tex}
+Tables \ref{tab:overall-tr-acc} and \ref{tab:overall-tr-auc} show the best
+accuracy and AUC results for each of the feature selection methods for each
+classifier. The best accuracy was 77.81\%, achieved using the $k$-NN algorithm
+with 1 nearest neighbour, a discretised data set, and feature selection using a
+C4.5 wrapper. The best AUC of 0.846 was achieved using logistic regression with
+features selected by a correlation coefficient threshold of 0.1, and again
+using the discretised data set.
 
+\input{results/overall-trauma-acc.tex}
 \input{results/overall-trauma-auc.tex}
+
+Recall that in order for our work to be comparable to that of previous work on
+trauma LOS prediction by Dinh et al. \cite{Dinh2013a}, we use the same data set
+that they used, and also tested the features they used as one of the manual
+feature selection methods. From Table \ref{tab:overall-tr-acc} we can see that
+the best accuracy achieved using their features is 75.06\% with logistic
+regression. It is worth noting that our best accuracy, using $k$-NN with 1
+nearest neighbour, improves upon the accuracy that they achieved by 2.75\%
+while using only 11 features (compared to the 19 they used). These 11 features
+make up only 14.1\% of all features in the data set, and performed better than
+the 11 features selected manually by the domain expert.
+
+Despite our inclusion of accuracy as an evaluation metric, the AUC is what Dinh
+et al. used to evaluate the ability of their logistic regression classifier to
+discriminate between the two LOS classes. Using their features, the best AUC
+was 0.812 with logistic regression, and our best result was 0.846, also with
+logistic regression. However, this was using the discretised data set with 29
+features selected by correlation coefficient at a threshold of 0.1.
+Although our logistic regression classifier exhibited an AUC improvement of
+0.034, it required roughly 50\% more features than the baseline of 19 features.
+
+Although $k$-NN with 1 nearest neighbour had the highest accuracy (77.81\%) out
+of all combinations of classifiers and feature selection methods for this data
+set, we should mention that logistic regression came a very close second with
+77.7\%, outperforming more sophisticated approaches such as SVM and MLP. It
+also achieved a higher AUC, and all while being faster to train.
+
+We would also like to highlight the importance of discretisation on improving
+performance: in Tables \ref{tab:overall-tr-acc} and
+\ref{tab:overall-tr-auc} the majority of the quoted results are from applying
+the learning algorithm and feature selection method on the discretised data.
+This indicates that discretisation produced a better result than applying the
+same classifier and feature selector on the non-discretised data.
+
+\subsection{General Data Set}
+For the general hospital data set, we report the best accuracy and AUC results
+for each combination of classifier and feature selection method in Tables
+\ref{tab:overall-pt-acc} and \ref{tab:overall-pt-auc}. The most accurate
+classifier was the C4.5 decision tree using all 14 features.
+This result was the same
+regardless of whether or not discretisation was first applied to the data set.
+The best AUC result was achieved by three classifiers: logistic regression, SVM
+and K*, with an AUC of 0.994. Logistic regression and K* achieved this AUC with
+an information gain feature selector with threshold 0.05, and SVM with a
+correlation coefficient selector at a 0.1 threshold. We consider logistic
+regression and K* to be superior to the SVM in this case because they achieved
+the same AUC with only 8 features, whereas the SVM required 10.
+
+\input{results/overall-portugal-acc.tex}
+\input{results/overall-portugal-auc.tex}
+
+Due to the general nature of this data set, and because we have defined a
+classification problem rather than a regression one, it is difficult to find a
+valid baseline for comparison. However, we can still make some remarks about
+how this data set performed differently with the same methods that were used
+for the trauma LOS data, which will give us valuable insight into the
+suitability of classifiers and learning algorithms for predicting the LOS for
+various medical domains. In addition, in the following sections it will be
+valuable to discuss and compare the important predictive features in this
+general data set with features that other researchers have found to be
+useful in predicting length of hospital stay.
+
+We note that, unlike for the trauma data set, discretisation does not improve
+the accuracy or the AUC of almost all of the classifier and feature selection
+combinations. This is likely due to the presence of only one numeric feature
+(\texttt{prev\_adm}) which, when discretised, was transformed into a nominal
+feature with only one value. Classifiers using the discretised
+\texttt{prev\_adm} were likely to perform worse because the single value does
+not help predict the class (since it will be the same value for both classes)
+and is simply noise. Classifiers which used a reduced set of features that
+excluded \texttt{prev\_adm} would have the same performance regardless of
+discretisation because all other features were nominal and would not have been
+affected by discretisation.
+
+\section{Comparison of Feature Selection Methods}
+\subsection{Trauma Data Set}
+Tables \ref{tab:features-tr-acc} and \ref{tab:features-tr-auc} show the
+best accuracy and AUC achieved with each classifier and feature method, with
+both discretised and non-discretised results. We did not include the results of
+Zero-R as they do not vary with discretisation or feature selection.
+The classifier that achieved the
+highest accuracy and AUC over most of the feature selection methods was
+logistic regression, with accuracies ranging from 74.4\% with 1R feature
+selection to 77.7\% with correlation coefficient feature selection. The AUC
+performance of logistic regression ranged from 0.811 to 0.846, again with
+1R and correlation feature selection respectively.
+\input{results/features-tr-acc.tex}
+\input{results/features-tr-auc.tex}
+
+As indicated by italics in the tables, the best accuracy and AUC results for
+each classifier resulted from a reduced feature set obtained through a
+particular feature selection method. There was at least one feature selector
+for each classifier that managed to outperform the same classifier with
+no feature selection. This is likely due to the large number of features in
+the original data -- after cleaning and preliminary removal of redundant
+features, we were still left with over 50. Many of these would still likely
+be irrelevant to predicting the class.
+Out of 20 combinations of classifiers
+and discretisation (the 10 classifiers with and 10 without
+discretisation), the C4.5 wrapper method resulted in the best
+accuracy for 7 of these combinations, followed by 5 using information gain
+and 4 using the correlation coefficient and very few for the other methods.
+Under no combination was 1R the best feature selection method to use, as other
+methods produced better accuracy.
+
+Focussing our attention on the AUC tells a slightly different story. Here we
+find that the correlation coefficient and the information gain are the feature
+selectors that give the best AUC for most of the classifiers, and perform
+equally well when used in conjunction with logistic regression and SVMs.
+Interestingly, although the C4.5
+wrapper method selects features which allow classifiers to achieve good
+accuracy, only in 2 out of the 20 combinations of classifiers did it give the
+best AUC result out of all the feature selectors. 
+
+Note that regardless of whether we consider accuracy or AUC to be more
+important in evaluating how our classifiers performed, neither the baseline
+feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
+the domain expert (both of which were manually selected) yielded better
+results than automatic feature selection in all but two cases. We did find
+that expert selection produced the best accuracy result for 1R (equal with
+correlation coefficient selection, but used less features) and that the
+baseline feature set produced the best accuracy for Na\"{i}ve Bayes. Neither
+feature selection method produced the best AUC result for any classifier.
+This is a surprising result because intuitively and in the literature it
+has been stated that in a highly specialised field such as medicine, the domain
+experts would be best-equipped to make judgements about which features to
+use \cite{Witten2005}, and these should give reasonable results. However,
+our results show that in attempting to classify patients according to their
+LOS, we should consider both manual and automatic approaches.
+
+Recall that $k$-NN with 1 nearest neighbour and C4.5 wrapper feature
+selection produced the best accuracy (77.81\%) for the trauma data set, and
+logistic regression with correlation coefficient feature selection at a
+threshold of 0.1 gave the best AUC (0.846). These two feature selection
+methods selected 11 and 29 features respectively, and the features that
+were chosen in common between them were: \texttt{operation}, \texttt{bp},
+\texttt{iss}, \texttt{lowerlimbnopelvis}, \texttt{age}, \texttt{lowerlimbany}
+and \texttt{icu}. This adds evidence to the work of Dinh et al. who found
+that \texttt{iss}, \texttt{age} and \texttt{operation} were important
+distinguishers of LOS $\leq$ or $>$ 2 days \cite{Dinh2013a}. We also
+confirm the findings of Gabbe et al. who found that \texttt{age},
+\texttt{iss} and \texttt{bp} were useful in predicting the length of
+hospital stay of blunt trauma patients \cite{Gabbe2005}.
+
+Although we were able to achieve higher accuracy and AUC than the baseline,
+our best approaches also have a number of limitations which need to be pointed
+out. The first point to note is that using a wrapper method of feature
+selection is slower than using a filter approach (or manually picking the
+features before training), as the learning algorithm used as the wrapper
+needs to be invoked at each of the folds of cross-validation. Additionally,
+the $k$-NN algorithm becomes slower as the data set increases in the number
+of examples. We did not face such a problem during our work, but this will
+have to be addressed for larger data sets. It is also common to use more
+than one nearest neighbour, so care needs to be taken to find a suitable number
+of neighbours for a given problem. Finally, we achieved an improvement
+in AUC of 0.034 but this was with 29 features, which is still a fairly large
+number. The importance of using a fewer number of features is twofold: not
+only does this speed up the training time, it also means that we are able to
+make predictions without requiring a lot of information about a patient,
+which is a crucial consideration if this is to be implemented for use by
+physicians.
+
+\subsection{General Data Set}
+Tables \ref{tab:features-pt-acc} and \ref{tab:features-pt-auc} compare the
+best accuracy and AUC of each classifier between all the feature selectors
+used on the general hospital data set. Again, Zero-R is not included as it
+does not vary with discretisation or feature selection. For accuracy, the
+best classifier across all feature selectors except CFS was C4.5, and even
+then it
+was only 0.01\% less accurate than logistic regression and the SVM. Both
+logistic regression and SVM achieved 0.994 AUC using no feature selection
+as well as correlation, information gain and 1R at the same thresholds. Whereas
+in the trauma data set, the MLP did not perform so well compared to many of the
+methods, here it produced the best AUC with CFS and C4.5 wrapper feature
+selection, resulting in 0.983 and 0.992 AUC respectively.
+\input{results/features-pt-acc.tex}
+\input{results/features-pt-auc.tex}
+
+While in the trauma data set we were able to consistently improve the accuracy
+and AUC of each classifier using at least one feature selection method,
+this data set seems to exhibit somewhat different
+behaviour. There are many more situations where the use of feature selection
+makes little improvement to the performance (accuracy or AUC) of a classifier,
+such as for the C4.5 decision tree, logistic regression and SVM if we consider
+accuracy, and logistic regression, $k$-NN, Ranked Distance and K* if we
+consider AUC. With all of these classifiers, we found that using CFS and the
+C4.5 wrapper method \textit{decreased} their accuracy and AUC. The other three
+methods (correlation coefficient, information gain and 1R) resulted in
+performance that was only just as good as without feature selection, and in
+some cases worse. Often, the feature selection that resulted in an accuracy
+or AUC that was as good as the one without feature selection was achieved at
+a threshold which did not discard any features, which would plainly give us
+identical results.
+
+There are a number of results which are notable, however. Logistic regression
+and K*
+were still able to achieve a mean AUC of 0.994 with features selected using
+information gain at a 0.05 threshold. This meant that it only used 8 out of
+the original 14 features, cutting down the number of features by nearly half.
+We mentioned that the MLP had the highest discriminating ability when used with
+CFS and C4.5 wrapper selection, with AUC 0.983 and 0.992 respectively. While
+this is not as high as the best result of 0.994, it is worth pointing out that
+CFS only selected 2 features and C4.5 wrapper, 4 features. This means that
+using only 2 features, we were still able to discriminate between the two LOS
+classes almost as well as if we used all of the features. Moreover, using
+only 6 out of 14 features and $k$-NN with 1 or 20 nearest neighbours, we can
+still achieve an accuracy that is less than 1\% worse than the best result
+of 98.23\%.
+
+These results are perhaps not surprising when we consider the characteristics
+of the features. The 1R classifier was able to achieve 92.88\% accuracy and
+0.858 AUC after ten-fold cross-validation with only a single feature. The best
+performing feature for the trauma data set using 1R only resulted in 72.01\%
+accuracy and 0.67 AUC at best. Using 1R at the 74.405\% accuracy threshold,
+we did not discard any features from the general hospital data set, but all
+features were discarded from the trauma data. This explains why feature
+selection was not effective at improving performance for the general hospital
+setting, but also why removing features did not drastically reduce the
+performance of classifiers -- each feature was individually predictive of the
+class, so removing certain features decreased accuracy or AUC but only by a
+small amount, since the other features were still able to predict the class
+to a high degree of accuracy. This is in contrast to the trauma data, where
+the removal of features improved performance and where most of the features
+had a predictive accuracy (indicated by the 1R feature selector) of
+\textit{less than} the Zero-R classifier.
+
+Out of all four automatic feature selection methods, the single feature that
+was deemed to be the most important in predicting LOS was \texttt{EpisodeType}.
+Although this was a general hospital-wide data set, the importance of this
+attribute indicates that condition-specific factors should be taken into
+account when predicting the LOS for any medical domain. Additionally, the
+\texttt{InpatientService} feature was also considered important in predicting
+the class, a finding that was also noted by \cite{Lucas2009}, although they
+considered the classification of LOS $\leq$ and > 3 days.
+
+\section{Comparison of Classifiers}
+\subsection{Trauma Data Set}
 
 \subsection{General Data Set}
 
-\section{Comparison of Classifiers}
-
-\section{Comparison of Feature Selection Methods}
-
 \section{Effect of Discretisation}
+
+\section{Summary}

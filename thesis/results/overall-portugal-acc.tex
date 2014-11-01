@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\label{tab:overall-pt-acc}
+\caption{Overall best accuracy of each classifier with a particular feature selection method on the general hospital data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
+\begin{tabular}{|l|cccccc|}
+\hline
+Classifier & None & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
+ZeroR & 75.64* & 75.64* & 75.64* & 75.64* & 75.64* & 75.64* \\
+1R & 92.88* & 92.88* & 92.88* & 92.88* & 92.88* & 92.88* \\
+NB & 93.66* & 93.06* & 93* & \textbf{\begin{tabular}[c]{@{}c@{}}93.72*\\ t=0.125\end{tabular}} & \begin{tabular}[c]{@{}c@{}}93.66*\\ t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}93.66*\\ t=74.405\end{tabular} \\
+DT & \textbf{98.23*} & 96.45* & 97.43* & \begin{tabular}[c]{@{}c@{}}98.23\\ t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}98.23\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}98.23\\ t=74.405\end{tabular} \\
+LR & \textbf{97.93*} & 96.46* & 97.19* & \begin{tabular}[c]{@{}c@{}}97.93\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.93\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.93\\ t=74.405\end{tabular} \\
+SVM & \textbf{98.01*} & 96.46* & 97.14* & \begin{tabular}[c]{@{}c@{}}98.01\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}98.01\\ t=0.001\end{tabular} & \begin{tabular}[c]{@{}c@{}}98.01\\ t=74.405\end{tabular} \\
+1NN & \begin{tabular}[c]{@{}c@{}}96.93\\ D\end{tabular} & 96.45* & 97.36* & \textbf{\begin{tabular}[c]{@{}c@{}}97.59*\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.57*\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.43*\\ t=76.905\end{tabular} \\
+20NN & 96.85 & 96.24* & 97.15* & \textbf{\begin{tabular}[c]{@{}c@{}}97.3\\ T=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.15\\ T=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}96.86\\ T=68.905\end{tabular} \\
+RD & 97.34 & 79.1* & 95.45* & \begin{tabular}[c]{@{}c@{}}97.3\\ t=0\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}97.36\\ t=0\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.34\\ t=68.905\end{tabular} \\
+K* & 97.36 & 92.94* & 96.53* & \textbf{\begin{tabular}[c]{@{}c@{}}97.46*\\ t=0.05\end{tabular}} & \begin{tabular}[c]{@{}c@{}}97.46*\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}97.36\\ t=74.405\end{tabular} \\
+MLP & 98.16 & 96.45* & 97.35* & \textbf{\begin{tabular}[c]{@{}c@{}}98.22*\\ t=0.05\end{tabular}} & \begin{tabular}[c]{@{}c@{}}98.22*\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}98.16\\ t=74.405\end{tabular} \\ \hline
+\end{tabular}
+\end{table}

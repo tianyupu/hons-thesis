@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\caption{Comparison of AUC between all feature selection methods for each classifier with and without discretisation, on the general hospital data set. The best AUC for each feature selection method is highlighted in bold, and the best AUC for each classifier is italicised.}
+\label{tab:features-pt-auc}
+\resizebox{!}{11cm}{%
+\begin{tabular}{|l|cccccc|}
+ \hline
+ & None & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
+ \textit{1R} &  &  &  &  &  &  \\
+ Discretised & 0.858 & 0.858 & 0.858 & 0.858 & 0.858 & 0.858 \\
+ Not discretised & 0.858 & 0.858 & 0.858 & 0.858 & 0.858 & 0.858 \\
+ \textit{NB} &  &  &  &  &  &  \\
+ Discretised & 0.979 & \textit{0.982} & 0.983 & \begin{tabular}[c]{@{}c@{}}0.981\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.979\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.979\\ t=74.405\end{tabular} \\
+ Not discretised & 0.976 & 0.982 & \textit{0.983} & \begin{tabular}[c]{@{}c@{}}0.981\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.979\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.979\\ t=74.405\end{tabular} \\
+ \textit{DT} &  &  &  &  &  &  \\
+ Discretised & 0.982 & 0.981 & 0.984 & \begin{tabular}[c]{@{}c@{}}0.983\\ t=0.2\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}0.989\\ t=0.001\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.989\\ t=74.405\end{tabular}} \\
+ Not discretised & \textit{0.989} & 0.981 & 0.984 & \textit{\begin{tabular}[c]{@{}c@{}}0.989\\ t=0.01\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.989\\ t=0.001\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.989\\ t=74.405\end{tabular}} \\
+ \textit{LR} &  &  &  &  &  &  \\
+ Discretised & \textit{\textbf{0.994}} & 0.981 & 0.99 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.05\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular}}} \\
+ Not discretised & \textit{\textbf{0.994}} & 0.981 & 0.99 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.05\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular}}} \\
+ \textit{SVM} &  &  &  &  &  &  \\
+ Discretised & \textit{\textbf{0.994}} & 0.971 & 0.981 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.01\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular}}} \\
+ Not discretised & \textit{\textbf{0.994}} & 0.971 & 0.981 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.01\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular}}} \\
+ \textit{1NN} &  &  &  &  &  &  \\
+ Discretised & 0.979 & 0.982 & \textit{0.991} & \textit{\begin{tabular}[c]{@{}c@{}}0.991\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.990\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.989\\ t=76.905\end{tabular} \\
+ Not discretised & 0.973 & 0.982 & \textit{0.991} & \textit{\begin{tabular}[c]{@{}c@{}}0.991\\ t=0.15\end{tabular}} & \scell{0.990\\t=0.1} & \begin{tabular}[c]{@{}c@{}}0.989\\ t=76.905\end{tabular} \\
+ \textit{20NN} &  &  &  &  &  &  \\
+ Discretised & \textit{0.992} & 0.981 & 0.991 & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=0.15\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=74.405\end{tabular}} \\
+ Not discretised & \textit{0.992} & 0.981 & 0.991 & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=0.15\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.992\\ t=74.405\end{tabular}} \\
+ \textit{RD} &  &  &  &  &  &  \\
+ Discretised & \textit{0.993} & 0.794 & 0.986 & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.005\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=74.405\end{tabular}} \\
+ Not discretised & \textit{0.993} & 0.794 & 0.986 & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.05\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.005\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=74.405\end{tabular}} \\
+ \textit{K*} &  &  &  &  &  &  \\
+ Discretised & 0.993 & 0.98 & 0.989 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.05\end{tabular}}} & \begin{tabular}[c]{@{}c@{}}0.993\\ t=74.405\end{tabular} \\
+ Not discretised & \textit{\textbf{0.994}} & 0.98 & 0.989 & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.1\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=0.05\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular}}} \\
+ \textit{MLP} &  &  &  &  &  &  \\
+ Discretised & 0.99 & \textbf{0.983} & \textbf{0.992} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.991\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.990\\ t=76.905\end{tabular} \\
+ Not discretised & 0.99 & \textbf{0.983} & \textbf{0.992} & \textit{\begin{tabular}[c]{@{}c@{}}0.993\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.991\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.990\\ t=76.905\end{tabular} \\ \hline
+ \end{tabular}
+}
+\end{table}
