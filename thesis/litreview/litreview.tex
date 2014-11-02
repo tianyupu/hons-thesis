@@ -1,4 +1,4 @@
-\chapter{Predicting the LOS: A Review} \label{chap:litreview}
+\chapter{Predicting the Length of Stay: A Review} \label{chap:litreview}
 
 \section{Introduction}
 Hospitals often have limited funding, and therefore managing and utilising
@@ -278,7 +278,8 @@ length of stay prediction was by Tu \& Guerriere, who used a neural network
 with the following structure \citep{Tu1993} to predict length of stay in
 intensive care following cardiac surgery:
 \begin{figure}[h]
-\caption{}
+\caption{A graphical representation of a neural network with one hidden layer,
+used by Tu \& Guerriere in predicting LOS.}
 \centering
 \includegraphics[scale=0.95]{images/a2-nn}
 \end{figure}
@@ -485,11 +486,12 @@ machines (SVMs), perhaps the most powerful classification algorithm in terms of
 predictive accuracy \citep{Bellazzi2008}. SVMs work on the principle that when
 the data is represented in a high enough dimensional space, a linear hyperplane
 can be found where the margin between two different records is as large as
-possible. In figure \ref{svm} from Yoo et al. \citep{Yoo2012}, hyperplane 2
-is the better plane because its margin is as large as possible. 
+possible. In Figure \ref{fig:svm-example} from Yoo et al. \citep{Yoo2012},
+hyperplane 2 is the better plane because its margin is as large as possible. 
 \begin{figure}[h]
-\label{svm}
-\caption{}
+\caption{An example of finding the largest margin hyperplane for a two-class
+support vector machine classifier.}
+\label{fig:svm-example}
 \centering
 \includegraphics[scale=1.05]{images/a2-svm}
 \end{figure}

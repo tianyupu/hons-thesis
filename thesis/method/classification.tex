@@ -1,4 +1,4 @@
-\chapter{LOS Classification Using Supervised Learning}
+\chapter{Length of Stay Classification Using Supervised Learning}
   \label{chap:classification}
 
 In order to use a supervised learning algorithm to identify objects with
@@ -31,20 +31,20 @@ In this
 chapter we describe each of the learning algorithms we used to model the
 relationship between the feature vectors and the LOS.
 
-\section{0R and 1R}
+\section{Zero-R and 1R}
 \label{sec:zeror}
-Short for ``0-rule'' and ``1-rule'' respectively, 0R and 1R are
-very simple classifiers. 0R uses no features to predict the class, and
+Short for ``0-rule'' and ``1-rule'' respectively, Zero-R and 1R are
+very simple classifiers. Zero-R uses no features to predict the class, and
 1R only uses one.
 
-Given a data set, the 0R classification algorithm will find the class that
+Given a data set, the Zero-R classification algorithm will find the class that
 occurs the most often, and predict this class for all new examples. For LOS
 classification, if one class in a data set was ``LOS $\leq$ 2 days'' and
 the other was
 ``LOS $>$ 2 days'', and feature vectors (which represent patients in this
-scenario) were more commonly labelled ``LOS $\leq$ 2 days'', then 0R will
+scenario) were more commonly labelled ``LOS $\leq$ 2 days'', then Zero-R will
 predict all unseen patients with ``LOS $\leq$ 2 days''.
-The prediction decision of 0R is very easy to understand,
+The prediction decision of Zero-R is very easy to understand,
 and its results also provide an apt baseline for evaluating the more
 sophisticated classifiers used in this work.
 
@@ -59,7 +59,7 @@ number of examples in the data set,
 is calculated for each rule that is generated
 in this way. The rule with the lowest error rate is then chosen as the 1-rule
 for this classifier,
-and if there is a tie, it is broken randomly. As with 0R, the prediction
+and if there is a tie, it is broken randomly. As with Zero-R, the prediction
 decision of 1R is transparent and it provides another baseline upon which
 more sophisticated classifiers can be evaluated. Studies have also found that
 1R performs quite well in terms of accuracy relative to other classifiers
@@ -82,9 +82,9 @@ An example of a rule is that \textit{age 0-20} most commonly
 has ``LOS $\leq$ 2 days''. For each of these rules, 1R will attempt to
 use only that rule to predict the LOS class for each example in the data set,
 noting down the error rate. 1R then chooses the feature that produces rules
-with the lowest total error rate.
+with the highest total accuracy.
 
-\section{Na\"{i}ve Bayes (NB)}
+\section{Na\"{i}ve Bayes}
 Unlike 1R, which considers only one feature in the feature vector, Na\"{i}ve
 Bayes (NB) classifiers allows all features to contribute equally to the
 classification decision. Such classifiers apply Bayes' theorem with the
@@ -139,9 +139,9 @@ feature belonging to a particular class:
 Despite the na\"{i}ve independence assumption of the NB classifier, it often
 works surprisingly well in practice and is relatively fast to train. We use it
 in our work both as a simple classifier in its own right, and also as a more
-sophisticated baseline to 0R and 1R.
+sophisticated baseline to Zero-R and 1R.
 
-\section{C4.5 Decision Tree (DT)}
+\section{C4.5 Decision Tree}
 \label{sec:c45}
 Decision trees (DT) can be specified recursively and are an example of a
 ``divide-and-conquer'' approach to learning. First, we choose a feature to
@@ -194,8 +194,8 @@ clinical environment. We will use the C4.5 tree induction algorithm, which is
 considered the state-of-the-art and handles different types of feature values
 as well as missing values.
 
-\section{Logistic Regression (LR)}
-Logistic regression is a regression technique used for when the dependent
+\section{Logistic Regression}
+Logistic regression (LR) is a regression technique used for when the dependent
 variable is dichotomous or two-valued, and thus it is a suitable candidate to
 use for our LOS classification problem.
 Previous work on trauma LOS prediction by
@@ -221,20 +221,20 @@ p &= \mathbb{P}(Class=\mathrm{LOS }\leq2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
 \end{equation*}
 
 Training the logistic regression classifier, then, is a matter of finding the
-$\beta_i$s that will maximise the likelihood (conditional probability of the
+$\beta_i$ that will maximise the likelihood (conditional probability of the
 data given the values for $\beta_i$) of the given data set. This is done using
-numerical methods, where estimates of the $\beta_i$s are chosen, the likelihood
+numerical methods, where estimates of the $\beta_i$ are chosen, the likelihood
 computed, and the $\beta_i$ are updated, and so on: this process is repeated
 until parameter estimates converge or do not change more than a given threshold
 value.
 
-To classify a feature vector $x = (x_1,x_2,\ldots,x_n)$, we substitute the
-$x_i$'s into the above equation in place of the $F_i$'s, which gives us a
+To classify a feature vector $\mathbf{x} = (x_1,x_2,\ldots,x_n)$, we substitute the
+$x_i$ into the above equation in place of the $F_i$, which gives us a
 probability. If this probability is above a particular threshold, then we
 classify the example as belonging to the class ``LOS $\leq$ 2 days'', otherwise
 it is classified as ``LOS $>$ 2 days''. Usually this threshold is 0.5.
 
-\section{Support Vector Machine (SVM)}
+\section{Support Vector Machine}
 Support vector machines (SVMs) are an example of a supervised learning algorithm
 capable of classifying training examples into two classes. They are one of the
 best algorithms in terms of predictive accuracy \cite{Bellazzi2008}. Despite
@@ -264,8 +264,8 @@ remove more and more of these ambiguous points from consideration when it
 cannot find a hyperplane until it finds a suitable one.
 
 \begin{figure}[h]
+\caption{An example of a 2-dimensional SVM.}
 \label{fig:svm}
-\caption{}
 \centering
 %\includegraphics[scale=0.95]{images/a2-nn}
 \end{figure}
@@ -306,7 +306,7 @@ To classify an instance $\mathbf{x_{new}}$, we simply find the sign of
 $\mathbf{w}\cdot\mathbf{x_{new}}+b$. This will tell us which one of the
 two classes the new example belongs to.
 
-\section{$k$-Nearest Neighbour ($k$-NN)}
+\section{$k$-Nearest Neighbour}
 In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
 and discuss some extensions which we use in our work. Additionally, we will
 describe our contribution, which is an extension of the distance metric for
@@ -344,12 +344,12 @@ set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is a
 scaling factor $t$ indicates how much to translate the range by. If $s=1$
 and $t=0$, then the range of normalised values will be in $[0,1]$.
 
-\subsection{Extensions}
+\subsection{Existing and Proposed Extensions}
 There have been many extensions proposed to the $k$-NN algorithm described
 above. These usually seek to find a more suitable distance metric for the
 problem domain at hand, or to reduce the storage requirements of the original
 $k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
-K* and our contribution, Ranked Distance.
+K* and our proposed distance function, Ranked Distance.
 
 \subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
 Cleary and Trigg developed K*, an instance-based classifier that uses entropy
@@ -383,7 +383,7 @@ P^*(C|a) = \sum_{b\in C} P^*(b|a)
 We use K* as a comparison to the basic NN algorithm and also as a comparison
 to $k$-NN with our distance function.
 
-\subsubsection{Ranked Distance}
+\subsubsection{Proposed Approach: Ranked Distance}
 \label{sec:rankeddist}
 \paragraph{Intuition}
 As we mentioned earlier, all features are considered equally in a $k$-NN
@@ -396,8 +396,8 @@ a modified distance function to take the relative importance of attributes into
 account. 
 
 \paragraph{Mathematical formulation}
-Given two instances $x = (x_1,x_2,\ldots,x_n)$ and $y = (y_1,y_2,\ldots,y_n)$,
-the distance between them is given by:
+Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
+$\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
 \begin{equation*}
 \mathrm{Distance} = \sum_{i=1}^n w_i |x_i-y_i|
 \end{equation*}
@@ -438,11 +438,11 @@ in the distance calculation.
 Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
 results in all features contributing equally to the distance calculation.
 
-\noindent We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}}$ and
-$f(\mathrm{Rank}) = n-\mathrm{Rank}$.
+\noindent We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
+$c$ varies from 0 to 1.
 \end{enumerate}
 
-\section{Multi-layer Perceptron (MLP)}
+\section{Multi-layer Perceptron}
 Multi-layer perceptrons (MLPs) are a generalised form of the
 \textit{perceptron}, first
 studied extensively by Rosenblatt \cite{Rosenblatt1962}. The original
@@ -494,8 +494,8 @@ that we can classify data which are not linearly separable. Figure
 \ref{fig:mlp} shows an MLP with one hidden layer.
 
 \begin{figure}[h]
+\caption{An MLP with one hidden layer.}
 \label{fig:mlp}
-\caption{}
 \centering
 %\includegraphics[scale=0.95]{images/a2-nn}
 \end{figure}
@@ -534,7 +534,7 @@ complex relationships between various medical attributes.
 \section{Summary}
 In this chapter we have outlined all of the learning algorithms that we will
 be evaluating with respect to our classification problem, from the simple
-0R and 1R to Na\"{i}ve Bayes, decision trees, logistic regression,
+Zero-R and 1R to Na\"{i}ve Bayes, decision trees, logistic regression,
 $k$-nearest neighbour (and extensions K* and Ranked Distance), to the more
 sophisticated support vector machines and multi-layer perceptrons. The reason
 for our inclusion of so many algorithms is two-fold. Firstly, many of

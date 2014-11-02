@@ -56,7 +56,7 @@ the class. Even if we are well-versed in the domain, evaluating a few different
 methods of automatic feature selection can give us new insight into the
 learning problem at hand. Here we will describe a few of the methods we used.
 
-\subsection{Correlation-based Feature Selection (CFS)}
+\subsection{Correlation-based Feature Selection}
 Correlation-based feature selection (CFS) is a method developed by Hall
 \cite{Hall2000} which looks for a subset of features that have high correlation
 with the class but low intercorrelation among the features. In this case,
@@ -84,7 +84,7 @@ correlate perfectly with the class and also with each other -- the numerator
 becomes $n$ and the denominator $\sqrt{n^2}$ if the subset has $n$ features.
 \todo{elaborate a bit more}
 
-\subsection{Pearson Correlation Coefficient (PCC)}
+\subsection{Pearson Correlation Coefficient}
 The Pearson correlation coefficient measures the degree of linear correlation
 between two variables. It is always in the range $[-1,1]$, where -1 is total
 negative correlation, 0 is no (linear) correlation, and 1 is total positive
@@ -104,7 +104,7 @@ rank all features according to their $r_i$ from highest to lowest, and select
 some subset of these either by selecting a fixed number, or selecting all
 features that have a correlation above a specified threshold.
 
-\subsection{Information Gain (IG)}
+\subsection{Information Gain}
 Recall from our discussion of decision trees in in Section \ref{sec:c45} that
 the information gain (IG) is used to decide which attribute to split on at each
 step of the tree. We can also measure the IG of each feature as follows.
@@ -141,7 +141,7 @@ We can also select a fixed number of features or all features above a certain
 1R accuracy threshold.
 
 \subsection{Wrapper-based Feature Selection}
-The feature selection methods described above (CFS, Pearson correlataion and
+The feature selection methods described above (CFS, Pearson correlation and
 1R) have been described as \textit{filter} approaches to attribute selection.
 Kohavi and John proposed another approach, the \textit{wrapper} approach:
 instead of performing feature selection independently of the learning
@@ -151,8 +151,9 @@ subsets of features \cite{Kohavi1997}. The difference between the filter
 and wrapper approaches is depicted in Figure \ref{fig:wrapper}.
 
 \begin{figure}[h]
+\caption{Filter and wrapper approaches to feature selection. Note the role of
+the learning algorithm in the wrapper method.}
 \label{fig:wrapper}
-\caption{}
 \centering
 %\includegraphics[scale=0.95]{images/a2-nn}
 \end{figure}

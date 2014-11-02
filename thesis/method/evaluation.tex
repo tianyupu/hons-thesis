@@ -89,7 +89,7 @@ Here we specify the technical details of our work: namely, the programming
 languages and software used in our entire procedure.
 
 \subsubsection{Repository}
-All code relating to this work, including the \LaTeX code for this document,
+All code relating to this work, including the \LaTeX\ code for this document,
 as well as results from our evaluations are available publicly online at
 \url{https://github.com/tianyupu/hons-thesis}. However, we were not able to
 obtain permission from neither the Royal Prince Alfred Hospital nor the
@@ -148,8 +148,7 @@ source was built using the 1.7 Java runtime. \todo{double check}
 \section{Performance Measures}
 There are many ways to evaluate the performance of learning algorithms. The
 two measures we will use are the \textit{accuracy} and the \textit{area under
-the receiver operating characteristic (ROC) curve}, commonly abbreviated AUC
-(for \textit{area under the curve}).
+the receiver operating characteristic (ROC) curve}, commonly abbreviated AUC.
 
 \subsection{Accuracy}
 The accuracy is a common measure of performance for classification algorithms,
@@ -172,7 +171,7 @@ where:
 \end{itemize}
 
 The accuracy can also be expressed more simply and intuitively as
-$\dfrac{\text{number of correct classifications}}{\text{total number of examples}}$
+the number of correct classifications out of the total number of examples,
 but the terms introduced above will be necessary to understand the
 AUC measure below.
 
@@ -180,7 +179,7 @@ We use accuracy as a performance measure as it is often used in previous work,
 which allows us to compare our work with others. Accuracy is also relatively
 straightforward to understand and interpret.
 
-\subsection{Area Under the Curve (AUC)}
+\subsection{Area Under the Curve}
 The area under the receiver operating characteristic (ROC) curve, often
 abbreviated AUC, is a measure of the ability of a binary classifier to
 distinguish between members of the two classes. Let the \textit{true
@@ -195,8 +194,10 @@ dividing the graph diagonally in half. Figure \ref{fig:sampleroc} shows
 two ROC curves on the same graph:
 
 \begin{figure}[h]
+\caption{Two ROC curves on the same graph. Note that the straight line from
+the bottom left corner to the top right corner indicates an AUC of 0.5. Curves
+which head towards the top left corner indicate increasing AUC.}
 \label{fig:sampleroc}
-\caption{}
 \centering
 %\includegraphics[scale=0.95]{images/a2-nn}
 \end{figure}
@@ -217,23 +218,23 @@ also used the AUC as the key measure by which they evaluated their model
 \cite{Dinh2013a}, and we would like our work to be comparable to theirs.
 
 \subsection{Confidence Intervals}
-In order to compare our results with that of Dinh et. al. \citep{Dinh2013a},
-we are especially interested in the mean cross-validated AUC of our
-classifiers as well as
-the upper and lower bounds of the 95\% confidence interval associated with this
-mean. The intervals are constructed using this argument:
+In order to compare our results with our baseline, the work of Dinh et. al.
+\citep{Dinh2013a}, as well as quantify the level of confidence we have in
+our performance measures, we constructed 95\% confidence intervals for the
+mean accuracy and AUC.
 
-For each classifier, let the population of all of its ten-fold cross-validated
-AUC scores be some random variable $X$, which follows a distribution whose
+For each classifier, let the population of all of its accuracy (or AUC)
+scores be some random variable $X$, which follows a distribution whose
 parameters (such as mean and standard deviation) we do not know.
-The Central Limit Theorem states that given a random
+The Central Limit Theorem from statistics states that given a random
 sample of $n$ items from $X$, namely $X_1,X_2,\dots,X_n$, the sample mean
 $\bar{x}$
 is approximately normally distributed when $n$ is at least roughly around 30
-and the $X_i$'s are independent and identically distributed.
-Consequently, we can construct a $(1-\alpha)$\% confidence interval for
+and the $X_i$'s are independent and identically distributed \cite{Phipps2001}.
+
+Consequently, we can construct a $(1-\alpha)$\% normal confidence interval for
 $\bar{x}$ -- where $\alpha$ is commonly called the
-\textit{significance level} -- as follows:
+\textit{significance level} -- as follows \cite{Wasserman2003}:
 \begin{equation*}
   \left[\bar{x} - z_{1-\alpha/2}\dfrac{s}{\sqrt{n}},
     \bar{x} + z_{1-\alpha/2}\dfrac{s}{\sqrt{n}}\right]
@@ -242,10 +243,13 @@ where $\bar{x}$ is the sample mean, $\alpha$ is the significance level
 (5\% or $0.05$ in our case), $s$ is the sample standard deviation, $n$
 is the number of observations in our sample, and $z_{1-\alpha/2}$ is the value
 of the standard normal variable $Z \sim \mathcal{N}(0,1)$ with cumulative
-probability $1-\alpha/2$. Since we have taken 40 independent samples of the
-ten-fold cross-validated AUC, the Central Limit Theorem holds and we can
-compute the mean and standard deviation of our 40 samples in order to
-construct a 95\% confidence interval for the mean AUC of each classifier.
+probability $1-\alpha/2$.
+
+These confidence intervals can be constructed 
+
+In our work, we repeated the ten-fold stratified cross-validation procedure
+ten times, leading to $n=100$ samples with which to obtain our confidence
+estimates.
 
 \subsection{Tests for Statistical Significance}
 To decide whether or not the difference in values of each measure between
