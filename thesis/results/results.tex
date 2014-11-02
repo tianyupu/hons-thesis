@@ -244,10 +244,103 @@ Although this was a general hospital-wide data set, the importance of this
 attribute indicates that condition-specific factors should be taken into
 account when predicting the LOS for any medical domain. Additionally, the
 \texttt{InpatientService} feature was also considered important in predicting
-the class, a finding that was also noted by \cite{Lucas2009}, although they
-considered the classification of LOS $\leq$ and > 3 days.
+the class, a finding that was also noted by Lucas et al. \cite{Lucas2009},
+although they considered the classification of LOS $\leq$ and $>$ 3 days.
 
 \section{Comparison of Classifiers}
+\begin{figure}[htbp]
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-nofs-acc.eps}
+\caption{1a}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-nofs-auc.eps}
+\caption{1b}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-dinh-acc.eps}
+\caption{1a}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-dinh-auc.eps}
+\caption{1b}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-expert-acc.eps}
+\caption{1a}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-expert-auc.eps}
+\caption{1b}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-cfs-acc.eps}
+\caption{1a}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-cfs-auc.eps}
+\caption{1b}
+\label{}
+\end{subfigure}
+\caption{plots of}
+\label{}
+\end{figure}
+
+\begin{figure}
+\ContinuedFloat
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-wrapper-acc.eps}
+\caption{1a}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-wrapper-auc.eps}
+\caption{1b}
+\label{}
+\end{subfigure}
+\caption{plots of}
+\label{}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{subfigure}{\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-corr.eps}
+\caption{}
+\label{}
+\end{subfigure}
+\caption{}
+\label{}
+\end{figure}
+
+\begin{figure}[htbp]
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-ig.eps}
+\caption{}
+\label{}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}[htbp]
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-oner.eps}
+\caption{}
+\label{}
+\end{subfigure}
+\end{figure}
+
 \subsection{Trauma Data Set}
 
 \subsection{General Data Set}

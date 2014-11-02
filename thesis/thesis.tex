@@ -24,6 +24,7 @@
 \usepackage{listings}
 \usepackage{longtable}
 \usepackage{multirow}
+\usepackage{pbox}
 \usepackage{pdflscape}
 \usepackage{pgf}
 \usepackage{pifont}
@@ -31,10 +32,12 @@
 \usepackage[english,rounding]{rccol}
 \usepackage{rotating}
 \usepackage{setspace}
+%\usepackage{subfigure}
 \usepackage{style/bib}
-\usepackage{subfigure}
+\usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{tipa}
+\usepackage{verbatim}
 \usepackage{wrapfig}
 \usepackage{xcolor}
 \usepackage{xspace}
@@ -53,6 +56,9 @@
 
 \newcommand{\todo}[1]{{\color{red} #1}}
 \newcommand{\sent}[1]{{\color{blue}\texttt{#1}\xspace}}
+
+\newcommand{\scell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
 
 %%%%%%%%%%%%

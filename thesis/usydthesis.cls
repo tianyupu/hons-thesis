@@ -24,6 +24,7 @@
 % for the University crest
 \usepackage{epsfig}
 \usepackage{graphicx}
+\usepackage{epstopdf}
 
 % cross-references
 \usepackage{style/prettyref}
