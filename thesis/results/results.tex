@@ -468,4 +468,20 @@ proposed Ranked Distance approach was able to improve the accuracy and AUC of
 the standard $k$-NN algorithm with the same number of neighbours, but we found
 that its performance suffered when used in conjunction with feature selection.
 
+In both the trauma and general hospital data sets, we were not able to
+consistently improve the accuracy and AUC of all
+classifiers with feature selection but we were able to sacrifice some
+predictive power in order to use a drastically reduced feature set: for trauma
+we found that K* with 11 features selected by a C4.5 wrapper performed only
+slightly worse in discriminating between the two LOS classes than logistic
+regression using 29 features, and for the hospital-wide data we achieved
+0.983 AUC using only 2 features out of 14 using the MLP, 0.011 less than the
+best result from logistic regression which required all 14 features. It is
+therefore important to consider the trade-off between predictive ability,
+speed and ease of understanding when making judgements about classifiers.
 
+Finally, we pointed out that although discretisation was able to improve
+classifier performance, this effect was less noticeable when more features
+were discarded from feature selection. Discretisation has not been used
+extensively in the LOS prediction literature, so our work will serve as a
+starting point for further investigation.
