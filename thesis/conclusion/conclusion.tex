@@ -1,5 +1,107 @@
 \chapter{Conclusions and Future Work} \label{chap:conclusion}
 
+In this thesis we conducted a systematic and empirical evaluation of a number
+of classification algorithms and feature selection methods, as well as the
+effect of discretisation, for predicting the length of hospital stay of trauma
+patients. In particular, we introduced a new distance function, Ranked
+Distance, for the standard
+$k$-nearest neighbours algorithm and compared its accuracy and AUC with ten
+other classifiers -- Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision tree, logistic
+regression, support vector machine, $k$-nearest neighbour with $k=1$ and 20,
+K* and multi-layer perceptron -- several of which (for example K*) have not
+been used in existing work on LOS prediction. We also investigated a variety of
+feature selection methods -- CFS, C4.5 wrapper, correlation coefficient,
+information gain, 1R and expert selection -- encompassing both manual and
+automatic methods, many of which have not been applied to the problem of LOS
+prediction. Our experiments were conducted on two data sets, one from the
+trauma ward of a Sydney hospital and the other a general hospital-wide data
+set from Portugal.
+
 \section{Conclusions}
+The best accuracy we achieved on the trauma data was 77.81\% with the $k$-NN
+classifier using 1 nearest neighbour and 11 out of 78 features. This represents
+an improvement over previous work done by Dinh et al. on the same data set,
+where they managed to achieve 75.06\% with logistic regression. More
+importantly, we were able to improve upon their AUC of 0.812 with a result of
+0.846, also using logistic regression but first discretising numeric features
+and reducing the feature set to 29 features.
+If we consider an even smaller number of features, then K*
+gives an AUC of 0.838 with 11 features selected by the C4.5 wrapper, which
+improves upon the result of Dinh et al. while using a little more than half
+the number of features. The drawback of $k$-NN and K* is that they require all
+examples to be stored and then searched during classification, which becomes
+storage- and computation-expensive as the data set increases in size.
+
+We were able to achieve substantially better results on the hospital-wide data,
+with a best accuracy of 98.23\% using a C4.5 decision tree and best AUC of
+0.994 achieved equally by logistic regression, SVM and K*. Like with the
+trauma data, we were also able to sacrifice a small amount of accuracy or AUC
+in order to use substantially less features: the MLP was able to achieve
+96.45\% accuracy and 0.983 AUC while using only 2 out of 14 features. In both
+these data sets, investigating feature selection was not only a way to
+improve the performance of our classifiers, but also allowed us to see the
+trade-off between the two (sometimes conflicting) objectives of increasing
+predictive power and reducing feature set size.
+
+An important contribution of our work is the use of several nearest neighbour
+algorithms for predicting the LOS class of a patient. We found that these
+techniques can achieve good accuracy and discriminating ability if a suitable
+set of features is found. In addition, we proposed a variation on the standard
+nearest neighbours distance function, in order to take the relative importance
+of each feature into account when determining the nearest neighbours of an
+example. We found that this achieved better results than the other nearest
+neighbour algorithms we evaluated, but only when most of the original feature
+set was used.
+
+Although we were able to improve on the work of Dinh et al. and confirm the
+importance of some features they and others found in predicting the LOS for
+trauma patients, we did not find a single classifier or feature selector
+that was superior to the others but instead observed different combinations
+giving better results than others in certain situations. This highlights the
+importance of understanding the data and investigating a range of classifiers
+and feature selection techniques when approaching any medical data mining
+problem, for which our work will become a catalogue.
+However, we did find that logistic regression tended to perform well
+on both data sets and across a number of feature selection methods, supporting
+its common use in deriving classifiers for various medical phenomena.
 
 \section{Future Work}
+In this thesis we have systematically evaluated a large number of combinations
+of classifiers and feature selection methods while also testing the effect of
+supervised discretisation, and have thus created a catalogue of examples of
+the application of data mining techniques to LOS classification. Our work on
+this topic has raised a number of avenues for futher research, one of which is
+to re-formulate the binary classification problem as a \textit{multi-class}
+classification problem. Our current categorisation of the LOS outcome is very
+crude: we can only classify patients into two categories. In order to better
+assist physicians in making decisions, we could split the classification into
+three or more classes, such as 1-3 days, 4-10 days and $>$11 days, and
+investigate how different classifiers and features perform for this slightly
+different problem.
+
+We mentioned in the discussion in Chapter \ref{chap:results} that we did not
+fine-tune the parameters of the classifiers that we evaluated. There is room
+for us to optimise these parameters and test whether these result in
+significant improvements in accuracy and AUC, and explore reasons why this
+did or did not help. We could also broaden our investigation by additionally
+using another data set, preferably from a different medical domain.
+
+For the $k$-NN algorithm using our Ranked Distance approach, we only considered
+one kind of weight assignment function, but it is not the only way to assign
+these weights. There is room to investigate other types of functions, as well
+as using weights obtained from another algorithm (such as logistic regression).
+In addition to assigning the weights, we have also only investigated one method
+of determining the relative importance of features: the correlation coefficient.
+This leaves much room to use other ways of ranking features, such as the
+information gain and 1R accuracy (which we have used in our work as feature
+selectors).
+
+Another area of potential future work is to investigate \textit{ensembles} of
+classifiers, which take the predictions of more than one classifier (of the
+same or different kind) and combine them to make a final prediction. There are
+numerous ways in which this can be done: an example is to take the majority
+class that is predicted as the final prediction for our ensemble. Ensembles
+have often been demonstrated to perform better than any single classifier,
+and there is a wide range of methods and combinations we could evaluate in
+order to assess their performance relative to the single classifiers we have
+used in our work.
