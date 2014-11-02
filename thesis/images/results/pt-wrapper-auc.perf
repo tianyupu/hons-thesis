@@ -1,0 +1,21 @@
+=cluster Zero-R 1R NB DT LR SVM 1NN 20NN RD K* MLP
+title=C4.5 Wrapper
+ylabel=AUC
+yformat=%3.2f
+font=Helvetica
+fontsz=12
+legendx=right
+legendy=center
+=norotate
+xlabel=
+=table
+Discretised 0.500 0.858 0.983 0.984 0.990 0.981 0.991 0.991 0.986 0.989 0.992
+NotDiscretised  0.500 0.858 0.983 0.984 0.990 0.981 0.991 0.991 0.986 0.989 0.992
+
+=yerrorbars
+Discretised 0.0000  0.0000  0.0001  0.0001  0.0000  0.0002  0.0001  0.0002  0.0002  0.0001  0.0001
+NotDiscretised  0.0000  0.0000  0.0001  0.0001  0.0000  0.0002  0.0001  0.0000  0.0000  0.0001  0.0001
+min=0
+max=1
+=noupperright
+=nolegoutline

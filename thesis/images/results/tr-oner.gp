@@ -37,7 +37,7 @@ set multiplot
 set origin 0, 0
 set size 0.5, 1
 set xrange [66.905:78]
-set yrange [60:80]
+set yrange [55:80]
 set format y "%g%%"
 set xlabel '1R Accuracy Threshold'
 set ylabel 'Accuracy'

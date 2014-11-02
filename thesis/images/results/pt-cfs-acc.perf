@@ -1,0 +1,21 @@
+=cluster Zero-R 1R NB DT LR SVM 1NN 20NN RD K* MLP
+title=CFS
+ylabel=Accuracy (%)
+font=Helvetica
+fontsz=12
+=nolegend
+legendx=right
+legendy=center
+=norotate
+xlabel=
+=table
+Discretised 75.64%  92.88%  93.06%  96.45%  96.46%  96.46%  96.45%  96.24%  79.10%  92.94%  96.45%
+NotDiscretised  75.64%  92.88%  93.06%  96.45%  96.46%  96.46%  96.45%  96.24%  79.10%  92.94%  96.45%
+
+=yerrorbars
+Discretised 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.01%
+NotDiscretised  0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.00% 0.01%
+min=0
+max=100
+=noupperright
+=nolegoutline

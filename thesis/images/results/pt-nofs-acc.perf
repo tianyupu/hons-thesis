@@ -1,0 +1,21 @@
+=cluster Zero-R 1R NB DT LR SVM 1NN 20NN RD K* MLP
+title=No Feature Selection
+ylabel=Accuracy (%)
+font=Helvetica
+fontsz=12
+=nolegend
+legendx=right
+legendy=center
+=norotate
+xlabel=
+=table
+Discretised 75.64%  92.88%  93.66%  97.74%  97.83%  97.96%  96.93%  96.53%  97.27%  97.22%  98.14%
+NotDiscretised  75.64%  92.88%  93.66%  98.23%  97.93%  98.01%  96.77%  96.85%  97.34%  97.36%  98.16%
+
+=yerrorbars
+Discretised 0.00% 0.00% 0.00% 0.01% 0.01% 0.01% 0.01% 0.01% 0.01% 0.01% 0.03%
+NotDiscretised  0.00% 0.00% 0.00% 0.01% 0.01% 0.01% 0.02% 0.02% 0.02% 0.01% 0.02%
+min=0
+max=100
+=noupperright
+=nolegoutline

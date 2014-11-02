@@ -32,12 +32,15 @@ logistic regression. However, this was using the discretised data set with 29
 features selected by correlation coefficient at a threshold of 0.1.
 Although our logistic regression classifier exhibited an AUC improvement of
 0.034, it required roughly 50\% more features than the baseline of 19 features.
+If we are willing to sacrifice a little discriminating power, we are able to
+achieve 0.838 AUC with only 11 features using the K* classifier.
 
 Although $k$-NN with 1 nearest neighbour had the highest accuracy (77.81\%) out
 of all combinations of classifiers and feature selection methods for this data
 set, we should mention that logistic regression came a very close second with
 77.7\%, outperforming more sophisticated approaches such as SVM and MLP. It
-also achieved a higher AUC, and all while being faster to train.
+also achieved a higher AUC, and has the added advantages of being faster to
+train, mathematically well-understood and widely applied in medicine.
 
 We would also like to highlight the importance of discretisation on improving
 performance: in Tables \ref{tab:overall-tr-acc} and
@@ -58,7 +61,11 @@ and K*, with an AUC of 0.994. Logistic regression and K* achieved this AUC with
 an information gain feature selector with threshold 0.05, and SVM with a
 correlation coefficient selector at a 0.1 threshold. We consider logistic
 regression and K* to be superior to the SVM in this case because they achieved
-the same AUC with only 8 features, whereas the SVM required 10.
+the same AUC with only 8 features, whereas the SVM required 10. Being able to
+maintain predictive accuracy and the ability to discriminate with less features
+means that the classifier is easier to understand. More importantly, we are
+able to make a decision with less complete information, a characteristic
+which is particularly useful in medicine.
 
 \input{results/overall-portugal-acc.tex}
 \input{results/overall-portugal-auc.tex}
@@ -84,7 +91,7 @@ not help predict the class (since it will be the same value for both classes)
 and is simply noise. Classifiers which used a reduced set of features that
 excluded \texttt{prev\_adm} would have the same performance regardless of
 discretisation because all other features were nominal and would not have been
-affected by discretisation.
+affected by discretising.
 
 \section{Comparison of Feature Selection Methods}
 \subsection{Trauma Data Set}
@@ -154,7 +161,27 @@ that \texttt{iss}, \texttt{age} and \texttt{operation} were important
 distinguishers of LOS $\leq$ or $>$ 2 days \cite{Dinh2013a}. We also
 confirm the findings of Gabbe et al. who found that \texttt{age},
 \texttt{iss} and \texttt{bp} were useful in predicting the length of
-hospital stay of blunt trauma patients \cite{Gabbe2005}.
+hospital stay of blunt trauma patients \cite{Gabbe2005}. Our feature
+selection results also
+support the findings of McGonigal et al. \cite{McGonigal1993} who used
+\texttt{age} and
+\texttt{iss} to predict the probability of survival for trauma patients, a
+related problem in the same medical domain.
+Our observations suggest the use of feature selection not only as a
+pre-processing step to improve the accuracy or AUC of a classifier, but also
+as a tool used separately that could help extract insights from medical data.
+
+It is interesting to note that feature selection improved the performance of
+some classifiers and hindered the performance of others, when compared to the
+same classifier without feature selection. Both 1NN and K* showed improved
+accuracy and AUC as the threshold for correlation, information gain and 1R
+accuracy was increased -- observe the dotted and solid lines corresponding
+to these classifiers in Figure \ref{fig:tr-threshold} sloping upward initially
+-- but this again decreased when a certain threshold was passed. C4.5 also
+benefitted from feature reduction, which reaffirms what we expect. On the other
+hand, correlation, information gain and 1R did not improve the classification
+accuracy or AUC of logistic regression or SVM, and produced mixed results for
+the other classifiers.
 
 Although we were able to achieve higher accuracy and AUC than the baseline,
 our best approaches also have a number of limitations which need to be pointed
@@ -222,16 +249,20 @@ still achieve an accuracy that is less than 1\% worse than the best result
 of 98.23\%.
 
 These results are perhaps not surprising when we consider the characteristics
-of the features. The 1R classifier was able to achieve 92.88\% accuracy and
-0.858 AUC after ten-fold cross-validation with only a single feature. The best
+of the features. For this data set, the 1R classifier was able to achieve
+92.88\% accuracy and
+0.858 AUC after ten-fold cross-validation with only a single feature. On the
+other hand, the best
 performing feature for the trauma data set using 1R only resulted in 72.01\%
 accuracy and 0.67 AUC at best. Using 1R at the 74.405\% accuracy threshold,
 we did not discard any features from the general hospital data set, but all
-features were discarded from the trauma data. This explains why feature
+features were discarded from the trauma data. This shows that the predictive
+ability of the features in the general hospital data are much higher than
+that of the trauma features. This explains why feature
 selection was not effective at improving performance for the general hospital
-setting, but also why removing features did not drastically reduce the
-performance of classifiers -- each feature was individually predictive of the
-class, so removing certain features decreased accuracy or AUC but only by a
+setting, but also did not drastically reduce performance: each feature
+was individually predictive of the
+class so removing certain features decreased accuracy or AUC but only by a
 small amount, since the other features were still able to predict the class
 to a high degree of accuracy. This is in contrast to the trauma data, where
 the removal of features improved performance and where most of the features
@@ -248,103 +279,193 @@ the class, a finding that was also noted by Lucas et al. \cite{Lucas2009},
 although they considered the classification of LOS $\leq$ and $>$ 3 days.
 
 \section{Comparison of Classifiers}
-\begin{figure}[htbp]
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-nofs-acc.eps}
-\caption{1a}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-nofs-auc.eps}
-\caption{1b}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-dinh-acc.eps}
-\caption{1a}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-dinh-auc.eps}
-\caption{1b}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-expert-acc.eps}
-\caption{1a}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-expert-auc.eps}
-\caption{1b}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-cfs-acc.eps}
-\caption{1a}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-cfs-auc.eps}
-\caption{1b}
-\label{}
-\end{subfigure}
-\caption{plots of}
-\label{}
-\end{figure}
-
-\begin{figure}
-\ContinuedFloat
-
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-wrapper-acc.eps}
-\caption{1a}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-wrapper-auc.eps}
-\caption{1b}
-\label{}
-\end{subfigure}
-\caption{plots of}
-\label{}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{subfigure}{\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-corr.eps}
-\caption{}
-\label{}
-\end{subfigure}
-\caption{}
-\label{}
-\end{figure}
-
-\begin{figure}[htbp]
-\ContinuedFloat
-\begin{subfigure}{\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-ig.eps}
-\caption{}
-\label{}
-\end{subfigure}
-\end{figure}
-
-\begin{figure}[htbp]
-\ContinuedFloat
-\begin{subfigure}{\textwidth}
-\includegraphics[width=\textwidth]{images/results/tr-oner.eps}
-\caption{}
-\label{}
-\end{subfigure}
-\end{figure}
-
 \subsection{Trauma Data Set}
+Figures \ref{fig:tr-nothreshold} and \ref{fig:tr-threshold} compare the
+accuracy and AUC of all classifiers under each feature selection method for
+the trauma data set.
+The methods that do not select features based upon a specified threshold
+(manual methods as well as CFS, C4.5 wrapper and no feature selection)
+are graphed in Figure \ref{fig:tr-nothreshold}, and the methods that select
+based upon thresholds (correlation, information gain and 1R) are graphed
+in Figure \ref{fig:tr-threshold}, showing varying accuracy and AUC as the
+threshold is changed.
+
+\input{results/tr-plots.tex}
+
+In terms of classification accuracy, we did not find a lot of variation
+between all classifiers, with Zero-R producing 66.91\% accuracy and 77.81\%
+being the best we achieved -- an improvement of just over 10\%. The AUC of
+the 11 classifiers we tested ranged from 0.498 with Zero-R to 0.846 with
+logistic regression. Logistic regression, the \textit{de facto} method
+used in LOS classification, performed consistently better than the others
+across all feature
+selection methods, but only when the feature set was not heavily reduced by
+the feature selector: in these cases, such as the results from Figure
+\ref{fig:tr-nothreshold-cfs-acc} showing classifier performance with features
+selected by CFS, C4.5 decision trees and nearest
+neighbour methods have higher accuracy than logistic regression. This is also
+apparent from the graphs in Figure \ref{fig:tr-threshold}: for all three
+feature selection methods, as we increase the threshold, logistic regression
+drops in performance after the initial few thresholds and is outperformed by
+C4.5 and the various nearest neighbour classifiers ($k$-NN with 1 and 20
+neighbours, Ranked Distance and K*). This is true for both accuracy and AUC.
+
+We found that in most cases, the SVM did not achieve a higher accuracy or
+AUC than logistic regression with the same features even though SVMs are
+considered the state-of-the-art in classification algorithms. Additionally,
+as the feature set was reduced, the discriminating ability of SVMs (as
+indicated by the AUC) decreased more than their accuracy: this is particularly
+noticeable in Figure \ref{fig:tr-threshold-oner}, where the AUC of the SVM
+drops sharply to below the AUC of even the 1R classifier at the 67.905\%
+threshold, where there are
+only 4 features. SVMs have not been used in a LOS classification problem like
+ours, so there will need to be further work carried out in order to assess the
+suitability of using SVMs to classify patient LOS.
+
+Although the MLP has been investigated in studies attempting to identify
+factors associated with longer LOS or mortality for trauma patients
+\cite{Hunter2000,McGonigal1993}, leading to improved results with the neural
+network, we did not see the MLP outperform all other classifiers with respect
+to accuracy or AUC for any feature selection method for this data set. In fact,
+the MLP often performed no better than any of the nearest neighbour
+classifiers, which use a straightfoward mechanism of classifying unseen
+examples. Even if the MLP had managed to achieve superior accuracy or AUC, the
+``black box'' nature of its prediction decisions are a barrier for their
+widespread use in medical decision-making.
+
+Nearest neighbour approaches appear to have performed well on this data set in
+both accuracy and AUC, especially in comparison to more sophisticated
+classifiers and when the feature set is significantly reduced. From the graphs
+in Figure \ref{fig:tr-threshold}, we can see that all the nearest neighbours
+approaches perform similarly when the number of features is decreased, but our
+Ranked Distance approach performs better than the other NN algorithms. This
+improvement is not apparent at smaller feature sets, where using the standard
+$k$-NN algorithm with 1 or 20 neighbours performs slightly better.
+The performance of NN we observed in our results is
+an interesting finding because nearest neighbours have not been commonly
+applied in predicting the LOS, but there is intuitive appeal in the
+case-by-case nature of how these algorithms classify new examples that should
+be explored further. Unlike MLPs and SVMs, prediction decision of nearest
+neighbours are more transparent and understandable. However, the major drawback
+of NN algorithms is their storage requirement and the computational time
+required to search for the nearest neighbours to make the classification.
+
+There is a limitation to our findings that needs to be noted: we did not
+attempt to tune the parameters of the classifiers in order to find the ones
+that resulted in the best performance, so our statements are based on the
+results of the default parameters of each classifier.
+MLPs in particular are sensitive to
+the network architecture, so it is likely that its accuracy and AUC could be
+improved if the parameters were selected to optimise its performance on this
+data set.
 
 \subsection{General Data Set}
+In Figures \ref{fig:pt-nothreshold} and \ref{fig:pt-threshold}, we compare the
+performance of the classifiers we used on the general hospital data set. In
+contrast to the trauma data, we were able to achieve very high accuracy and
+AUC on this data set using the exact same classifiers and feature selection
+methods. Instead of only a 10\% improvement from Zero-R by the best classifier
+in the trauma data, we were able to achieve an accuracy of 98.23\%, which is
+an increase of over 20\% from the Zero-R accuracy on this data set of 75.64\%.
+Additionally, we also managed to observe very high ($>0.97$) AUC figures for
+all classifiers except Zero-R and 1R.
+
+\input{results/pt-plots.tex}
+
+Logistic regression and the SVM performed equal best in discriminating ability,
+along with K* with an AUC of 0.994. We consider the performance of K* to be
+superior because it was able to achieve this with 8 features out of 14, and
+additionally it does not require any optimising of its parameters.
+The AUC result of both logistic regression and the SVM were achieved with all
+14 features. Although this is not a large number of features, simplifying the
+inputs to a classifier is beneficial because it reduces the time needed for
+training and classifying new examples. However, as indicated by the graphs in
+Figure \ref{fig:pt-threshold} of AUC against threshold, and the bar charts in
+Figure \ref{fig:pt-nothreshold}, the AUC of all classifiers except Zero-R and
+1R was very close, around 0.98-0.99.
+
+Notably, the MLP performed better than logistic regression on this data set
+than on the trauma data, achieving better AUC with CFS and C4.5 wrapper feature
+selection and better accuracy over all feature selection methods. This is a
+surprising result as CFS and C4.5 wrapper select only 2 and 4 features
+respectively. However, the major drawback of training the MLP with this data
+set was the amount of time needed for one run of ten-fold cross-validation.
+Even with only 14 features, the classifier required several hours to train.
+Although we did not attempt to quantify the exact training time, it was by far
+the slowest learning algorithm.
+This is because the data set contained over 17000 training examples, which have
+to be processed several times by the MLP until all of the weights between its
+connections do not change more than a certain threshold.
+
+Notice that in Figure \ref{fig:pt-threshold-corr}, both the accuracy and AUC
+of Ranked Distance drop much more than for the other classifiers. This is at
+a correlation coefficient threshold of 0.2, which reduces the feature set to
+4 features. We noted in the discussion on classifiers for the trauma data set
+that Ranked Distance performed worse for smaller feature sets than for larger
+ones, and this is another example of this phenomenon. Recall that in Ranked
+Distance, features are first ranked according to some similarity metric (we
+have used the correlation coefficient), and then assigned a weight according
+to their rank. The function we have used assigns rapidly decaying weights to
+the features, which results in greater importance being placed on a few of
+the features with the highest rank. Further work needs to be carried out to
+investigate the cause of the poor performance on smaller feature sets, but
+it is not altogether surprising: Ranked Distance performs best by using the
+weighted distance contributions of all features, and by significantly reducing
+their number we can expect to sharply reduce its ability to differentiate
+between neighbours. There is also scope for investigating other weight
+assignment functions which would work better in reduced-feature situations.
 
 \section{Effect of Discretisation}
+We touched briefly upon the effect of discretisation on the performance of the
+classifiers used, but we would like to point out a few other things not
+mentioned earlier. Firstly,
+although discretisation improved the best accuracy and AUC for many
+classifiers trained on the trauma data, this was only when using a larger
+proportion of features: note the dotted lines in
+Figures \ref{fig:tr-threshold-corr}, \ref{fig:tr-threshold-ig} and
+\ref{fig:tr-threshold-oner} are above their solid line counterparts of the
+same colour on the very left of the graph (where no features have been
+discarded), but as we increase the threshold and more features are discarded,
+the classifier using the discretised data set does not always perform better.
+Notably, discretisation improves the accuracy and AUC of nearest neighbour
+classifiers when few features have been removed, but as the number of features
+decreases, these approaches perform worse with discretised features.
+
+Although the results from discretisation with varying thresholds of the
+correlation, information gain and 1R feature selectors are mixed, the graphs
+in Figure \ref{fig:tr-nothreshold} show improvements in AUC and accuracy for
+most classifiers in most of the situations, and show that discretisation is a
+viable pre-processing technique for data mining problem. This improvement is
+not present in the general hospital data set due to the nature of the data set:
+as mentioned earlier, only one feature is discretised, which transforms it into
+a single value. This single value does not help the classifier distinguish
+between classes, and hence degrades performance.
+
+Discretisation consistently improved the accuracy and AUC of the Na\"{i}ve
+Bayes classifier, which suggests that it is more suitable for the data than the
+classifier's assumption that continuous-valued features follow a normal
+distribution.
+
+Supervised discretisation such as the one we have used is very specific to the
+data set, so it is difficult to draw general conclusions that will apply to
+other learning problems. However, we have not yet seen this technique being
+used in LOS prediction problems, and we believe it is worth investigating
+when approaching a new learning problem.
 
 \section{Summary}
+In this section we have presented and discussed the main findings of our
+work, examining the overall picture, and then detailing comparisons between
+classifiers and feature selection methods in detail before concluding with a
+few remarks on discretisation.
+
+We found that irrespective of discretisation or feature selection, logistic
+regression still performed better than other learning algorithms, which
+reaffirms its use as the \textit{de facto} classifier in predictive medicine.
+However, we were also able to achieve results that were almost as good using
+nearest neighbour approaches combined with feature selection techniques,
+neither of which have been investigated thoroughly in previous work. Our
+proposed Ranked Distance approach was able to improve the accuracy and AUC of
+the standard $k$-NN algorithm with the same number of neighbours, but we found
+that its performance suffered when used in conjunction with feature selection.
+
+
