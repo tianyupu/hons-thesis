@@ -250,6 +250,11 @@ in each class. This distance is called the \textit{margin}, and the intuition
 is that maximising it will give us the greatest possible separation between the
 classes -- the classifier comes no closer to either class than it needs to.
 This gives the SVM the best generalising ability to classify new examples.
+\begin{figure}[h]
+\includegraphics[scale=0.95]{images/method/svm-example.eps}
+\caption{An example of a 2-dimensional SVM.}
+\label{fig:svm}
+\end{figure}
 
 Figure \ref{fig:svm} shows an example of a two-dimensional feature space, with
 two classes of points (black and white). We can see the hyperplane, in this
@@ -262,13 +267,6 @@ Note that the points closest to the margin are those that are most likely to be
 ambiguous when the data cannot be cleanly separated. The SVM will progressively
 remove more and more of these ambiguous points from consideration when it
 cannot find a hyperplane until it finds a suitable one.
-
-\begin{figure}[h]
-\caption{An example of a 2-dimensional SVM.}
-\label{fig:svm}
-\centering
-%\includegraphics[scale=0.95]{images/a2-nn}
-\end{figure}
 
 Instead of removing points from consideration by the SVM, we can also specify
 a \textit{kernel function}, which transforms the original feature space into
