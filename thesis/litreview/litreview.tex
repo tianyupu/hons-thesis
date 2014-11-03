@@ -75,9 +75,9 @@ technique for prediction in the medical domain \citep{Tu1996}, and especially
 in the trauma data analysis \citep{Gabbe2005}. A series of
 predictor (independent) variables (or features) determine the probability of a
 particular outcome by an equation of the form
-\begin{equation}
+\begin{equation*}
 \mathrm{log}\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1X_1 + \beta_2X_2 + \dots + \beta_nX_n
-\end{equation}
+\end{equation*}
 where $p$ is the probability of the desired outcome, $\beta_i$ are coefficients
 associated with each variable, and $X_i$ are the values of the independent
 variables \citep{Hosmer1989}. A stepwise selection algorithm is often used to
@@ -86,7 +86,7 @@ different algorithms produce different models which are then compared against
 one another to find the best model. Usually, a standard maximum-likelihood
 procedure is followed in order to obtain values for the $\beta_i$'s, and models
 can be tested using measures such as the area under the receiver operating
-characteristic (ROC) curve (AUC) and the Hosmer-Lemeshow statistic.
+characteristic (ROC) curve (AUC or AUROC) and the Hosmer-Lemeshow statistic.
 
 This is the method that Gabbe et al. used in their study to identify factors
 that contributed to trauma patient length of stay and use these factors to
@@ -169,9 +169,9 @@ clinical process, rather than simply at admission. By making predictions
 at the admission, acute, and post-treatment stages, they were able to decrease
 their predictions' mean absolute error (MAE) from 9.532 days at admission, to
 6.314 days at post-treatment, where MAE is defined as
-\begin{equation}
-MAE = \frac{\sum_{i=1}^n |\mathrm{PredictedLOS}_i-\mathrm{ActualLOS}_i|}{n}
-\end{equation}
+\begin{equation*}
+MAE = \dfrac{1}{n}\sum_{i=1}^n |\mathrm{PredictedLOS}_i-\mathrm{ActualLOS}_i|
+\end{equation*}
 and PredictedLOS$_i$ is the predicted length of stay for the $i$-th instance,
 ActualLOS$_i$ is the actual length of stay for the $i$-th instance, and $n$
 is the total number of instances. Their approach was very much appropriate to
@@ -189,7 +189,8 @@ There have been a number of studies attempting to model the length of stay
 using discrete-time Markov processes. Kapadia et al. constructed a transition
 probability matrix using 4 states for a pediatric intensive care unit (ICU)
 application \citep{Kapadia2000}:
-\begin{center}
+
+\begin{table}[h]
 \begin{tabular}{l|llll}
 & Low & Medium & High & Exit \\
 \hline
@@ -198,7 +199,8 @@ Medium & 0.137 & 0.513 & 0.096 & 0.254 \\
 High & 0.086 & 0.364 & 0.379 & 0.171 \\
 Exit & 0 & 0 & 0 & 1 \\
 \end{tabular}
-\end{center}
+\caption{}
+\end{table}
 From the matrix, we can say that the probability of transitioning from state
 `Medium' to state `Low' is 0.137. Note that each row sums to 1, and that `Exit'
 is an absorbing state: once entered, one can only re-enter the `Exit' state
@@ -278,10 +280,10 @@ length of stay prediction was by Tu \& Guerriere, who used a neural network
 with the following structure \citep{Tu1993} to predict length of stay in
 intensive care following cardiac surgery:
 \begin{figure}[h]
-\caption{A graphical representation of a neural network with one hidden layer,
-used by Tu \& Guerriere in predicting LOS.}
 \centering
 \includegraphics[scale=0.95]{images/a2-nn}
+\caption{A graphical representation of a neural network with one hidden layer,
+used by Tu \& Guerriere in predicting LOS.}
 \end{figure}
 
 There are 15 nodes (or ``neurons'') in the input layer, one for each of the
@@ -489,11 +491,11 @@ can be found where the margin between two different records is as large as
 possible. In Figure \ref{fig:svm-example} from Yoo et al. \citep{Yoo2012},
 hyperplane 2 is the better plane because its margin is as large as possible. 
 \begin{figure}[h]
-\caption{An example of finding the largest margin hyperplane for a two-class
-support vector machine classifier.}
 \label{fig:svm-example}
 \centering
 \includegraphics[scale=1.05]{images/a2-svm}
+\caption{An example of finding the largest margin hyperplane for a two-class
+support vector machine classifier.}
 \end{figure}
 
 However, because SVMs are typically
