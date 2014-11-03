@@ -183,7 +183,7 @@ attribute, and calculate the information at the node given the split. We do
 this for each attribute, and compute the \textit{information gain} from
 splitting on that attribute:
 \begin{equation*}
-\mathrm{gain}(feature) = \mathrm{info}(\text{child node}) - \mathrm{info}(\text{parent node})
+\mathrm{gain}(feature) = \mathrm{info}(\text{split}) - \mathrm{info}(\text{parent})
 \end{equation*}
 The feature that is chosen is therefore the one with the highest information
 gain.
@@ -252,7 +252,8 @@ classes -- the classifier comes no closer to either class than it needs to.
 This gives the SVM the best generalising ability to classify new examples.
 \begin{figure}[h]
 \includegraphics{images/method/svm-example.pdf}
-\caption{An example of a 2-dimensional SVM.}
+\caption{An example of a 2-dimensional SVM. The solid line indicates the
+maximum margin hyperplane.}
 \label{fig:svm}
 \end{figure}
 
@@ -303,142 +304,6 @@ $\mathbf{w}$ and $b$.
 To classify an instance $\mathbf{x_{new}}$, we simply find the sign of
 $\mathbf{w}\cdot\mathbf{x_{new}}+b$. This will tell us which one of the
 two classes the new example belongs to.
-
-\section{$k$-Nearest Neighbour}
-In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
-and discuss some extensions which we use in our work. Additionally, we will
-describe our contribution, which is an extension of the distance metric for
-finding the nearest neighbours.
-
-\subsection{Basic Algorithm}
-The $k$-nearest neighbour classifier is an example of an
-\textit{instance-based} learning algorithm. This is because it does not, unlike
-the other classifiers described in this section, attempt to deduce or
-generalise a relationship between the features and the class: it simply stores
-all training examples and classifies an unseen example by finding the $k$
-``nearest'' examples (or \textit{instances}) and assigning the majority class
-to the new example. In the simplest form of the algorithm, $k$ is chosen to be
-1 and the Euclidean distance is used to measure the closeness of neighbours:
-\begin{equation*}
-\mathrm{Distance} = \sqrt{(x_1-y_1)^2 + (x_2-y_2)^2 + \ldots + (x_n-y_n)^2}
-\end{equation*}
-where $x_i,y_i$ are the values of the $i$-th feature for two different feature
-vectors (or instances).
-
-Like the Na\"{i}ve Bayes classifier, $k$-NN allows all features to be taken
-into account equally when classifying a new example. However, since feature
-values often span different ranges and units of measurement, a particularly
-large range of values for a feature would contribute much more to the distance
-than another feature that spans a lower set of values.
-To avoid this, it is important to \textit{normalise} the
-values of each numeric feature before using $k$-NN: for each feature $i$, we
-calculate the normalised value of the feature for each training example. This
-is done using the following relationship:
-\begin{equation*}
-a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
-\end{equation*}
-where $a_i$ is the normalised value, $v_i$ is the actual value in the data
-set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is a
-scaling factor $t$ indicates how much to translate the range by. If $s=1$
-and $t=0$, then the range of normalised values will be in $[0,1]$.
-
-\subsection{Existing and Proposed Extensions}
-There have been many extensions proposed to the $k$-NN algorithm described
-above. These usually seek to find a more suitable distance metric for the
-problem domain at hand, or to reduce the storage requirements of the original
-$k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
-K* and our proposed distance function, Ranked Distance.
-
-\subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
-Cleary and Trigg developed K*, an instance-based classifier that uses entropy
-to measure the distances between instances \cite{Cleary1995}. They consider
-the distance between two instances to be the complexity of transforming one
-into another. Define a sequence of transformations on an instance:
-\begin{equation*}
-\bar{t}(a) = t_n(t_{n-1}(\ldots t_1(a)\ldots)), \bar{t} \in T
-\end{equation*}
-where $\bar{t} = t_1,\ldots,t_n$. We can define a probability function $p$
-that gives the probabilities of these transformations occurring, and then we
-can define a probability function that gives the probabilities of all paths
-(transformations) from example $a$ to $b$:
-\begin{equation*}
-P^*(b|a) = \sum_{\bar{t}\in T:\bar{t}(a)=b} p(\bar{t})
-\end{equation*}
-Within this framework, we can define transformations for both real-valued and
-categorical features, which allows K* to work with all types of features.
-The K* function is then defined as:
-\begin{equation*}
-K^*(b|a) = -\mathrm{log}_2P^*(b|a)
-\end{equation*}
-
-To calculate the probability of an instance $a$ being in a class $C$, we sum
-the probabilities from $a$ to each instance of $C$, and repeat for each class.
-The predicted class will be the one with the highest probability:
-\begin{equation*}
-P^*(C|a) = \sum_{b\in C} P^*(b|a)
-\end{equation*}
-
-We use K* as a comparison to the basic NN algorithm and also as a comparison
-to $k$-NN with our distance function.
-
-\subsubsection{Proposed Approach: Ranked Distance}
-\label{sec:rankeddist}
-\paragraph{Intuition}
-As we mentioned earlier, all features are considered equally in a $k$-NN
-classifier, which implies that all features are equally important in predicting
-the class. In practice, however, this is not always the case: to predict the
-LOS of a trauma patient, the severity of their injury should affect the final
-LOS more than whether or not they can speak English (which could be just two
-of many features that are recorded about a patient). Our contribution is thus
-a modified distance function to take the relative importance of attributes into
-account. 
-
-\paragraph{Mathematical formulation}
-Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
-$\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
-\begin{equation*}
-\mathrm{Distance} = \sum_{i=1}^n w_i |x_i-y_i|
-\end{equation*}
-where the $w_i$s weight the contribution of the $i$-th feature to the overall
-distance that is computed by the $k$-NN algorithm. We assume that all feature
-values have been normalised, as described above.
-
-\paragraph{Assignment of weights}
-The weights $w_i$ can be tuned to match the particular problem that is being
-investigated. For our LOS classification problem, we will consider two ways
-of weighting features:
-\begin{enumerate}
-\item The weight of each feature is the magnitude of the correlation
-coefficient
-between it and the class, meaning that features that are more highly correlated
-with the class will contribute more to the distance. The correlation
-coefficient $r_i$ for feature $i$ with the class $c$ can be computed by:
-\begin{equation*}
-r_i = \dfrac{\sum_{i=1}^m (x_i-\bar{x})(c-\bar{c})}{\sqrt{(\sum_{i=1}^m x_i-\bar{x})(\sum_{i=1}^m c-\bar{c})}}
-\end{equation*}
-where $m$ is the number of training examples, $x_i$ is the value of feature
-$i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
-values and the class values respectively. 
-\item We compute the correlation coefficients as described in the point above.
-This gives us a ranking of the importance of each feature to the prediction of
-the class, with 1 being the highest rank (indicating the most importance) and
-$n$ being the lowest rank (indicating the least importance).
-Instead of using the values of the correlation directly to weight
-the distance contribution of each feature, we specify a function:
-\begin{equation*}
-f : \mathrm{Rank} \rightarrow \mathbb{R}, \mathrm{Rank} \in \{1,2,\ldots,n\}
-\end{equation*}
-that describes
-how the weights of the features vary with the rank. This function should
-inituitively be non-increasing and should produce lower values when the rank
-number is greater, meaning that less important features have a lower weight
-in the distance calculation.
-Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
-results in all features contributing equally to the distance calculation.
-
-\noindent We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
-$c$ varies from 0 to 1.
-\end{enumerate}
 
 \section{Multi-layer Perceptron}
 Multi-layer perceptrons (MLPs) are a generalised form of the
@@ -494,7 +359,8 @@ that we can classify data which are not linearly separable. Figure
 \begin{figure}[h]
 \centering
 \includegraphics{images/method/mlp.pdf}
-\caption{An MLP with one hidden layer.}
+\caption{An MLP with one hidden layer. There are $n$ input nodes, $k$ nodes
+in the hidden layer, and one output node.}
 \label{fig:mlp}
 \end{figure}
 
@@ -529,12 +395,143 @@ have described, such as decision trees. We use them in this work on LOS
 classification as we would like to see how they perform in modelling the
 complex relationships between various medical attributes.
 
+\section{$k$-Nearest Neighbour}
+In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
+and discuss some extensions which we use in our work. Additionally, we will
+describe our contribution, which is an extension of the distance metric for
+finding the nearest neighbours.
+
+\subsection{Basic Algorithm}
+The $k$-nearest neighbour classifier is an example of an
+\textit{instance-based} learning algorithm. This is because it does not, unlike
+the other classifiers described in this section, attempt to deduce or
+generalise a relationship between the features and the class: it simply stores
+all training examples and classifies an unseen example by finding the $k$
+``nearest'' examples (or \textit{instances}) and assigning the majority class
+to the new example. In the simplest form of the algorithm, $k$ is chosen to be
+1 and the Euclidean distance is used to measure the closeness of neighbours:
+\begin{equation*}
+\mathrm{Distance} = \sqrt{(x_1-y_1)^2 + (x_2-y_2)^2 + \ldots + (x_n-y_n)^2}
+\end{equation*}
+where $x_i,y_i$ are the values of the $i$-th feature for two different feature
+vectors (or instances).
+
+Like the Na\"{i}ve Bayes classifier, $k$-NN allows all features to be taken
+into account equally when classifying a new example. However, since feature
+values often span different ranges and units of measurement, a particularly
+large range of values for a feature would contribute much more to the distance
+than another feature that spans a lower set of values.
+To avoid this, it is important to \textit{normalise} the
+values of each numeric feature before using $k$-NN: for each feature $i$, we
+calculate the normalised value of the feature for each training example. This
+is done using the following relationship:
+\begin{equation*}
+a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
+\end{equation*}
+where $a_i$ is the normalised value, $v_i$ is the actual value in the data
+set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is a
+scaling factor and $t$ indicates how much to translate the range by. If $s=1$
+and $t=0$, then the range of normalised values will be in $[0,1]$.
+
+\subsection{Existing and Proposed Extensions}
+There have been many extensions proposed to the $k$-NN algorithm described
+above. These usually seek to find a more suitable distance metric for the
+problem domain at hand, or to reduce the storage requirements of the original
+$k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
+K* and our proposed algorithm, Ranked Distance.
+
+\subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
+Cleary and Trigg developed K*, an instance-based classifier that uses entropy
+to measure the distances between instances \cite{Cleary1995}. They consider
+the distance between two instances to be the complexity of transforming one
+into another. Define a sequence of transformations on an instance:
+\begin{equation*}
+\bar{t}(a) = t_n(t_{n-1}(\ldots t_1(a)\ldots)), \bar{t} \in T
+\end{equation*}
+where $\bar{t} = t_1,\ldots,t_n$. We can define a probability function $p$
+that gives the probabilities of these transformations occurring, and then we
+can define a probability function that gives the probabilities of all paths
+(transformations) from example $a$ to $b$:
+\begin{equation*}
+P^*(b|a) = \sum_{\bar{t}\in T:\bar{t}(a)=b} p(\bar{t})
+\end{equation*}
+Within this framework, we can define transformations for both real-valued and
+categorical features, which allows K* to work with all types of features.
+The K* function is then defined as:
+\begin{equation*}
+K^*(b|a) = -\mathrm{log}_2P^*(b|a)
+\end{equation*}
+
+To calculate the probability of an instance $a$ being in a class $C$, we sum
+the probabilities from $a$ to each instance of $C$, and repeat for each class.
+The predicted class will be the one with the highest probability:
+\begin{equation*}
+P^*(C|a) = \sum_{b\in C} P^*(b|a)
+\end{equation*}
+
+We use K* as a comparison to the basic NN algorithm and also as a comparison
+to our proposed Ranked Distance Nearest Neighbours algorithm.
+
+\subsubsection{Proposed Approach: Ranked Distance Nearest Neighour}
+\label{sec:rankeddist}
+\paragraph{Intuition}
+As we mentioned earlier, all features are considered equally in a $k$-NN
+classifier, which implies that all features are equally important in predicting
+the class. In practice, however, this is not always the case: to predict the
+LOS of a trauma patient, the severity of their injury should affect the final
+LOS more than whether or not they can speak English (which could be just two
+of many features that are recorded about a patient). Our contribution is a
+new NN algorithm that uses a modified distance function which takes into
+account the relative importance of all features called Ranked Distance
+Nearest Neighbour (RD).
+
+\paragraph{Mathematical formulation}
+Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
+$\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
+\begin{equation*}
+\mathrm{Distance} = \sum_{i=1}^n w_i |x_i-y_i|
+\end{equation*}
+where the $w_i$s weight the contribution of the $i$-th feature to the overall
+distance that is computed by the $k$-NN algorithm. We assume that all feature
+values have been normalised, as described above.
+
+\paragraph{Assignment of weights}
+The weights $w_i$ can be tuned to match the particular problem that is being
+investigated. For our LOS classification problem, we will consider one way
+of weighting features.
+First, we compute the correlation coefficients using:
+\begin{equation*}
+r_i = \dfrac{\sum_{i=1}^m (x_i-\bar{x})(c-\bar{c})}{\sqrt{(\sum_{i=1}^m x_i-\bar{x})(\sum_{i=1}^m c-\bar{c})}}
+\end{equation*}
+where $m$ is the number of training examples, $x_i$ is the value of feature
+$i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
+values and the class values respectively. 
+This gives us a ranking of the importance of each feature to the prediction of
+the class, with 1 being the highest rank (indicating the most importance) and
+$n$ being the lowest rank (indicating the least importance).
+Instead of using the values of the correlation directly to weight
+the distance contribution of each feature, we specify a function:
+\begin{equation*}
+f : \mathrm{Rank} \rightarrow \mathbb{R}, \mathrm{Rank} \in \{1,2,\ldots,n\}
+\end{equation*}
+that describes
+how the weights of the features vary with the rank. This function should
+inituitively be non-increasing and should produce lower values when the rank
+number is greater, meaning that less important features have a lower weight
+in the distance calculation.
+Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
+results in all features contributing equally to the distance calculation.
+We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
+$c$ varies from 0 to 1.
+
 \section{Summary}
 In this chapter we have outlined all of the learning algorithms that we will
 be evaluating with respect to our classification problem, from the simple
 Zero-R and 1R to Na\"{i}ve Bayes, decision trees, logistic regression,
-$k$-nearest neighbour (and extensions K* and Ranked Distance), to the more
-sophisticated support vector machines and multi-layer perceptrons. The reason
+$k$-nearest neighbour (and K*), to the more
+sophisticated support vector machines and multi-layer perceptrons. We also
+described our proposed new algorithm, Ranked Distance Nearest Neighbours.
+The reason
 for our inclusion of so many algorithms is two-fold. Firstly, many of
 these algorithms have not been extensively applied in various medical settings
 to the problem of LOS prediction. Using a wide range of algorithms from various

@@ -1,8 +1,5 @@
 \begin{table}[htbp]
-\caption{Overall best AUC of each classifier with a particular feature selection method on the general hospital data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
-\label{tab:overall-pt-auc}
-\begin{tabular}{|l|cccccc|}
-\hline
+\begin{tabular}{l|cccccc}
 Classifier & None & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
 ZeroR & 0.5* & 0.5* & 0.5* & 0.5* & 0.5* & 0.5* \\
 1R & 0.858* & 0.858* & 0.858* & 0.858* & 0.858* & 0.858* \\
@@ -14,6 +11,8 @@ SVM & 0.994* & 0.971* & 0.981* & \textbf{\begin{tabular}[c]{@{}c@{}}0.994*\\ t=0
 20NN & 0.992* & 0.981* & 0.991* & \textbf{\begin{tabular}[c]{@{}c@{}}0.992*\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.992*\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.992*\\ t=74.405\end{tabular} \\
 RD & 0.993* & 0.794* & 0.986* & \textbf{\begin{tabular}[c]{@{}c@{}}0.993*\\ t=0.05\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.993*\\ t=0.005\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.993*\\ t=74.405\end{tabular} \\
 K* & 0.994 & 0.980* & 0.989* & \begin{tabular}[c]{@{}c@{}}0.994*\\ t=0.1\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.994*\\ t=0.05\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.994\\ t=74.405\end{tabular} \\
-MLP & 0.990* & 0.983* & 0.992* & \textbf{\begin{tabular}[c]{@{}c@{}}0.993*\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.991*\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.990*\\ t=76.905\end{tabular} \\ \hline
+MLP & 0.990* & 0.983* & 0.992* & \textbf{\begin{tabular}[c]{@{}c@{}}0.993*\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.991*\\ t=0.1\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.990*\\ t=76.905\end{tabular} \\
 \end{tabular}
+\caption{Overall best AUC of each classifier with a particular feature selection method on the general hospital data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
+\label{tab:overall-pt-auc}
 \end{table}

@@ -1,0 +1,61 @@
+\chapter{Source Code Listings}
+\label{app:code}
+
+In this appendix we display the source code of the most important scripts we
+wrote in our to conduct our experiments. These are described in more detail
+in Section \ref{sec:code}. To download the latest version of the code, please
+visit \url{https://github.com/tianyupu/hons-thesis}.
+
+\lstset{
+  language = Python,
+  texcl = false, % Parse comments as TeX
+  backgroundcolor = \color{white},
+  basicstyle = \footnotesize\ttfamily\singlespacing,
+  commentstyle = \color{mygreen},
+  keywordstyle = \color{blue},
+  stringstyle = \color{mymauve},
+  numberstyle = \tiny\color{mygray},
+  numbers = left, % possible values are (none, left, right)
+  numbersep = 5pt, % how far the line-numbers are from the code
+  rulecolor = \color{black},
+  stepnumber = 1, % the step between two line-numbers
+  showstringspaces = false, % underline spaces within strings?
+  literate = {~} {$\sim$}{1}, % make ~ nice
+  literate = {_} {\textunderscore}{1}, % make _ nice
+  breaklines = true,
+  prebreak = \raisebox{0ex}[0ex][0ex]
+  {\color{red}\ensuremath{\space\hookleftarrow}},
+  postbreak = \raisebox{0ex}[0ex][0ex]
+  {\color{red}\ensuremath{\hookrightarrow\space}},
+  tabsize = 2
+}
+
+\section{Data Cleaning and Whitespace Removal}
+\label{sec:python-preprocess}
+\lstinputlisting{../code/sklearn/util.py}
+
+\section{Automating WEKA and Saving Results}
+\label{sec:run-weka}
+\lstset{language=bash}
+\lstinputlisting{../code/weka/run_weka.sh}
+
+\subsection{WEKA Configuration File}
+The configuration files that were used in the above script consisted of WEKA
+classes in a text file, one per line with as many as we wanted to test in one
+experiment. A typical file looked like this:
+\lstset{language={}}
+\lstinputlisting{../code/weka/weka-config/all_clfs_default}
+
+\section{Summarising a Large Number of Results}
+\label{sec:summarise-script}
+\lstset{language=bash}
+\lstinputlisting{../code/weka/summarise_results.sh}
+
+\subsection{Computing Confidence Intervals from Summarised Results}
+\lstset{language=Python}
+\lstinputlisting{../code/weka/compute_ci.py}
+
+\section{Ranked Distance Implementation}
+\label{sec:rankeddist-code}
+\lstset{language=Java}
+\lstinputlisting{../code/weka/RankedDistance.java}

@@ -16,9 +16,9 @@ preprocessing, describing the specific steps we took on our data.
 
 \section{Data Sets}
 In our work we obtained two independent sets of LOS data, one specifically for
-trauma and the other a general, hospital-wide set.
+trauma and the other a general, hospital-wide data set.
 
-\subsection{Trauma LOS Data}
+\subsection{Trauma}
 \subsubsection{Collection}
 The data set used consisted of trauma registry data from the trauma centre
 at the Royal Prince Alfred Hospital, a major trauma centre in New South Wales,
@@ -39,15 +39,23 @@ values, 0 or 1 -- with 1 indicating that the patient stayed two days or less,
 and 0 indicating a stay of greater than 2 days.
 
 \subsubsection{Features}
+The features present in the original data set are listed and briefly described
+in Table \ref{tab:feature-desc-tr}.
 
-\subsection{General Hospital LOS Data}
+\subsection{General Hospital}
 By collaborating with our colleagues from the University of Minho in Portugal,
 we were able to obtain LOS data for all inpatient hospitalisations from
 2000--2013 at the Hospital das Foras Armadas in Lisboa, Portugal. The data
-contained 26462 inpatient records spanning all medical departments within the
+contained 17547 inpatient records spanning all medical departments within the
 hospital, comprising 15 features that were not specific to any medical domain.
+One of these features was the class, \texttt{LOS48}, indicating a stay of
+less than or equal to 2 days.
 
 \subsubsection{Features}
+The features present in the original data set are listed and briefly described
+in Table \ref{tab:feature-desc-pt}.
+
+\input{method/feature-descriptions.tex}
 
 \section{Cleaning} % missing values, irrelevant features
 In any data mining task, adequately \textit{cleaning} the data ensures the best
@@ -69,6 +77,7 @@ the system that stores the data
 The following paragraphs address how we dealt with the issues that were
 applicable to our data.
 
+\subsection{Trauma Data}
 \paragraph{Incorrect spelling and punctuation.}
 Since the data was initially in Excel spreadsheet format, we explored the data
 by hand using Microsoft Excel's filter on each column. This allowed us to see
@@ -99,8 +108,9 @@ the data was then exported into CSV (comma-separated value) format, so that
 we could continue to process it programmatically rather than manually without
 having to use Excel. Many
 fields in the data set contained leading or trailing whitespace, which was
-removed with a few lines of Python code (see appendix \todo{[add reference
-to appendix]}). All attribute names were converted to lowercase. In the case
+removed with a few lines of Python code (see Appendix
+\ref{sec:python-preprocess}).
+All attribute names were converted to lowercase. In the case
 where attribute names consisted of several words, the spaces were replaced
 with underscores (\_) to ensure that the full attribute name was read.
 For example, \texttt{Any Cancer} was converted into \texttt{any\_cancer}.
@@ -120,6 +130,12 @@ WEKA, a suite of machine learning algorithms implemented in Java
 \cite{Hall2009}. Each feature was carefully checked to ensure that their
 type was specified correctly -- that is, the nominal attributes were
 distinguished from the numeric.
+
+\subsection{General Hospital Data}
+The general hospital data we received had already been preprocessed. The only
+preprocessing here was to
+undo the logarithm transform that had been applied to the \texttt{Previous
+Admissions} feature.
 
 \section{Normalisation}
 Features represent different pieces of information about a training example.
@@ -198,7 +214,7 @@ in each sub-interval denoted $E_1$ and $E_2$:
 The first term is the information needed for the splitting point, and the
 second is a correction necessary for encoding which classes belong to which
 sub-interval. The decision rule is then to split if the information gain for
-that split exceeds the MDL value: $\mathrm{gain} > \mathrm{MDL}$.
+that split exceeds the MDL value.
 
 Since this requires exhaustive searching of the full range of feature values
 to find potential split points, this method of supervised discretisation can
@@ -209,7 +225,7 @@ consider splits between regions of different classes, reducing the number of
 possible points to consider.
 
 The data was discretised according to the above method using the supervised
-discretisation filter in WEKA. We keep both the original data set (without
+discretisation filter in WEKA. We kept both the original data set (without
 discretisation) and the discretised data set for comparison.
 
 \section{Summary}

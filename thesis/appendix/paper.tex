@@ -1,1 +1,481 @@
-\chapter{Artificial Intelligence in Medicine -- Submitted Paper} \label{app:paper}
+\chapter{Artificial Intelligence in Medicine -- Draft Paper} \label{app:paper}
+
+We are currently in the process of drafting a paper of our results to submit to
+Artificial Intelligence in Medicine, a top journal for research that uses
+artificial intelligence in fields such as medicine, human biology and health
+care. Here we have attached our draft, which will be soon ready for submission.
+
+\clearpage
+
+\setlength{\multicolsep}{0pt}
+\setlength{\topskip}{\fontcharht\font`B }
+\setlength{\parskip}{0pt}
+%[
+\begin{center}
+\section*{Improving the Prediction of Length of Hospital Stay for Trauma Patients}
+\end{center}
+\begin{multicols}{2}
+\begin{center}
+Tianyu Pu, Irena Koprinska \\
+School of Information Technologies \\
+University of Sydney, NSW, 2006 \\
+\texttt{\{tianyu.pu,irena.koprinska\}@sydney.edu.au}
+\end{center}
+\vfill
+\columnbreak
+\begin{center}
+Michael Dinh \\
+Trauma Services, Royal Prince Alfred Hospital \\
+Sydney, NSW, 2042 \\
+\texttt{dinh.mm@gmail.com}
+\end{center}
+\end{multicols}
+%]
+
+\begin{multicols}{2}
+\subsection*{Abstract}
+Predicting the length of hospital stay for injured patients involves making a
+judgement about how long they need to be hospitalised, so that doctors and
+hospital staff can plan the appropriate course of treatment for the patient
+to ensure they recover in the quickest possible time. However, previous studies
+have used a limited number of statistical techniques such as logistic
+regression in order to predict the length of stay, and have not considered
+automatic methods of feature selection.
+
+Our work systematically evaluates and compares the performance of a number of
+state-of-the-art classification algorithms and feature selection methods,
+and also assesses the effect of feature discretisation for all combinations
+of classifiers and feature selectors. We propose a new classification algorithm
+called Ranked Distance Nearest Neighbor that considers the
+relative importance of each feature when determining the nearest neighbours.
+
+We were able to achieve improved accuracy and area
+under the curve for both data sets, and we also show that our proposed Ranked
+Distance Nearest Neighbour improves accuracy and area under the curve over
+traditional nearest neighbour algorithms.
+
+\subsection*{Introduction}
+Hospitals often have limited funding, and therefore managing and utilising
+their resources efficiently has always been a priority \cite{Walczak2003}.
+One key measurement of hospital activity, health care utilisation, and hospital
+cost is the patient length of stay \citep{Omachonu2004,Ng2006}. The length of
+stay has been used in a wide variety of medical domains, such as burns
+ \citep{Yang2010}, intensive
+care \citep{Tu1993,Harper2005,Perez2006,Dybowski1996},
+psychiatry \citep{Lowell1997}, and acute pancreatitis \citep{Pofahl1998}, in
+order to assist hospitals in allocating beds and other patient management
+resources as efficiently as possible. However, given the many different
+conditions that hospitals manage, the length of stay of a patient is
+not easy to predict \citep{Walczak2003}, especially upon a patient's admission.
+Many methods have been explored in the literature, from the realm of statistics
+to techniques in data mining, and they have been explored for many different
+medical domains.
+
+One of the more well-understood and widely used statistical methods for
+predicting the length of stay is \textit{logistic regression} \citep{Tu1996}.
+Logistic regression models are straightforward to construct and use via the
+help of statistical software packages such as SAS, and
+also make the contribution of each independent variable to the final
+prediction explicit. Thus they is easy to interpret when compared to more
+``black box'' approaches such as artificial neural networks \citep{Adams2012}.
+A wide variety of other statistical approaches have been proposed, notably:
+various scoring systems from univariate analysis \citep{Adams2012,Lavoie2005},
+linear regression \citep{Yang2010}, exponential models \citep{Clark2007},
+survival analysis \citep{Vasilakis2005}, and Markov
+models \citep{Perez2006,Jain1989,Kapadia2000}.
+
+Out of the development of the various statistically-motivated models, data
+mining techniques, particularly artificial neural networks,
+began to become more widely adopted following a number of
+early applications to length of stay prediction in intensive
+care \citep{Tu1993,Dybowski1996}, in addition to disease diagnosis and mortality
+prediction \citep{Silva2006}. Artificial neural networks are able to detect
+complex and non-linear relationships between input and output variables and can
+be developed using many different techniques. Much work has been done in using
+neural networks to predict patient length of stay in various medical conditions
+such as acute pancreatitis \citep{Walczak2003}, gastroenteritis \citep{Ng2006},
+surgical intensive care \citep{Buchman1994,Tu1993} and
+psychiatry \citep{Lowell1997}. Other data mining techniques have also been
+applied, such as support vector machines and tree-based
+methods \citep{Harper2005}.
+
+Given the benefits to the hospital of accurate length of stay prediction,
+this research aims to build upon improving length of stay prediction for trauma
+patients by utilising state-of-the-art data mining techniques. Being able to
+predict the length of stay for trauma patients is especially crucial because of
+the scarcity of patient care resource in this area \citep{Yang2010}.
+Additionally,
+despite the wealth of research into length of stay prediction in various
+medical domains, there has been little work done in generalising models from
+one domain to another, or to predict a combination of outcomes (not only
+length of stay, but mortality, or rehabilitation requirement). Being able to
+do this would mean that hospital staff are better equipped to handle patient
+cases and prepare for possible critical outcomes well in advance, resulting
+in time and resources saved for both hospital and patient.
+
+\subsection*{Problem Statement}
+Our problem is a binary \textit{classification} task in which we
+predict one of two possible categories for a patient: a length of stay (LOS) of
+less than or equal to 2 days, or a LOS of greater than 2 days. 
+
+\subsection*{Ranked Distance Nearest Neighbour}
+\paragraph{Intuition}
+As we mentioned earlier, all features are considered equally in a $k$-NN
+classifier, which implies that all features are equally important in predicting
+the class. In practice, however, this is not always the case: to predict the
+LOS of a trauma patient, the severity of their injury should affect the final
+LOS more than whether or not they can speak English (which could be just two
+of many features that are recorded about a patient). Our contribution is a
+new NN algorithm that uses a modified distance function which takes into
+account the relative importance of all features called Ranked Distance
+Nearest Neighbour (RD).
+
+\paragraph{Mathematical formulation}
+Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
+$\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
+\begin{equation*}
+\mathrm{Distance} = \sum_{i=1}^n w_i |x_i-y_i|
+\end{equation*}
+where the $w_i$s weight the contribution of the $i$-th feature to the overall
+distance that is computed by the $k$-NN algorithm. We assume that all feature
+values have been normalised, as described above.
+
+\paragraph{Assignment of weights}
+The weights $w_i$ can be tuned to match the particular problem that is being
+investigated. For our LOS classification problem, we will consider one way
+of weighting features.
+First, we compute the correlation coefficients as described in the point above.
+This gives us a ranking of the importance of each feature to the prediction of
+the class, with 1 being the highest rank (indicating the most importance) and
+$n$ being the lowest rank (indicating the least importance).
+Instead of using the values of the correlation directly to weight
+the distance contribution of each feature, we specify a function:
+\begin{equation*}
+f : \mathrm{Rank} \rightarrow \mathbb{R}, \mathrm{Rank} \in \{1,2,\ldots,n\}
+\end{equation*}
+that describes
+how the weights of the features vary with the rank. This function should
+inituitively be non-increasing and should produce lower values when the rank
+number is greater, meaning that less important features have a lower weight
+in the distance calculation.
+Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
+results in all features contributing equally to the distance calculation.
+We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
+$c$ varies from 0 to 1.
+
+\subsection*{Feature Selection}
+Here we introduce the feature selection algorithms we evaluate in our work.
+Several of these have not been investigated in previous work on length of
+stay prediction.
+\subsubsection*{Correlation-based Feature Selection}
+Correlation-based feature selection (CFS) is a method developed by Hall
+\cite{Hall2000} which looks for a subset of features that have high correlation
+with the class but low intercorrelation among the features. In this case,
+correlation between two features is measured using what is called the
+\textit{symmetric uncertainty}:
+\begin{equation*}
+U(A,B) = 2\dfrac{H(A)+H(B)-H(A,B)}{H(A)+H(B)}
+\end{equation*}
+where $A$ and $B$ are two nominal attributes and $H$ is the entropy function.
+The entropies are calculated from the probabilities of each feature value, and
+$H(A,B)$, the joint entropy of $A$ and $B$, is calculated from the
+probabilities of each combination of values of $A$ and $B$. Note that $U(A,B)$
+is always between 0 and 1.
+CFS conducts a search through subsets of all features in order to find the
+one feature subset that has the best merit.
+
+\subsubsection*{Pearson Correlation Coefficient}
+The Pearson correlation coefficient measures the degree of linear correlation
+between two variables. It is always in the range $[-1,1]$, where -1 is total
+negative correlation, 0 is no (linear) correlation, and 1 is total positive
+correlation. We compute the Pearson correlation between each feature and the
+class using:
+\begin{equation*}
+r_i = \dfrac{\sum_{i=1}^m (x_i-\bar{x})(c-\bar{c})}{\sqrt{(\sum_{i=1}^m x_i-\bar{x})(\sum_{i=1}^m c-\bar{c})}}
+\end{equation*}
+where $m$ is the number of training examples, $x_i$ is the value of feature
+$i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
+values and the class values respectively.
+
+\subsubsection*{Information Gain}
+We can also measure the IG of each feature as follows.
+If we have a class $C$ and a feature $F$, the entropy of the
+class before and after observing the feature is:
+\begin{equation*}
+\begin{aligned}
+& \mathrm{entropy}(C) = - \sum_{c \in C} p(c) \mathrm{log}_2 p(c) \\
+& \mathrm{entropy}(C|F) = - \sum_{f \in F} p(f) \sum_{c \in C} p(c|f) \mathrm{log}_2 p(c|f)
+\end{aligned}
+\end{equation*}
+The decrease in entropy reflects the gain in information provided by the
+feature and is given by:
+\begin{equation*}
+IG(C|F) = \mathrm{entropy}(C) - \mathrm{entropy}(C|F)
+\end{equation*}
+
+We can compute the IG for each feature and then select subsets of features that
+are greater than some threshold we specify, similarly to the correlation
+coefficient method of feature selection. We choose a similar set of thresholds
+because of the high numbers of features with very low information gain.
+
+\subsubsection*{1R}
+Another way to evaluate the relevance of features is to use the idea behind the
+1R classifier described in Section. Recall that the 1R
+classifier constructs simple 1-rules based on each feature and uses the feature
+that produces the lowest error rate (that is, the highest accuracy) on the data
+set to classify unseen examples. These accuracy rates can be calculated for
+each feature, which are then used to rank the features from highest to lowest
+accuracy.
+
+We can also select a fixed number of features or all features above a certain
+1R accuracy threshold. This threshold is a slightly different quantity to the
+threshold of the correlation coefficient and information gain methods, as it
+is an accuracy, expressed in percentages. Our first threshold is the Zero-R
+accuracy for the trauma data set, which is the lower of the two Zero-R
+accuracies on our two data sets. We increase this percentage by in increasing
+increments to obtain a range of thresholds up to nearly 97\% accuracy (which
+discards all features for both data sets). Using the same thresholds across
+both data sets allows us to make valid comparisons of the effect of feature
+selection on performance.
+
+\subsubsection*{Wrapper-based Feature Selection}
+The feature selection methods described above (CFS, Pearson correlation and
+1R) have been described as \textit{filter} approaches to attribute selection.
+Kohavi and John proposed another approach, the \textit{wrapper} approach:
+instead of performing feature selection independently of the learning
+algorithm using some measure of ``relevance'',
+the learning algorithm itself is used to evaluate the goodness of
+subsets of features \cite{Kohavi1997}. 
+
+A key advantage of the wrapper approach is that the selected feature sets are
+specifically tailored to a learning algorithm, which ensures the best
+performance of that algorithm given the data set. However, wrapper approaches
+can also be prohibitively slow if the data or feature sets are large and the
+chosen learning algorithm expensive to train (such as support vector machines
+and multi-layer perceptrons). We will evaluate the use of C4.5 decision trees
+in selecting features using the wrapper approach.
+Using decision trees to select features is relatively fast as due to the
+divide and conquer nature of the learning algorithm, and the tendency of the
+trees to select fewer features for learning than other algorithms. Like CFS,
+wrapper methods search for the best subset of features and do not require a
+threshold to discard attributes.
+
+\subsection*{Evaluation Method}
+Our evaluation was carried out using a trauma-specific data set
+containing 2546 records collected from 2007--2011 collected at a major hospital
+in Sydney, Australia.
+\subsubsection*{Classifiers}
+We tested the performance of Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision trees,
+support vector machines, multi-layer perceptrons, $k$-nearest neighbour with 1
+and 20 nearest neighbours, K* and logistic regression, as well as our proposed
+Ranked Distance Nearest Neighbour.
+
+\subsubsection*{Procedure}
+The steps that we took to evaluate the performance of the various classifiers
+and feature selection methods were:
+\begin{enumerate}
+\item For each data set, we evaluated the effect of the 4 automatic feature
+selection methods on each of the 8 classifiers listed above, giving us 32
+configurations for each data set, over
+4 sets. Evaluation was performed using ten runs of \textit{ten-fold stratified
+cross-validation}.
+\item For the two trauma LOS data sets, we additionally evaluated the two
+manual feature selection methods with all 8 classifiers. Recall from Section
+\ref{sec:manual} that one of the feature sets is from the key previous work
+on trauma LOS prediction that we use as a baseline, and the other feature set
+is a set of features included through consultation with a domain expert.
+\end{enumerate}
+
+\subsection*{Results and Discussion}
+The best accuracy was 77.81\%, achieved using the $k$-NN algorithm
+with 1 nearest neighbour, a discretised data set, and feature selection using a
+C4.5 wrapper. The best AUC of 0.846 was achieved using logistic regression with
+features selected by a correlation coefficient threshold of 0.1, and again
+using the discretised data set.
+
+\begin{figure*}[htbp]
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-nofs-acc.eps}
+\caption{}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-nofs-auc.eps}
+\caption{}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-dinh-acc.eps}
+\caption{}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-dinh-auc.eps}
+\caption{}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-expert-acc.eps}
+\caption{}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-expert-auc.eps}
+\caption{}
+\label{}
+\end{subfigure}
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-cfs-acc.eps}
+\caption{}
+\label{fig:tr-nothreshold-cfs-acc}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-cfs-auc.eps}
+\caption{}
+\label{}
+\end{subfigure}
+\caption[]{Comparison of accuracy and AUC between classifiers for each non-threshold feature selection method, grouped by whether or not discretisation was applied.}
+\label{fig:tr-nothreshold}
+\end{figure*}
+
+\begin{figure*}
+\ContinuedFloat
+
+\begin{subfigure}{.48\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-wrapper-acc.eps}
+\caption{}
+\label{}
+\end{subfigure}%
+\begin{subfigure}{.55\textwidth}
+\includegraphics[width=\textwidth]{images/results/tr-wrapper-auc.eps}
+\caption{}
+\label{}
+\end{subfigure}
+\caption[]{Comparison of accuracy and AUC between classifiers for each non-threshold feature selection method, grouped by whether or not discretisation was applied.}
+\label{}
+\end{figure*}
+
+It is worth noting that our best accuracy, using $k$-NN with 1
+nearest neighbour, shows a statistically significant improvement upon the accuracy
+that they achieved by 2.75\%
+while using only 11 features (compared to the 19 they used). These 11 features
+make up only 14.1\% of all features in the data set, and performed better than
+the 11 features selected manually by the domain expert.
+
+Despite our inclusion of accuracy as an evaluation metric, the AUC is what Dinh
+et al. \cite{Dinh2013a}
+used to evaluate the ability of their logistic regression classifier to
+discriminate between the two LOS classes. Using their features, the best AUC
+was 0.812 with logistic regression, and our best result was 0.846, also with
+logistic regression. However, this was using the discretised data set with 29
+features selected by correlation coefficient at a threshold of 0.1.
+Although our logistic regression classifier exhibited an AUC improvement of
+0.034, it required roughly 50\% more features than the baseline of 19 features.
+If we are willing to sacrifice a little discriminating power, we are able to
+achieve 0.838 AUC with only 11 features using the K* classifier.
+
+Although $k$-NN with 1 nearest neighbour had the highest accuracy (77.81\%) out
+of all combinations of classifiers and feature selection methods for this data
+set, we should mention that logistic regression came a very close second with
+77.7\%, outperforming more sophisticated approaches such as SVM and MLP. It
+also achieved a higher AUC, and has the added advantages of being faster to
+train, mathematically well-understood and widely applied in medicine.
+
+The best accuracy and AUC results for
+each classifier resulted from a reduced feature set obtained through a
+particular feature selection method. There was at least one feature selector
+for each classifier that managed to outperform the same classifier with
+no feature selection. This is likely due to the large number of features in
+the original data -- after cleaning and preliminary removal of redundant
+features, we were still left with over 50. Many of these would still likely
+be irrelevant to predicting the class.
+Out of 20 combinations of classifiers
+and discretisation (the 10 classifiers with and 10 without
+discretisation), the C4.5 wrapper method resulted in the best
+accuracy for 7 of these combinations, followed by 5 using information gain
+and 4 using the correlation coefficient and very few for the other methods.
+Under no combination was 1R the best feature selection method to use, as other
+methods produced better accuracy.
+
+Focussing our attention on the AUC reveals slightly different patterns. Here we
+find that the correlation coefficient and the information gain are the feature
+selectors that give the best AUC for most of the classifiers, and perform
+equally well when used in conjunction with logistic regression and SVMs.
+Interestingly, although the C4.5
+wrapper method selects features which allow classifiers to achieve good
+accuracy, only in 2 out of the 20 combinations of classifiers did it give the
+best AUC result out of all the feature selectors. 
+
+Recall that $k$-NN with 1 nearest neighbour and C4.5 wrapper feature
+selection produced the best accuracy (77.81\%) for the trauma data set, and
+logistic regression with correlation coefficient feature selection at a
+threshold of 0.1 gave the best AUC (0.846). These two feature selection
+methods selected 11 and 29 features respectively, and the features that
+were chosen in common between them were: \texttt{operation}, \texttt{bp},
+\texttt{iss}, \texttt{lowerlimbnopelvis}, \texttt{age}, \texttt{lowerlimbany}
+and \texttt{icu}. This adds evidence to the work of Dinh et al. who found
+that \texttt{iss}, \texttt{age} and \texttt{operation} were important
+distinguishers of LOS $\leq$ or $>$ 2 days \cite{Dinh2013a}. We also
+confirm the findings of Gabbe et al. who found that \texttt{age},
+\texttt{iss} and \texttt{bp} were useful in predicting the length of
+hospital stay of blunt trauma patients \cite{Gabbe2005}. Our feature
+selection results also
+support the findings of McGonigal et al. \cite{McGonigal1993} who used
+\texttt{age} and
+\texttt{iss} to predict the probability of survival for trauma patients, a
+related problem in the same medical domain.
+Our observations suggest the use of feature selection not only as a
+pre-processing step to improve the accuracy or AUC of a classifier, but also
+as a tool used separately that could help extract insights from medical data.
+
+Although we were able to achieve higher accuracy and AUC than the baseline,
+our best approaches also have a number of limitations which need to be pointed
+out. The first point to note is that using a wrapper method of feature
+selection is slower than using a filter approach (or manually picking the
+features before training), as the learning algorithm used as the wrapper
+needs to be invoked at each of the folds of cross-validation. Additionally,
+the $k$-NN algorithm becomes slower as the data set increases in the number
+of examples. We did not face such a problem during our work, but this will
+have to be addressed for larger data sets. It is also common to use more
+than one nearest neighbour, so care needs to be taken to find a suitable number
+of neighbours for a given problem. Finally, we achieved an improvement
+in AUC of 0.034 but this was with 29 features, which is still a fairly large
+number. The importance of using a fewer number of features is twofold: not
+only does this speed up the training time, it also means that we are able to
+make predictions without requiring a lot of information about a patient,
+which is a crucial consideration if this is to be implemented for use by
+physicians.
+
+
+\subsection*{Conclusions}
+The best accuracy we achieved on the trauma data was 77.81\% with the $k$-NN
+classifier using 1 nearest neighbour and 11 out of 78 features. This represents
+an improvement over previous work done by Dinh et al. \cite{Dinh2013a}
+on the same data set,
+where they managed to achieve 75.06\% with logistic regression. More
+importantly, we were able to improve upon their AUC of 0.812 with a result of
+0.846, also using logistic regression but first discretising numeric features
+and reducing the feature set to 29 features.
+If we consider an even smaller number of features, then K*
+gives an AUC of 0.838 with 11 features selected by the C4.5 wrapper, which
+improves upon the result of Dinh et al. \cite{Dinh2013a} while using a little
+more than half
+the number of features. The drawback of $k$-NN and K* is that they require all
+examples to be stored and then searched during classification, which becomes
+storage- and computation-expensive as the data set increases in size.
+
+An important contribution of our work is the use of several nearest neighbour
+algorithms for predicting the LOS class of a patient. We found that these
+techniques can achieve good accuracy and discriminating ability if a suitable
+set of features is found. In addition, we proposed a new algorithm, Ranked
+Distance Nearest Neighbours, which is an extension of the standard nearest
+neighbours classifier that takes the relative importance
+of each feature into account when determining the nearest neighbours of an
+example. We found that this achieved better results than the other nearest
+neighbour algorithms we evaluated, but only when most of the original feature
+set was used.
+
+\end{multicols}

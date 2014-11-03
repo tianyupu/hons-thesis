@@ -24,8 +24,8 @@ days), normalised the numeric attribute \texttt{prev\_admissions}, and derived
 both a discretised and non-discretised data set. This resulted in 4 sets of
 data.
 \item For each data set, we evaluated the effect of the 4 automatic feature
-selection methods on each of the 8 classifiers described in Chapter
-\ref{chap:classification}, giving us 32 configurations for each data set, over
+selection methods on each of the 11 classifiers described in Chapter
+\ref{chap:classification}, giving us 44 configurations for each data set, over
 4 sets. Evaluation was performed using \textit{ten-fold stratified
 cross-validation} (described below).
 \item For the two trauma LOS data sets, we additionally evaluated the two
@@ -79,8 +79,8 @@ our experiments easily using scripts which we wrote (see Section
 \subsubsection{Code Written}
 \label{sec:code}
 Leading and trailing whitespace was removed and feature names transformed using
-code written in Python to manipulate the CSV exported from Microsoft Excel.
-All runs of WEKA were executed by
+code written in Python (language version 3.4.1) to manipulate the CSV exported
+from Microsoft Excel. All runs of WEKA were executed by
 a program we wrote in Bash (a Unix shell) script. This program was able to run
 WEKA with the following features:
 \begin{itemize}
@@ -111,8 +111,8 @@ interfaces and override the right inherited methods in order for the $k$-NN
 classifier in WEKA to be able to use it as a distance function. This also
 involved updating certain properties of the \texttt{weka.jar} executable in
 order to use the new class, as well as building the entire WEKA source. The
-development environment we used was Eclipse \todo{insert version}, and the
-source was built using the 1.7.0 Java runtime.
+development environment we used was Eclipse 4.2.1, and the
+source was built using version 1.7.0 Update 17 of the Java Development Kit.
 
 The source code listing of the most important programs we wrote are displayed
 in Appendix \ref{app:code}.
@@ -168,9 +168,9 @@ two ROC curves on the same graph:
 \begin{figure}[h]
 \centering
 \includegraphics{images/method/example-roc.eps}
-\caption{Two ROC curves on the same graph. Note that the straight line from
-the bottom left corner to the top right corner indicates an AUC of 0.5. Curves
-which head towards the top left corner indicate increasing AUC.}
+\caption{Three ROC curves on the same graph. Curves
+which head towards the top left corner indicate increasing AUC. In this
+example, the curve labelled `No feature selection' has the highest AUC.}
 \label{fig:sampleroc}
 \end{figure}
 
@@ -201,14 +201,14 @@ parameters (such as mean and standard deviation) we do not know.
 The Central Limit Theorem from statistics states that given a random
 sample of $n$ items from $X$, namely $X_1,X_2,\dots,X_n$, the sample mean
 $\bar{x}$
-is approximately normally distributed when $n$ is at least roughly around 30
+is approximately normally distributed when $n$ is at least approximately 30
 and the $X_i$'s are independent and identically distributed \cite{Phipps2001}.
 
 Consequently, we can construct a $(1-\alpha)$\% normal confidence interval for
 $\bar{x}$ -- where $\alpha$ is commonly called the
 \textit{significance level} -- as follows \cite{Wasserman2003}:
 \begin{equation*}
-  \left[\bar{x} - z_{1-\alpha/2}\dfrac{s}{\sqrt{n}},
+  \left[\bar{x} - z_{1-\alpha/2}\dfrac{s}{\sqrt{n}},\text{ }
     \bar{x} + z_{1-\alpha/2}\dfrac{s}{\sqrt{n}}\right]
 \end{equation*}
 where $\bar{x}$ is the sample mean, $\alpha$ is the significance level
@@ -217,21 +217,25 @@ is the number of observations in our sample, and $z_{1-\alpha/2}$ is the value
 of the standard normal variable $Z \sim \mathcal{N}(0,1)$ with cumulative
 probability $1-\alpha/2$.
 
-These confidence intervals can be constructed 
-
+These confidence intervals can be constructed by computing the average and
+standard deviation of performance estimates of at least three ten-fold
+cross-validation runs per classifier.
 In our work, we repeated the ten-fold stratified cross-validation procedure
 ten times, leading to $n=100$ samples with which to obtain our confidence
 estimates.
 
 \subsection{Tests for Statistical Significance}
-To decide whether or not the difference in values of each measure between
-classifiers and feature selection methods was statistically significant,
-paired $t$-tests at a significance level of 0.05 were conducted.
-\todo{elaborate}
+We conducted paired $t$-tests in order to determine whether or not our
+improvements in performance were statistically significant at the 95\% level.
+This is done by comparing the results from ten-fold cross-validation, which
+are means. We are also able to take advantage of the paired test because we
+can use the same way of creating the cross-validation folds for different
+classifiers, giving us a more accurate result.
 
 \section{Summary}
 In this section we described our method of evaluating the performance of each
 classifier and feature selection method that we use. We used accuracy and the
 area under the curve to measure two different aspects of our classifiers, and
 we obtained these figures using stratified ten-fold cross-validation. Paired
-$t$-tests were conducted to test for statistical significance.
+$t$-tests were conducted to test for statistical significance of improvements
+in accuracy and AUC.

@@ -1,0 +1,111 @@
+\renewcommand{\arraystretch}{0.7}
+\begin{longtable}{lp{13cm}}
+\textbf{Name} & \textbf{Description} \\ 
+\hline
+id & The id of the current record (numeric) \\ 
+age & Age of patient in years (numeric) \\ 
+sex & Patient gender (nominal) \\ 
+bp & Systolic blood pressure in mmHg (numeric) \\ 
+bp1 & Whether or not the patient had a normal systolic blood pressure between 90-180 mmHg (nominal) \\ 
+pr1 & Whether or not the patient had a normal pulse rate between 50-110 BPM (nominal) \\ 
+rr1 & Whether or not the patient had a normal respiratory rate of 10-24 breaths per minute (nominal) \\ 
+normalvitals & Whether or not the patient had bp, rr and pr normal (nominal) \\ 
+pr & Pulse rate in BPM (numeric) \\ 
+rr & Respiratory rate in breaths per minute (numeric) \\ 
+gcs1 & Whether or not the patient had a Glasgow Coma Score of 14 or 15 (nominal) \\ 
+gcs & Glasgow Coma Score on arrival (numeric) \\ 
+iculos & Length of ICU stay in days (numeric) \\ 
+icu & Whether or not the patient stayed in the ICU (nominal) \\ 
+outcome & Whether the patient survived or died (nominal) \\ 
+disp\_from\_ed & Disposition from hospital (nominal) \\ 
+disp\_from\_hosp & Discharge destination from hospital (nominal) \\ 
+iss8 & Whether or not the patient had an Injury Severity Score 8 or less (nominal) \\ 
+iss & Injury Severity Score (numeric) \\ 
+mechanism & Mechanism of injury (nominal) \\ 
+male & Whether or not the patient was male (nominal) \\ 
+age65 & Whether or not the patient was older than 65 years (nominal) \\ 
+arrivalmode & How the patient arrived at the hospital (nominal) \\ 
+transfer & Whether or not the patient was transferred from another hospital (nominal) \\ 
+traumatier & The level of trauma team activation (nominal) \\ 
+traumateam & Whether or not the trauma team was required (nominal) \\ 
+penetrating & Whether or not the injury was penetrating (nominal) \\ 
+died & Whether or not the patient died in hospital (nominal) \\ 
+eddc & Patient was discharged within expected time (nominal) \\ 
+rehab & Whether or not the patient was discharged from hospital to rehabiliation (nominal) \\ 
+mechcode & Category of injury mechanism (nominal) \\ 
+fall & Mechanism of injury was a fall (nominal) \\ 
+headany & Whether or not there was any head injury (nominal) \\ 
+faceany & Whether or not there was any face injury (nominal) \\ 
+headface & Presence of any injury to head or face (nominal) \\ 
+neckany & Any injury to neck (nominal) \\ 
+chestany & Any injury to chest (nominal) \\ 
+abdoany & Any injury to abdomen (nominal) \\ 
+spineany & Any injury to spine (nominal) \\ 
+upperlimbany & Any injury to upper limb (nominal) \\ 
+lowerlimbany & Any injury to lower limb (nominal) \\ 
+bodyregions & Number of bodyregions injured (numeric) \\ 
+externalany & Any external burns injury (nominal) \\ 
+head3 & Any major head injury (nominal) \\ 
+face3 & Any major face injury (nominal) \\ 
+neck3 & Any major neck injury (nominal) \\ 
+chest3 & Any major chest injury (nominal) \\ 
+abdo3 & Any major abdominal injury (nominal) \\ 
+spine3 & Any major spine injury (nominal) \\ 
+upper3 & Any major upper limb injury (nominal) \\ 
+lower3 & Any major lower limb injury (nominal) \\ 
+ext3 & Any major external injury (nominal) \\ 
+laparotomy & Whether a laparotomy was performed (nominal) \\ 
+thoracotomy & Whether a thoracotomy was performed (nominal) \\ 
+neurosurgery & Whether any neurosurgery was performed (nominal) \\ 
+anypelvis & Any injury to pelvic region (nominal) \\ 
+pelvic\_fracture & Whether or not there was any pelvic fracture (nominal) \\ 
+upper\_limbop & Whether an operation was performed on the upper limb (nominal) \\ 
+lower\_limbop & Whether an operation was performed on the lower limb (nominal) \\ 
+married & Whether or not the patient is married (nominal) \\ 
+english & Whether or not the patient speaks English (nominal) \\ 
+charlson & Charlson Comorbidity Index (numeric) \\ 
+triss & Calculated probability of survival (numeric) \\ 
+mentalhealth & Whether the patient suffered any mental health problems (nominal) \\ 
+alcohol & Whether alcohol was involved in the injury (nominal) \\ 
+comorbidity & Whether or not the patient had comorbidities (nominal) \\ 
+operation & Whether or not an operation was performed in the hospital (nominal) \\ 
+upperlimboponly & An operation was performed only on the upper limb (nominal) \\ 
+upperlimbonly & Any injury to the upper limb only (nominal) \\ 
+headminor & Minor or no head injury (nominal) \\ 
+lowerlimbnopelvis & Any injury to the lower limb, excluding pelvic injuries (nominal) \\ 
+any\_heart & Any heart disease (nominal) \\ 
+any\_liver & Any liver disease (nominal) \\ 
+any\_kidney & Any kidney disease (nominal) \\ 
+any\_cancer & Whether the patient has or had cancer (nominal) \\ 
+any\_dm & Any diabetes mellitus (nominal) \\ 
+any\_stroketia & Whether or not the patient had suffered a stroke or transient ischemic attack (nominal) \\ 
+los & Length of hospital stay in days (numeric) \\ 
+los48 & Whether or not the length of hospital stay was less than or equal to 2 days (nominal) \\ 
+\caption{A listing of all features from the trauma data set and what they represent.}
+\label{tab:feature-desc-tr}
+\end{longtable}
+\renewcommand{\arraystretch}{1}
+
+\begin{table}[htbp]
+\begin{tabular}{ll}
+\textbf{Name} & \textbf{Description} \\ 
+\hline
+Sex & Patient gender (nominal) \\ 
+Age & Age at the time of admission, separated into categories (nominal) \\ 
+Education & Highest level of education completed (nominal) \\ 
+Marital Status & Marital status (nominal) \\ 
+Episode Type & Patient type of episode (nominal) \\ 
+Inpatient Service & Physical inpatient service (nominal) \\ 
+Medical Specialty & Medical specialty associated with patient condition (nominal) \\ 
+Origin Episode Type & Origin episode type that caused hospitalisation (nominal) \\ 
+Admission Month & Month admitted to hospital (nominal) \\ 
+Admission Day & Day of week admitted to hospital (nominal) \\ 
+Admission Hour & Hour of the day patient was admitted to hospital (nominal) \\ 
+Main Procedure & Type of main procedure performed (nominal) \\ 
+Main Diagnosis & Main diagnosis of patient (nominal) \\ 
+Previous Admissions & Number of times patient was previously admitted (numeric) \\ 
+LOS48 & Whether or not the length of hospital stay was less than or equal to 2 days (nominal) \\ 
+\end{tabular}
+\caption{A listing of all features from the general hospital data set and what they represent.}
+\label{tab:feature-desc-pt}
+\end{table}

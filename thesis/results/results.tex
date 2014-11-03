@@ -1,7 +1,7 @@
 \chapter{Results and Discussion} \label{chap:results}
 
 \section{Overall Performance}
-\subsection{Trauma Data Set}
+\subsection{Trauma Data}
 Tables \ref{tab:overall-tr-acc} and \ref{tab:overall-tr-auc} show the best
 accuracy and AUC results for each of the feature selection methods for each
 classifier. The best accuracy was 77.81\%, achieved using the $k$-NN algorithm
@@ -19,7 +19,8 @@ that they used, and also tested the features they used as one of the manual
 feature selection methods. From Table \ref{tab:overall-tr-acc} we can see that
 the best accuracy achieved using their features is 75.06\% with logistic
 regression. It is worth noting that our best accuracy, using $k$-NN with 1
-nearest neighbour, improves upon the accuracy that they achieved by 2.75\%
+nearest neighbour, shows a statistically significant improvement upon the accuracy
+that they achieved by 2.75\%
 while using only 11 features (compared to the 19 they used). These 11 features
 make up only 14.1\% of all features in the data set, and performed better than
 the 11 features selected manually by the domain expert. The number of features
@@ -30,7 +31,8 @@ features can be found in Appendices \ref{app:features-tr} and
 \ref{app:features-pt}.
 
 Despite our inclusion of accuracy as an evaluation metric, the AUC is what Dinh
-et al. used to evaluate the ability of their logistic regression classifier to
+et al. \cite{Dinh2013a}
+used to evaluate the ability of their logistic regression classifier to
 discriminate between the two LOS classes. Using their features, the best AUC
 was 0.812 with logistic regression, and our best result was 0.846, also with
 logistic regression. However, this was using the discretised data set with 29
@@ -54,7 +56,7 @@ the learning algorithm and feature selection method on the discretised data.
 This indicates that discretisation produced a better result than applying the
 same classifier and feature selector on the non-discretised data.
 
-\subsection{General Data Set}
+\subsection{General Hospital Data}
 For the general hospital data set, we report the best accuracy and AUC results
 for each combination of classifier and feature selection method in Tables
 \ref{tab:overall-pt-acc} and \ref{tab:overall-pt-auc}. The most accurate
@@ -99,7 +101,7 @@ discretisation because all other features were nominal and would not have been
 affected by discretising.
 
 \section{Comparison of Feature Selection Methods}
-\subsection{Trauma Data Set}
+\subsection{Trauma Data}
 Tables \ref{tab:features-tr-acc} and \ref{tab:features-tr-auc} show the
 best accuracy and AUC achieved with each classifier and feature method, with
 both discretised and non-discretised results. We did not include the results of
@@ -132,7 +134,7 @@ methods produced better accuracy.
 \input{results/features-selected-nothreshold.tex}
 \input{results/features-selected-threshold.tex}
 
-Focussing our attention on the AUC tells a slightly different story. Here we
+Focussing our attention on the AUC reveals slightly different patterns. Here we
 find that the correlation coefficient and the information gain are the feature
 selectors that give the best AUC for most of the classifiers, and perform
 equally well when used in conjunction with logistic regression and SVMs.
@@ -209,7 +211,7 @@ make predictions without requiring a lot of information about a patient,
 which is a crucial consideration if this is to be implemented for use by
 physicians.
 
-\subsection{General Data Set}
+\subsection{General Hospital Data}
 Tables \ref{tab:features-pt-acc} and \ref{tab:features-pt-auc} compare the
 best accuracy and AUC of each classifier between all the feature selectors
 used on the general hospital data set. Again, Zero-R is not included as it
@@ -287,7 +289,7 @@ the class, a finding that was also noted by Lucas et al. \cite{Lucas2009},
 although they considered the classification of LOS $\leq$ and $>$ 3 days.
 
 \section{Comparison of Classifiers}
-\subsection{Trauma Data Set}
+\subsection{Trauma Data}
 Figures \ref{fig:tr-nothreshold} and \ref{fig:tr-threshold} compare the
 accuracy and AUC of all classifiers under each feature selection method for
 the trauma data set.
@@ -316,7 +318,8 @@ apparent from the graphs in Figure \ref{fig:tr-threshold}: for all three
 feature selection methods, as we increase the threshold, logistic regression
 drops in performance after the initial few thresholds and is outperformed by
 C4.5 and the various nearest neighbour classifiers ($k$-NN with 1 and 20
-neighbours, Ranked Distance and K*). This is true for both accuracy and AUC.
+neighbours and K*), as well as our Ranked Distance algorithm.
+This is true for both accuracy and AUC.
 
 We found that in most cases, the SVM did not achieve a higher accuracy or
 AUC than logistic regression with the same features even though SVMs are
@@ -346,7 +349,8 @@ both accuracy and AUC, especially in comparison to more sophisticated
 classifiers and when the feature set is significantly reduced. From the graphs
 in Figure \ref{fig:tr-threshold}, we can see that all the nearest neighbours
 approaches perform similarly when the number of features is decreased, but our
-Ranked Distance approach performs better than the other NN algorithms. This
+Ranked Distance algorithm showed a statistically significant improvement over
+other NN algorithms. This
 improvement is not apparent at smaller feature sets, where using the standard
 $k$-NN algorithm with 1 or 20 neighbours performs slightly better.
 The performance of NN we observed in our results is
@@ -367,7 +371,7 @@ the network architecture, so it is likely that its accuracy and AUC could be
 improved if the parameters were selected to optimise its performance on this
 data set.
 
-\subsection{General Data Set}
+\subsection{General Hospital Data}
 In Figures \ref{fig:pt-nothreshold} and \ref{fig:pt-threshold}, we compare the
 performance of the classifiers we used on the general hospital data set. In
 contrast to the trauma data, we were able to achieve very high accuracy and
@@ -406,18 +410,18 @@ to be processed several times by the MLP until all of the weights between its
 connections do not change more than a certain threshold.
 
 Notice that in Figure \ref{fig:pt-threshold-corr}, both the accuracy and AUC
-of Ranked Distance drop much more than for the other classifiers. This is at
+of Ranked Distance NN drop much more than for the other classifiers. This is at
 a correlation coefficient threshold of 0.2, which reduces the feature set to
 4 features. We noted in the discussion on classifiers for the trauma data set
-that Ranked Distance performed worse for smaller feature sets than for larger
+that Ranked Distance NN performed worse for smaller feature sets than for larger
 ones, and this is another example of this phenomenon. Recall that in Ranked
-Distance, features are first ranked according to some similarity metric (we
+Distance NN, features are first ranked according to some similarity metric (we
 have used the correlation coefficient), and then assigned a weight according
 to their rank. The function we have used assigns rapidly decaying weights to
 the features, which results in greater importance being placed on a few of
 the features with the highest rank. Further work needs to be carried out to
 investigate the cause of the poor performance on smaller feature sets, but
-it is not altogether surprising: Ranked Distance performs best by using the
+it is not altogether surprising: Ranked Distance NN performs best by using the
 weighted distance contributions of all features, and by significantly reducing
 their number we can expect to sharply reduce its ability to differentiate
 between neighbours. There is also scope for investigating other weight
@@ -472,7 +476,7 @@ reaffirms its use as the \textit{de facto} classifier in predictive medicine.
 However, we were also able to achieve results that were almost as good using
 nearest neighbour approaches combined with feature selection techniques,
 neither of which have been investigated thoroughly in previous work. Our
-proposed Ranked Distance approach was able to improve the accuracy and AUC of
+proposed Ranked Distance algorithm was able to improve upon the accuracy and AUC of
 the standard $k$-NN algorithm with the same number of neighbours, but we found
 that its performance suffered when used in conjunction with feature selection.
 

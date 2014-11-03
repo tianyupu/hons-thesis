@@ -1,9 +1,6 @@
 \begin{table}[htbp]
-\caption{Overall best AUC of each classifier with a particular feature selection method on the trauma data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
-\label{tab:overall-tr-auc}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|cccccccc|}
-\hline
+\begin{tabular}{l|cccccccc}
 Classifier & None & Baseline & Expert & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
 ZeroR & 0.498* & 0.498* & 0.498* & 0.498* & 0.498* & 0.498* & 0.498* & 0.498* \\
 1R & 0.67 & 0.5* & 0.581* & 0.668 & 0.668 & \begin{tabular}[c]{@{}c@{}}0.669\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.669\\ t=0.005\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.67\\ t=69.905\end{tabular}} \\
@@ -15,7 +12,9 @@ SVM & \begin{tabular}[c]{@{}c@{}}0.843\\ D\end{tabular} & 0.787* & 0.807 & \begi
 20NN & \begin{tabular}[c]{@{}c@{}}0.827\\ D\end{tabular} & 0.792* & \begin{tabular}[c]{@{}c@{}}0.808\\ D\end{tabular} & 0.814 & \begin{tabular}[c]{@{}c@{}}0.828\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.831\\ D, t=0.1\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.832\\ D, t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.799\\ D, t=66.905\end{tabular} \\
 RD & \begin{tabular}[c]{@{}c@{}}0.834\\ D\end{tabular} & 0.742* & \begin{tabular}[c]{@{}c@{}}0.807\\ D\end{tabular} & 0.81 & \begin{tabular}[c]{@{}c@{}}0.825\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.836\\ D, t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.834\\ D, t=0.005\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.791\\ D, t=66.905\end{tabular} \\
 K* & \begin{tabular}[c]{@{}c@{}}0.768\\ D\end{tabular} & 0.774* & \begin{tabular}[c]{@{}c@{}}0.803\\ D\end{tabular} & 0.815 & \textbf{\begin{tabular}[c]{@{}c@{}}0.838\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.82\\ D, t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.802\\ D, t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.787\\ t=68.905\end{tabular} \\
-MLP & \begin{tabular}[c]{@{}c@{}}0.803\\ D\end{tabular} & 0.781* & \begin{tabular}[c]{@{}c@{}}0.784\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.802\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.825\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.818\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.803\\ D, t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.772\\ D, t=68.905\end{tabular} \\ \hline
+MLP & \begin{tabular}[c]{@{}c@{}}0.803\\ D\end{tabular} & 0.781* & \begin{tabular}[c]{@{}c@{}}0.784\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.802\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.825\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.818\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.803\\ D, t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.772\\ D, t=68.905\end{tabular} \\
 \end{tabular}
 }
+\caption{Overall best AUC of each classifier with a particular feature selection method on the trauma data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
+\label{tab:overall-tr-auc}
 \end{table}

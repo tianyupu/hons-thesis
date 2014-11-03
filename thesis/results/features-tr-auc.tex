@@ -1,9 +1,6 @@
 \begin{table}[htbp]
-\caption{Comparison of AUC between all feature selection methods for each classifier with and without discretisation, on the trauma data set. The best AUC for each feature selection method is highlighted in bold, and the best AUC for each classifier is italicised.}
-\label{tab:features-tr-auc}
 \resizebox{!}{11cm}{%
-\begin{tabular}{|l|cccccccc|}
- \hline
+\begin{tabular}{l|cccccccc}
  & None & Baseline & Expert & CFS & C4.5 Wrapper & Correlation & IG & 1R \\ \hline
 \textit{1R} &  &  &  &  &  &  &  &  \\
 Discretised & 0.569 & 0.5 & 0.581 & 0.569 & 0.581 & \begin{tabular}[c]{@{}c@{}}0.572\\ t=0.1\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}0.581\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.571\\ t=68.905\end{tabular} \\
@@ -34,7 +31,9 @@ Discretised & 0.768 & 0.774 & 0.803 & 0.813 & \textit{\textbf{0.838}} & \begin{t
 Not discretised & 0.732 & 0.774 & 0.784 & \textit{0.815} & 0.809 & \begin{tabular}[c]{@{}c@{}}0.811\\ t=0.2\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.779\\ t=0.05\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.787\\ t=68.905\end{tabular} \\
 \textit{MLP} &  &  &  &  &  &  &  &  \\
 Discretised & 0.803 & 0.781 & 0.784 & 0.802 & \textit{0.825} & \begin{tabular}[c]{@{}c@{}}0.807\\ t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.803\\ t=0\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.772\\ t=68.905\end{tabular} \\
-Not discretised & 0.78 & 0.781 & 0.774 & 0.799 & 0.804 & \textit{\begin{tabular}[c]{@{}c@{}}0.818\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.788\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.752\\ t=68.905\end{tabular} \\ \hline
+Not discretised & 0.78 & 0.781 & 0.774 & 0.799 & 0.804 & \textit{\begin{tabular}[c]{@{}c@{}}0.818\\ t=0.15\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.788\\ t=0.01\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.752\\ t=68.905\end{tabular} \\
 \end{tabular}
 }
+\caption{Comparison of AUC between all feature selection methods for each classifier with and without discretisation, on the trauma data set. The best AUC for each feature selection method is highlighted in bold, and the best AUC for each classifier is italicised.}
+\label{tab:features-tr-auc}
 \end{table}
