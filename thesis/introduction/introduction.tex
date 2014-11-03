@@ -26,7 +26,7 @@ values in the data set. The two major sub-areas of predictive modelling are
 nature of the quantity we want to predict. If we want to predict whether
 something belongs in a category, such as the disease of a patient, then we
 are dealing with classification; otherwise, if we wish to predict a numeric
-quantity, such as the value of the stock market at some future data, then
+quantity, such as the value of the stock market at some future date, then
 it is a regression problem;
 \item Pattern and rule discovery, which covers anomaly detection (finding data
 points which do not fit an expected trend, like detecting credit card fraud)
@@ -38,19 +38,15 @@ that are similar to the one he or she specifies. Search engines are a familiar
 application of this area of data mining.
 \end{enumerate}
 
-Data mining overlaps substantially with machine learning, a sub-field of
-artificial intelligence (AI) dedicated to the study of systems that can learn
-from data rather than executing explicitly programmed instructions. The
-techniques and issues discussed in this thesis are equally relevant in both
-areas, so we will not attempt to define a clear distinction here.
-
-\todo{Probably will need to revise this section here and be a bit more
-clear on the distinctions.}
-
+The technical methods of data mining are drawn substantially from a field of
+computer science known as \textit{machine learning}, which is dedicated to the
+study of systems that can learn structural descriptions from data examples.
 In this thesis we will focus on the task of predictive modelling, also
-commonly known as \textit{supervised learning}. Specifically,
-our problem will be a classification one. We will introduce the necessary
-terminology in the next section as we describe the problem.
+known as \textit{supervised learning} in the field of machine learning.
+Specifically,
+our problem will be one of classification. We will introduce the necessary
+terminology in the next section as we describe the problem, as well as
+throughout this thesis as necessary.
 
 \section{Problem Statement}
 Consider a data set of patients admitted to the trauma ward of a hospital.
@@ -58,8 +54,9 @@ This data set looks like a very large table: there are many columns, each one
 describing some aspect of a patient (for example, age); there are also many
 rows, each corresponding to a particular patient that was admitted. We will
 refer to the columns as \textit{features} or \textit{attributes}, so-named
-because they describe some particular aspect of the rows, which we will call
-\textit{samples}. Concretely, as an example, our data set could contain
+because they describe some particular aspect of the rows, which are often
+called \textit{instances}, \textit{samples}, or \textit{training examples}.
+Concretely, as an example, our data set could contain
 two features (age and gender) for five patients: as a table, this means that
 we have two columns, one for age and another for gender, with five rows
 containing the age and gender data for each patient. Attributes can be numeric
@@ -67,35 +64,28 @@ containing the age and gender data for each patient. Attributes can be numeric
 or categorical (such as gender) and can only have one of a limited, pre-defined
 list of values.
 
-In a general predictive modelling problem, we wish to predict a value for some
-desired quantity given some values for the attributes. In our problem, we wish
-to predict the length of stay (LOS) for a patient admitted to a hospital trauma
-ward. To do this, we use our data set of trauma patients with \textit{known}
-values for the LOS and apply various predictive modelling techniques to deduce
-an effective model that will be able to predict the LOS of patients in advance.
+In a general supervised learning problem, we wish to predict a value for some
+desired quantity given some values for the attributes. The relationship between
+the features and the desired quantity can be \textit{learned} from using data
+that contains known values for the quantity that we wish to predict: this is
+what makes the problem \textit{supervised}.
+Our problem is a binary \textit{classification} task in which we
+predict one of two possible categories for a patient: a length of stay (LOS) of
+less than or equal to 2 days, or a LOS of greater than 2 days. These outcomes
+are also called \textit{classes} or \textit{class labels}.
+
+To do this, we use our data set of trauma patients with \textit{known}
+values for the LOS and apply various \textit{learning} or
+\textit{classification algorithms} to deduce
+a relationship between the features and the LOS. Once the learning algorithm
+or \textit{classifier}
+has ``learned'' this relationship, it is then able to predict the class of
+any patient given a set of features describing him or her.
 Note that the LOS is simply another attribute of our data set; however, because
 it is the quantity that we are interested in predicting, it is also called the
-\textit{target} or \textit{outcome} variable.
+\textit{target}, \textit{outcome}, or \textit{class}.
 
-Like the other attributes, the target or outcome variable can also be numeric
-or categorical. This determines the sub-task of predictive modelling that we
-will subsequently be dealing with: regression if the target variable is
-numeric, and classification if it is categorical. The various values that the
-categorical target variable can take on are also called \textit{classes}.
-Our problem is one of classification, divided into two sub-problems:
-
-\begin{enumerate}
-\item The first problem is a \textit{binary} classification task in which we
-predict one of two possible outcomes (or classes) for the patient: LOS less
-than 2 days, or greater than 2 days. Given this, what model performs best?
-\item The second problem is a \textit{multi-class} classification in which we
-define several possible outcomes with different ranges for the LOS and predict
-which range the patient will fall into. An example of possible outcomes can be
-1-3 days, 4-10 days, and 11 or more days, giving us three classes for the
-target variable. The optimal division of LOS into ranges will be investigated
-as part of the problem.
-\end{enumerate}
-
+\section{Motivation}
 The LOS is an important measure of resource utilisation in hospitals around
 the world \citep{Ng2006},
 and many studies have been carried out to investigate whether the
@@ -107,33 +97,46 @@ and management of limited resources such as staff, equipment and medical
 supplies. This is particularly critical as hospitals often face the problem
 of limited funding \citep{Walczak2003}.
 As we will see in the next chapter, there has been limited
-application of a wide range of data mining techniques to predict the LOS in
-various medical domains, including trauma. Our work will aim to fill this
-gap by providing insights on the application of data mining techniques to
-LOS prediction.
+application of a variety of data mining techniques to predict the LOS in
+various medical domains, including trauma. Our work will aim to bridge this
+gap by providing insights on the application of a wide range of data mining
+techniques to LOS prediction.
 
 \section{Contributions}
 The work presented in this thesis aims to address several gaps in the current
-research into LOS prediction, by building upon the work of Dinh et. al.
-\citep{Dinh2013a}.
-We apply and assess a range of techniques from different data mining paradigms
-to a data set of trauma patients, and investigate whether formulating the LOS
-prediction problem differently yields different results. The insights gained
-from applying various data mining techniques will lead to a novel method of
-predicting the LOS which will yield reliable and accurate results and support
-the decision-making of medical professionals.
+research into LOS prediction, by building upon the work of Dinh et al.
+\citep{Dinh2013a}. We systematically and empirically evaluated a comprehensive
+catalogue of 11 classification
+algorithms and 5 feature selection methods, as well as the effect of
+discretisation, for predicting the LOS of trauma patients. 3 of the
+classifiers and 4 of the feature selection methods have not been applied in
+LOS prediction to date. Additionally, we are also not aware of any previous
+work using the discretisation method that we evaluate in this thesis.
+
+We also proposed a new distance function, Ranked Distance, for use with one
+of the classification algorithms that we evaluate, and showed that this
+performed better than the standard distance function in certain situations.
+
+Finally, we conducted our evaluations on two independent data sets from
+different medical domains: one from trauma and the other a general hospital
+data set. Not only is the evaluation of a second data set in one work
+uncommon in the literature, but the inclusion of more than one data set
+allowed us to draw additional insights about the classifiers and feature
+selections we used which would not have been possible with only one set of
+data.
 
 \section{Thesis Outline}
-This thesis is structured as follows. Chapter \ref{chap:litreview} describes
-the major methods in predictive modelling, interweaved with an analysis of
-past work on LOS prediction. We explore in detail the major algorithms,
-summarise the current state of research, and identify where our work fits
-within this area.
+This thesis is structured as follows. Chapter \ref{chap:litreview} introduces
+the major methods in supervised learning as used in past work on LOS
+prediction. We explore the major algorithms, summarise the current state of
+research, and identify where our work fits within this area.
 
-Chapter \ref{chap:experiments} describes the experimental setup, detailing
-each step in the process from data pre-processing to model creation and
-finally to performance evaluation.
+Chapters \ref{chap:classification}, \ref{chap:preprocess} and
+\ref{chap:selection} describe in detail the classification algorithms, and
+feature preprocessing and selection methods used in our work. This leads into
+the process of our evaluation, which is detailed in Chapter
+\ref{chap:evaluation}.
 
-After the methods and setup are described, the results are presented and
-discussed in Chapter \ref{chap:results}. We conclude in Chapter
-\ref{chap:conclusion}, with indications for future work in this area.
+Our findings are presented and discussed in Chapter \ref{chap:results}.
+We conclude in Chapter \ref{chap:conclusion}, with indications for future
+work in this area.
