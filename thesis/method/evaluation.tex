@@ -7,39 +7,8 @@ decide how to evaluate our work. Here we have chosen to rigorously evaluate
 our results (such as using stratified cross-validation when others may have
 used a single training-test split), while still using performance measures
 comparable to the literature and suitable for our particular learning problem.
-This chapter discusses the data sets, procedure and performance measures used
+This chapter discusses the procedure and performance measures used
 in evaluating our work.
-
-\section{Data Sets}
-In our work we obtained two independent sets of LOS data, one specifically for
-trauma and the other a general, hospital-wide set.
-
-\subsection{Trauma LOS Data}
-\subsubsection{Collection}
-The data set used consisted of trauma registry data from the trauma centre
-at the Royal Prince Alfred Hospital, a major trauma centre in New South Wales,
-Australia. It covered all adult (age 15 and over) inpatient admissions to the
-trauma centre from 2007--2011. 
-
-All patients were first admitted to the trauma ward until discharged
-or transferred to an appropriate unit within the hospital. A single trained
-data manager recorded a variety of attributes about the admitted patient,
-such as age, gender, blood pressure, mechanism of injury and body regions
-that were injured. We received this data in a Microsoft Excel spreadsheet.
-
-\subsubsection{Characteristics}
-There were 2546 patient records in the data set we received, comprising of 79
-features, one of which was the target variable \texttt{los48}.
-\texttt{los48} was a binary variable -- that is, it could only take two
-values, 0 or 1 -- with 1 indicating that the patient stayed two days or less,
-and 0 indicating a stay of greater than 2 days.
-
-\subsection{General Hospital LOS Data}
-By collaborating with our colleagues from the University of Minho in Portugal,
-we were able to obtain LOS data for all inpatient hospitalisations from
-2000--2013 at the Hospital das Foras Armadas in Lisboa, Portugal. The data
-contained 26462 inpatient records spanning all medical departments within the
-hospital, comprising 15 features that were not specific to any medical domain.
 
 \section{Evaluation Procedure}
 \subsection{Steps Involved}
@@ -109,9 +78,9 @@ our experiments easily using scripts which we wrote (see Section
 
 \subsubsection{Code Written}
 \label{sec:code}
-\todo{attach code in appendix?}
 Leading and trailing whitespace was removed and feature names transformed using
-code written in Python to manipulate the CSV. All runs of WEKA were executed by
+code written in Python to manipulate the CSV exported from Microsoft Excel.
+All runs of WEKA were executed by
 a program we wrote in Bash (a Unix shell) script. This program was able to run
 WEKA with the following features:
 \begin{itemize}
@@ -135,7 +104,7 @@ in the next section) for each classifier, and compute the mean and confidence
 interval (also discussed in the next section) in a single output that we could
 then save as CSV.
 
-In order to implement our novel Ranked Distance function (Section
+In order to implement our novel Ranked Distance Nearest Neighbour algorithm,
 \ref{sec:rankeddist}), we created our own class within the WEKA Java package
 hierarchy. This was implemented in Java and needed to implement the correct
 interfaces and override the right inherited methods in order for the $k$-NN
@@ -143,7 +112,10 @@ classifier in WEKA to be able to use it as a distance function. This also
 involved updating certain properties of the \texttt{weka.jar} executable in
 order to use the new class, as well as building the entire WEKA source. The
 development environment we used was Eclipse \todo{insert version}, and the
-source was built using the 1.7 Java runtime. \todo{double check}
+source was built using the 1.7.0 Java runtime.
+
+The source code listing of the most important programs we wrote are displayed
+in Appendix \ref{app:code}.
 
 \section{Performance Measures}
 There are many ways to evaluate the performance of learning algorithms. The

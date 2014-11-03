@@ -11,8 +11,43 @@ preprocessing, it will be difficult to evaluate the true performance of
 our classifiers on the data set and to draw meaningful conclusions from
 comparisons between classifiers.
 
-In this chapter give an overview of preprocessing and describe the steps we
-took on our data.
+In this chapter we introduce the data sets and give an overview of
+preprocessing, describing the specific steps we took on our data.
+
+\section{Data Sets}
+In our work we obtained two independent sets of LOS data, one specifically for
+trauma and the other a general, hospital-wide set.
+
+\subsection{Trauma LOS Data}
+\subsubsection{Collection}
+The data set used consisted of trauma registry data from the trauma centre
+at the Royal Prince Alfred Hospital, a major trauma centre in New South Wales,
+Australia. It covered all adult (age 15 and over) inpatient admissions to the
+trauma centre from 2007--2011. 
+
+All patients were first admitted to the trauma ward until discharged
+or transferred to an appropriate unit within the hospital. A single trained
+data manager recorded a variety of attributes about the admitted patient,
+such as age, gender, blood pressure, mechanism of injury and body regions
+that were injured. We received this data in a Microsoft Excel spreadsheet.
+
+\subsubsection{Characteristics}
+There were 2546 patient records in the data set we received, comprising of 79
+features, one of which was the target variable \texttt{los48}.
+\texttt{los48} was a binary variable -- that is, it could only take two
+values, 0 or 1 -- with 1 indicating that the patient stayed two days or less,
+and 0 indicating a stay of greater than 2 days.
+
+\subsubsection{Features}
+
+\subsection{General Hospital LOS Data}
+By collaborating with our colleagues from the University of Minho in Portugal,
+we were able to obtain LOS data for all inpatient hospitalisations from
+2000--2013 at the Hospital das Foras Armadas in Lisboa, Portugal. The data
+contained 26462 inpatient records spanning all medical departments within the
+hospital, comprising 15 features that were not specific to any medical domain.
+
+\subsubsection{Features}
 
 \section{Cleaning} % missing values, irrelevant features
 In any data mining task, adequately \textit{cleaning} the data ensures the best

@@ -105,25 +105,38 @@ techniques to LOS prediction.
 \section{Contributions}
 The work presented in this thesis aims to address several gaps in the current
 research into LOS prediction, by building upon the work of Dinh et al.
-\citep{Dinh2013a}. We systematically and empirically evaluated a comprehensive
-catalogue of 11 classification
-algorithms and 5 feature selection methods, as well as the effect of
-discretisation, for predicting the LOS of trauma patients. 3 of the
-classifiers and 4 of the feature selection methods have not been applied in
-LOS prediction to date. Additionally, we are also not aware of any previous
-work using the discretisation method that we evaluate in this thesis.
+\citep{Dinh2013a}. Our contributions can be summarised as follows:
 
-We also proposed a new distance function, Ranked Distance, for use with one
-of the classification algorithms that we evaluate, and showed that this
-performed better than the standard distance function in certain situations.
+\begin{enumerate}
+\item We systematically evaluated the performance of a catalogue of eleven
+classification algorithms and five feature selection methods for predicting the
+LOS of trauma patients. Three of the classifiers and four of the feature
+selection methods have not been applied in LOS prediction to date, and only
+one has been applied in our medical domain. 
 
-Finally, we conducted our evaluations on two independent data sets from
-different medical domains: one from trauma and the other a general hospital
-data set. Not only is the evaluation of a second data set in one work
-uncommon in the literature, but the inclusion of more than one data set
-allowed us to draw additional insights about the classifiers and feature
-selections we used which would not have been possible with only one set of
-data.
+\item We assessed the effect of feature discretisation on classifier
+performance. This has not been studied in previous work.
+
+\item We proposed a new algorithm, Ranked Distance Nearest Neighbour, and
+showed that it performed better than the standard nearest neighbour algorithm
+in certain situations.
+
+\item We conducted our evaluations on two independent data sets from different
+medical domains: one from a trauma ward in a major Sydney hospital and the other
+from a general hospital in Portugal. The collection, processing and
+understanding of the data involved collaboration with medical experts (Dr
+Michael Dinh from the Royal Prince Alfred Hospital in Sydney) and researchers
+from Portugal (Associate Professor Paulo Cortez from the University of Minho).
+Not only is the evaluation of a second data set in one work uncommon in the
+literature, the inclusion of more than one data set allowed us to draw
+additional insights about the classifiers and feature selections we used
+which would not have been possible with only one set of data. 
+
+\item We comprehensively analysed and discussed various aspects of the results
+(such as comparison across classification algorithms, feature selection
+methods, performance measures, datasets and discretisation). Our results showed
+an improvement over the best result on the same datasets.
+\end{enumerate}
 
 \section{Thesis Outline}
 This thesis is structured as follows. Chapter \ref{chap:litreview} introduces

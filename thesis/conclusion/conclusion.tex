@@ -3,9 +3,8 @@
 In this thesis we conducted a systematic and empirical evaluation of a number
 of classification algorithms and feature selection methods, as well as the
 effect of discretisation, for predicting the length of hospital stay of trauma
-patients. In particular, we introduced a new distance function, Ranked
-Distance, for the standard
-$k$-nearest neighbours algorithm and compared its accuracy and AUC with ten
+patients. In particular, we introduced a new classification algorithm, Ranked
+Distance Nearest Neighbours, and compared its accuracy and AUC with ten
 other classifiers -- Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision tree, logistic
 regression, support vector machine, $k$-nearest neighbour with $k=1$ and 20,
 K* and multi-layer perceptron -- several of which (for example K*) have not
@@ -20,14 +19,16 @@ set from Portugal.
 \section{Conclusions}
 The best accuracy we achieved on the trauma data was 77.81\% with the $k$-NN
 classifier using 1 nearest neighbour and 11 out of 78 features. This represents
-an improvement over previous work done by Dinh et al. on the same data set,
+an improvement over previous work done by Dinh et al. \cite{Dinh2013a}
+on the same data set,
 where they managed to achieve 75.06\% with logistic regression. More
 importantly, we were able to improve upon their AUC of 0.812 with a result of
 0.846, also using logistic regression but first discretising numeric features
 and reducing the feature set to 29 features.
 If we consider an even smaller number of features, then K*
 gives an AUC of 0.838 with 11 features selected by the C4.5 wrapper, which
-improves upon the result of Dinh et al. while using a little more than half
+improves upon the result of Dinh et al. \cite{Dinh2013a} while using a little
+more than half
 the number of features. The drawback of $k$-NN and K* is that they require all
 examples to be stored and then searched during classification, which becomes
 storage- and computation-expensive as the data set increases in size.
@@ -46,14 +47,16 @@ predictive power and reducing feature set size.
 An important contribution of our work is the use of several nearest neighbour
 algorithms for predicting the LOS class of a patient. We found that these
 techniques can achieve good accuracy and discriminating ability if a suitable
-set of features is found. In addition, we proposed a variation on the standard
-nearest neighbours distance function, in order to take the relative importance
+set of features is found. In addition, we proposed a new algorithm, Ranked
+Distance Nearest Neighbours, which is an extension of the standard nearest
+neighbours classifier that takes the relative importance
 of each feature into account when determining the nearest neighbours of an
 example. We found that this achieved better results than the other nearest
 neighbour algorithms we evaluated, but only when most of the original feature
 set was used.
 
-Although we were able to improve on the work of Dinh et al. and confirm the
+Although we were able to improve on the work of Dinh et al. \cite{Dinh2013a}
+and confirm the
 importance of some features they and others found in predicting the LOS for
 trauma patients, we did not find a single classifier or feature selector
 that was superior to the others but instead observed different combinations
@@ -86,7 +89,7 @@ significant improvements in accuracy and AUC, and explore reasons why this
 did or did not help. We could also broaden our investigation by additionally
 using another data set, preferably from a different medical domain.
 
-For the $k$-NN algorithm using our Ranked Distance approach, we only considered
+In our proposed Ranked Distance Nearest Neighbours algorithm, we only considered
 one kind of weight assignment function, but it is not the only way to assign
 these weights. There is room to investigate other types of functions, as well
 as using weights obtained from another algorithm (such as logistic regression).
