@@ -22,7 +22,12 @@ regression. It is worth noting that our best accuracy, using $k$-NN with 1
 nearest neighbour, improves upon the accuracy that they achieved by 2.75\%
 while using only 11 features (compared to the 19 they used). These 11 features
 make up only 14.1\% of all features in the data set, and performed better than
-the 11 features selected manually by the domain expert.
+the 11 features selected manually by the domain expert. The number of features
+selected by each method for each data set is listed in Tables
+\ref{tab:features-selected-nothreshold} and
+\ref{tab:features-selected-threshold}, and the full details of the selected
+features can be found in Appendices \ref{app:features-tr} and
+\ref{app:features-pt}.
 
 Despite our inclusion of accuracy as an evaluation metric, the AUC is what Dinh
 et al. used to evaluate the ability of their logistic regression classifier to
@@ -123,6 +128,9 @@ accuracy for 7 of these combinations, followed by 5 using information gain
 and 4 using the correlation coefficient and very few for the other methods.
 Under no combination was 1R the best feature selection method to use, as other
 methods produced better accuracy.
+
+\input{results/features-selected-nothreshold.tex}
+\input{results/features-selected-threshold.tex}
 
 Focussing our attention on the AUC tells a slightly different story. Here we
 find that the correlation coefficient and the information gain are the feature

@@ -1,0 +1,18 @@
+\begin{table}[htbp]
+\resizebox{\textwidth}{!}{%
+\tabcolsep=2pt
+\begin{tabular}{llcccccccc}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{4}{c}{No discretisation} & \multicolumn{4}{c}{Discretisation} \\
+\hline
+ &  & \multicolumn{2}{c}{Trauma} & \multicolumn{2}{c}{General hospital} & \multicolumn{2}{c}{Trauma} & \multicolumn{2}{c}{General hospital} \\
+ Type & Method & \multicolumn{1}{l}{Selected} & \multicolumn{1}{l}{\% of total} & \multicolumn{1}{l}{Selected} & \multicolumn{1}{l}{\% of total} & Selected & \% of total & Selected & \% of total \\
+ \hline
+ \multirow{2}{*}{Manual} & Baseline & 19 & 24.36 & - & - & 19 & 24.36 & - & - \\
+  & Expert Selection & 11 & 14.10 & - & - & 11 & 14.10 & - & - \\
+  \multirow{2}{*}{Automatic} & CFS & 9 & 11.54 & 2 & 14.29 & 9 & 11.54 & 2 & 14.29 \\
+   & C4.5 Wrapper & 10 & 12.82 & 4 & 28.57 & 11 & 14.10 & 4 & 28.57 \\
+   \end{tabular}
+}
+\caption{A listing of the number of features selected by non-threshold feature selectors for both data sets, with and without discretisation.}
+\label{tab:features-selected-nothreshold}
+\end{table}
