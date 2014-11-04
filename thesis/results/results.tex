@@ -168,7 +168,7 @@ were chosen in common between them were: \texttt{operation}, \texttt{bp},
 \texttt{iss}, \texttt{lowerlimbnopelvis}, \texttt{age}, \texttt{lowerlimbany}
 and \texttt{icu}. This adds evidence to the work of Dinh et al. who found
 that \texttt{iss}, \texttt{age} and \texttt{operation} were important
-distinguishers of LOS $\leq$ or $>$ 2 days \cite{Dinh2013a}. We also
+distinguishers of LOS ``less than or equal to 2 days'' or ``greater than 2 days'' \cite{Dinh2013a}. We also
 confirm the findings of Gabbe et al. who found that \texttt{age},
 \texttt{iss} and \texttt{bp} were useful in predicting the length of
 hospital stay of blunt trauma patients \cite{Gabbe2005}. Our feature
@@ -251,7 +251,7 @@ the original 14 features, cutting down the number of features by nearly half.
 We mentioned that the MLP had the highest discriminating ability when used with
 CFS and C4.5 wrapper selection, with AUC 0.983 and 0.992 respectively. While
 this is not as high as the best result of 0.994, it is worth pointing out that
-CFS only selected 2 features and C4.5 wrapper, 4 features. This means that
+CFS and C4.5 selected only selected 2 and 4 features, respectively. This means that
 using only 2 features, we were still able to discriminate between the two LOS
 classes almost as well as if we used all of the features. Moreover, using
 only 6 out of 14 features and $k$-NN with 1 or 20 nearest neighbours, we can
@@ -286,7 +286,8 @@ attribute indicates that condition-specific factors should be taken into
 account when predicting the LOS for any medical domain. Additionally, the
 \texttt{InpatientService} feature was also considered important in predicting
 the class, a finding that was also noted by Lucas et al. \cite{Lucas2009},
-although they considered the classification of LOS $\leq$ and $>$ 3 days.
+although they considered the classification of LOS less than and greater than
+3 days.
 
 \section{Comparison of Classifiers}
 \subsection{Trauma Data}

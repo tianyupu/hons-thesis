@@ -82,7 +82,7 @@ An example of a rule is that \textit{age 0-20} most commonly
 has ``LOS $\leq$ 2 days''. For each of these rules, 1R will attempt to
 use only that rule to predict the LOS class for each example in the data set,
 noting down the error rate. 1R then chooses the feature that produces rules
-with the highest total accuracy.
+with the highest total accuracy across all discretised feature values.
 
 \section{Na\"{i}ve Bayes}
 Unlike 1R, which considers only one feature in the feature vector, Na\"{i}ve
@@ -93,7 +93,7 @@ description \textit{na\"{i}ve}. This means that we
 calculate the probability that a particular feature value belongs in a class
 without considering the effect of other features on this probability. This
 probability can be computed by
-counting the frequency with which the value is associated with a class in the
+counting the frequency with which a feature value is associated with a class in the
 training data. After these probabilities are computed, classifying a feature
 vector simply involves multiplying the probabilities of each feature belonging
 to each possible class. The predicted class for that feature vector is then the
@@ -111,7 +111,7 @@ Since we assume that the features are independent, we can simplify the above as:
 \end{equation*}
 This gives us the probability that the feature vector $(F_1,F_2,\ldots,F_n)$
 belongs in the $i$-th class. Classifying the feature vector involves
-calculating this probability for each for each class and choosing the class
+calculating this probability for each class and choosing the class
 with the highest probability.
 
 Since we compute the probability of each feature value belonging in a
@@ -119,10 +119,10 @@ particular class by counting the frequency of each value's occurrence with
 respect to the class, it is sometimes possible that a feature value has zero
 probability of being in a certain class. This would make the numerator of the
 above equation zero. A feature vector that could otherwise have been highly
-likely to belong in class $i$ is now counted as having zero probability of
+likely to belong in class $i$ is then counted as having zero probability of
 belonging in the class. In order to ensure that each probability is non-zero,
 a small constant is added to all probabilities in a process called
-\textit{Laplace smoothing}, which is commonly used for NB classifiers.
+\textit{Laplace smoothing}, which is now commonly used for NB classifiers.
 
 Like 1R, numeric features also need to be handled separately from nominal ones.
 The typical approach is to assume that the values of a numeric feature follow a
@@ -153,8 +153,8 @@ subsets, growing the tree.
 If all examples in a subset have the same class at any point during
 this process, we stop splitting that subset.
 
-The only thing left to specify
-now is how to decide which attribute to split on. Note that when splitting,
+We now only need to specify how to decide which attribute to split on at
+each step. Note that when splitting,
 we would like to create subsets that are as ``pure''
 -- that is, containing as many
 instances of the same class -- as possible, so that the splitting may
@@ -162,7 +162,7 @@ terminate earlier. Since we would like our trees to be as small as possible to
 prevent overfitting and allow the best generalisation ability,
 we would therefore like to choose the feature to split on such that the
 created subsets were as pure as possible. The measure of purity used in
-learning decision trees is the \textit{information}, and is measured in
+learning decision trees is called \textit{information}, and is measured in
 \textit{bits}. At any node (or subset) of the tree, this measure represents
 the expected amount of information that would be needed to classify a new
 example, given that the example reached the node. The information at each
@@ -190,17 +190,17 @@ gain.
 
 Decision trees are fast to train and produce models that are straightforward
 for humans to interpret, the latter of which is particularly valuable in a
-clinical environment. We will use the C4.5 tree induction algorithm, which is
-considered the state-of-the-art and handles different types of feature values
-as well as missing values.
+clinical environment. We will use the C4.5 tree induction algorithm
+\cite{Quinlan1993}, which is considered the state-of-the-art in decision trees
+and handles different types of feature values as well as missing values.
 
 \section{Logistic Regression}
 Logistic regression (LR) is a regression technique used for when the dependent
 variable is dichotomous or two-valued, and thus it is a suitable candidate to
 use for our LOS classification problem.
 Previous work on trauma LOS prediction by
-Dinh et. al. \cite{Dinh2013a}, as well as many attempts at modelling the LOS
-in various medical domains, have all used logistic regression, often as a
+Dinh et. al. \cite{Dinh2013a} as well as many attempts at modelling the LOS
+in various medical domains have all used logistic regression, often as a
 starting point.
 
 For a class variable with two possible values that occur with
@@ -212,7 +212,7 @@ $(F_1,F_2,\ldots,F_n)$, the logistic regression model is:
   &= \beta_0 + \beta_1F_1 + \beta_2F_2 + \ldots + \beta_nF_n
 \end{aligned}
 \end{equation*}
-For LOS classification, this can be rearranged to:
+For our LOS classification problem, this can be rearranged to:
 \begin{equation*}
 \begin{aligned}
 p &= \mathbb{P}(Class=\mathrm{LOS }\leq2\mathrm{ days}|F_1,F_2,\ldots,F_n) \\
@@ -224,7 +224,7 @@ Training the logistic regression classifier, then, is a matter of finding the
 $\beta_i$ that will maximise the likelihood (conditional probability of the
 data given the values for $\beta_i$) of the given data set. This is done using
 numerical methods, where estimates of the $\beta_i$ are chosen, the likelihood
-computed, and the $\beta_i$ are updated, and so on: this process is repeated
+computed, the $\beta_i$ updated accordingly, and so on: this process is repeated
 until parameter estimates converge or do not change more than a given threshold
 value.
 
@@ -253,7 +253,7 @@ This gives the SVM the best generalising ability to classify new examples.
 \begin{figure}[h]
 \includegraphics{images/method/svm-example.pdf}
 \caption{An example of a 2-dimensional SVM. The solid line indicates the
-maximum margin hyperplane.}
+maximum margin hyperplane, and the dotted line indicates the margin.}
 \label{fig:svm}
 \end{figure}
 
@@ -263,11 +263,12 @@ case a line since we are only in two dimensions, separating the two classes
 with as much margin as possible. In
 this case, the points are linearly separable: all white points lie on one side
 of the hyperplane, and all black points lie on the other. In practice, this is
-not common, and often data cannot be separated cleanly by a hyperplane.
+not common, and often the data cannot be separated cleanly by a hyperplane.
 Note that the points closest to the margin are those that are most likely to be
-ambiguous when the data cannot be cleanly separated. The SVM will progressively
-remove more and more of these ambiguous points from consideration when it
-cannot find a hyperplane until it finds a suitable one.
+ambiguous when the data cannot be cleanly separated. If it cannot find a
+hyperplane, the SVM will progressively
+remove more and more of these ambiguous points from consideration 
+until it finds a suitable one.
 
 Instead of removing points from consideration by the SVM, we can also specify
 a \textit{kernel function}, which transforms the original feature space into
@@ -275,7 +276,7 @@ some other non-linear space. Commonly, polynomial functions of degree 2 or
 greater are used, and theoretically they can approximate non-linear boundaries
 between classes to any arbitrary accuracy. However, this is usually not
 practically possible with data sets containing even a modest number of features
-(around 10), due to the computational complexity of estimating a large number
+(around 10) due to the computational complexity of estimating a large number
 of coefficients that are introduced by the transformation.
 
 SVMs can be specified mathematically as a type of optimisation problem known
@@ -293,13 +294,13 @@ $y_i \in \{-1,+1\}, i=1,\ldots,m$, the optimisation problem can be written as:
 \end{equation*}
 where $\phi(\mathbf{x})$ is the kernel function, and
 $\mathbf{w}\cdot\mathbf{x_i} + b = 0$ is the hyperplane that the SVM finds.
-The $s_i$'s allow the SVM to ignore some examples if it cannot find a suitable
+The $s_i$ allow the SVM to ignore some examples if it cannot find a suitable
 hyperplane, and $C$ (sometimes called the SVM's complexity constant) is a
 constant specified by the user that controls how much we want to balance
 finding the best possible margin with allowing misclassified examples.
 Note that for a linear kernel, $\phi(\mathbf{x}) = \mathbf{x}$. Training the
 SVM involves solving this optimisation problem and obtaining values for
-$\mathbf{w}$ and $b$.
+$\mathbf{w}$ and $b$, which define the hyperplane.
 
 To classify an instance $\mathbf{x_{new}}$, we simply find the sign of
 $\mathbf{w}\cdot\mathbf{x_{new}}+b$. This will tell us which one of the
@@ -360,7 +361,8 @@ that we can classify data which are not linearly separable. Figure
 \centering
 \includegraphics{images/method/mlp.pdf}
 \caption{An MLP with one hidden layer. There are $n$ input nodes, $k$ nodes
-in the hidden layer, and one output node.}
+in the hidden layer, and one output node which contains the prediction of
+the network.}
 \label{fig:mlp}
 \end{figure}
 
@@ -376,7 +378,7 @@ algorithm called \textit{gradient descent}. This requires taking derivatives,
 so the threshold function we used for the perceptron is usually replaced with
 the sigmoid function $f(x) = \frac{1}{1+e^{-x}}$. We also define an error
 function $E=\frac{1}{2}(\text{actual} - \text{predicted})^2$ -- the one most
-commonly used -- which is
+commonly used in practice -- which is
 minimised in the gradient descent process. Updating the weights for each
 connection in the network now involves finding the value of the derivative,
 multiplying it by a small constant between 0 and 1 called the
@@ -428,17 +430,19 @@ is done using the following relationship:
 \begin{equation*}
 a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
 \end{equation*}
-where $a_i$ is the normalised value, $v_i$ is the actual value in the data
-set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is a
-scaling factor and $t$ indicates how much to translate the range by. If $s=1$
+where $a_i$ is the normalised feature value, $v_i$ is the actual value in the
+data set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is
+a scaling factor and $t$ indicates how much to translate the range by. If $s=1$
 and $t=0$, then the range of normalised values will be in $[0,1]$.
 
 \subsection{Existing and Proposed Extensions}
 There have been many extensions proposed to the $k$-NN algorithm described
 above. These usually seek to find a more suitable distance metric for the
 problem domain at hand, or to reduce the storage requirements of the original
-$k$-NN algorithm. We will focus on two extensions to the Euclidean distance:
-K* and our proposed algorithm, Ranked Distance.
+$k$-NN algorithm (since the classifier makes no attempt to generalise from the
+examples, all of them must be stored).
+We will focus on two algorithms that extend the standard Euclidean distance:
+K* and our proposed approach, Ranked Distance Nearest Neighbour.
 
 \subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
 Cleary and Trigg developed K*, an instance-based classifier that uses entropy
@@ -470,20 +474,23 @@ P^*(C|a) = \sum_{b\in C} P^*(b|a)
 \end{equation*}
 
 We use K* as a comparison to the basic NN algorithm and also as a comparison
-to our proposed Ranked Distance Nearest Neighbours algorithm.
+to our proposed Ranked Distance Nearest Neighbour algorithm. Additionally,
+K* has not been yet been applied in predicting LOS, and its performance in this
+domain is worth investigating.
 
 \subsubsection{Proposed Approach: Ranked Distance Nearest Neighour}
 \label{sec:rankeddist}
 \paragraph{Intuition}
 As we mentioned earlier, all features are considered equally in a $k$-NN
 classifier, which implies that all features are equally important in predicting
-the class. In practice, however, this is not always the case: to predict the
+the class. In practice, however, this is not always the case: for example,
+to predict the
 LOS of a trauma patient, the severity of their injury should affect the final
 LOS more than whether or not they can speak English (which could be just two
 of many features that are recorded about a patient). Our contribution is a
-new NN algorithm that uses a modified distance function which takes into
-account the relative importance of all features called Ranked Distance
-Nearest Neighbour (RD).
+new NN algorithm, Ranked Distance Nearest Neighbour (RD), which uses a modified
+distance function that takes into account the relative importance of each
+feature in predicting the class.
 
 \paragraph{Mathematical formulation}
 Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
@@ -512,16 +519,16 @@ $n$ being the lowest rank (indicating the least importance).
 Instead of using the values of the correlation directly to weight
 the distance contribution of each feature, we specify a function:
 \begin{equation*}
-f : \mathrm{Rank} \rightarrow \mathbb{R}, \mathrm{Rank} \in \{1,2,\ldots,n\}
+f : \mathrm{Rank} \rightarrow \mathbb{R}, \text{ }\mathrm{Rank} \in \{1,2,\ldots,n\}
 \end{equation*}
 that describes
 how the weights of the features vary with the rank. This function should
-inituitively be non-increasing and should produce lower values when the rank
-number is greater, meaning that less important features have a lower weight
-in the distance calculation.
+inituitively be non-increasing: that is, it should produce lower values when
+the rank number is greater (which indicates a lower rank), meaning that less
+important features have a lower weight in the final distance calculation.
 Note that choosing $f(\mathrm{Rank}) = k$ for any non-zero constant $k$
 results in all features contributing equally to the distance calculation.
-We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
+We will use $f(\mathrm{Rank}) = \dfrac{1}{\mathrm{Rank}^c}$, where
 $c$ varies from 0 to 1.
 
 \section{Summary}
@@ -530,7 +537,7 @@ be evaluating with respect to our classification problem, from the simple
 Zero-R and 1R to Na\"{i}ve Bayes, decision trees, logistic regression,
 $k$-nearest neighbour (and K*), to the more
 sophisticated support vector machines and multi-layer perceptrons. We also
-described our proposed new algorithm, Ranked Distance Nearest Neighbours.
+described our proposed new algorithm, Ranked Distance Nearest Neighbour.
 The reason
 for our inclusion of so many algorithms is two-fold. Firstly, many of
 these algorithms have not been extensively applied in various medical settings
@@ -539,4 +546,4 @@ paradigms will enable us to see what algorithms perform better than others.
 Secondly, evaluating several classifiers will allow us to make comparisons
 between different feature selection methods that are independent of the
 classifier and give us more insight into the nature of the data set and of the
-problem.
+problem itself.

@@ -4,10 +4,10 @@
 Hospitals often have limited funding, and therefore managing and utilising
 their resources efficiently has always been a priority \cite{Walczak2003}.
 One key measurement of hospital activity, health care utilisation, and hospital
-cost is the patient length of stay \citep{Omachonu2004,Ng2006}. The length of
+cost is the patient length of stay \citep{Ng2006,Omachonu2004}. The length of
 stay has been used in a wide variety of medical domains, such as burns
  \citep{Yang2010}, intensive
-care \citep{Tu1993,Harper2005,Perez2006,Dybowski1996},
+care \citep{Dybowski1996,Harper2005,Perez2006,Tu1993},
 psychiatry \citep{Lowell1997}, and acute pancreatitis \citep{Pofahl1998}, in
 order to assist hospitals in allocating beds and other patient management
 resources as efficiently as possible. However, given the many different
@@ -23,19 +23,19 @@ Logistic regression models are straightforward to construct and use via the
 help of statistical software packages such as
 SAS\footnote{SAS Institute, Cary, NC, USA}, and
 also make the contribution of each independent variable to the final
-prediction explicit. Thus they is easy to interpret when compared to more
+prediction explicit. Thus they are easier to interpret when compared to more
 ``black box'' approaches such as artificial neural networks \citep{Adams2012}.
 A wide variety of other statistical approaches have been proposed, notably:
 various scoring systems from univariate analysis \citep{Adams2012,Lavoie2005},
 linear regression \citep{Yang2010}, exponential models \citep{Clark2007},
 survival analysis \citep{Vasilakis2005}, and Markov
-models \citep{Perez2006,Jain1989,Kapadia2000}.
+models \citep{Jain1989,Kapadia2000,Perez2006}.
 
 Out of the development of the various statistically-motivated models, data
 mining techniques, particularly artificial neural networks,
 began to become more widely adopted following a number of
 early applications to length of stay prediction in intensive
-care \citep{Tu1993,Dybowski1996}, in addition to disease diagnosis and mortality
+care \citep{Dybowski1996,Tu1993}, in addition to disease diagnosis and mortality
 prediction \citep{Silva2006}. Artificial neural networks are able to detect
 complex and non-linear relationships between input and output variables and can
 be developed using many different techniques. Much work has been done in using
@@ -55,7 +55,7 @@ Additionally,
 despite the wealth of research into length of stay prediction in various
 medical domains, there has been little work done in generalising models from
 one domain to another, or to predict a combination of outcomes (not only
-length of stay, but mortality, or rehabilitation requirement). Being able to
+length of stay, but mortality or rehabilitation requirement). Being able to
 do this would mean that hospital staff are better equipped to handle patient
 cases and prepare for possible critical outcomes well in advance, resulting
 in time and resources saved for both hospital and patient.
@@ -96,8 +96,8 @@ logistic regression is well suited \citep{Tu1996}: will length of stay be
 \textit{less than 5 days}, or \textit{equal to 5 days}? They used a
 \textit{backward} stepwise selection algorithm, whereby all available variables
 were initially included in the model and then progressively eliminated if their
-likelihood ratio (LR) test $P$-value was $>0.15$. Features could only be
-re-included if $P<0.05$. For length of stay
+likelihood ratio (LR) test $P$-value was greater than 0.15. Features could
+only be re-included if $P<0.05$. For length of stay
 prediction, this left them with 9 features out of the 15 that they originally
 included. To validate their model, they used a data set collected from an
 independent source which had slightly different statistical characteristics for
@@ -267,10 +267,10 @@ understandable and useful to the data owner \citep{Hand2001}. Compared to
 traditional statistical techniques, it is a relatively recent field, having
 emerged in the 1990s, and has
 given researchers a variety of new tools to analyse and understand biomedical
-datasets \citep{Bellazzi2008,Yoo2012}. Bellazzi \& Zupan \citep{Bellazzi2008}
+datasets \citep{Bellazzi2008,Yoo2012}. Bellazzi and Zupan \citep{Bellazzi2008}
 have written a
 comprehensive review paper of data mining techniques in clinical prediction
-settings, and we refer the reader to their article for a more detailed
+settings, and we refer readers to their article for a more detailed
 treatment of the techniques and their applications. Here we will describe the
 major methods in the context of their applicability to the problem of
 predicting length of hospital stay.
@@ -280,7 +280,7 @@ Artificial neural networks have been widely used in clinical prediction
 following their use in diagnosing acute myocardial infarction and various
 applications in radiology \citep{Baxt1995}.
 One of the earliest applications of neural networks to
-length of stay prediction was by Tu \& Guerriere, who used a neural network
+length of stay prediction was by Tu and Guerriere, who used a neural network
 with the following structure \citep{Tu1993} to predict length of stay in
 intensive care following cardiac surgery:
 \begin{figure}[h]
@@ -320,10 +320,10 @@ using logistic regression techniques, there are a number of well-known reasons
 why neural networks are advantageous to modelling complex clinical situations:
 \begin{enumerate}
 \item Neural networks are able to model arbitrarily complex relations between
-independent and dependent variables \citep{Tu1996,Buchman1994}, especially if
+independent and dependent variables \citep{Buchman1994,Tu1996}, especially if
 the relation is of a non-linear nature
 \item Neural networks are able to handle models where the features (independent
-variables) are not completely independent of each other
+variables) are not completely independent of each other \cite{Tu1996}
 \item Neural networks can be ``trained'' in different ways, which changes their
 predictive power -- this has been studied by Walczak et al. \citep{Walczak2003},
 discussed in the next section
@@ -337,9 +337,9 @@ how many nodes in each hidden layer. The difficulty of finding the right
 architecture is pointed out by Tu \& Guerriere themselves -- in their paper
 they state, ``The optimal structure of the neural network model was determined
 by `trial and error' ''.}
-and learning rate\footnote{A constant that is set by the
+and learning rate\footnote{A constant set by the
 network developer that governs how much the connection weights should adjust at
-each iteration of the training algorithm.}), as well as the difficulty in
+each iteration of the training algorithm.}), as well as difficulty in
 inducing sensible rules from the model (even by domain
 experts) \citep{Bellazzi2008}. Additionally, they are also prone to overfitting
 and require substantially more computational power to train when compared to
@@ -369,7 +369,7 @@ Dybowski et al. decided to address the problem of neural network architecture
 by applying a genetic algorithm approach to selecting the best
 structure \citep{Dybowski1996} --
 an improvement from the ``trial and error'' method Tu \& Guerriere used. It is
-interesting to briefly discuss their method even though they were interested
+interesting to briefly discuss their method even though their focus was
 in predicting the outcome of critically ill patients in intensive care, rather
 than the length of stay which is the focus of our work. The genetic algorithm
 in choosing an optimal neural network structure is as
@@ -415,7 +415,7 @@ to improve predictive power \citep{Rowan2007}. Many different combinations of
 trained neural networks were tested in order to find the combination with the
 greatest classification power according to the AUC measure.
 
-Additionally, Walczak et al. also examined not only backpropagation, which
+Additionally, Walczak et al. examined not only backpropagation, which
 is the training algorithm used by most of the applications, but also radial
 basis function and fuzzy ARTMAP. Using the mean absolute difference, they
 found that a single hidden layer backpropagation neural network performed
@@ -474,8 +474,9 @@ a node with the smallest variance (i.e., the greatest similarity). This is
 continued until defined stopping rules are met. One of the major reasons that
 such tree-based methods are more popular than neural networks in the
 healthcare domain is that the rules it ``learns'' are very simple to extract
-from the resulting tree, unlike the ``black box'' that neural networks commonly
-are. Harper found that CART performed almost as well as neural networks in
+from the resulting tree, unlike the ``black box'' nature of neural network
+predictions.
+Harper found that CART performed almost as well as neural networks in
 predicting intensive care length of stay, and much better in predicting
 hospital length of stay in terms of predicting accuracy (the only evaluation
 statistic reported). He also found that CART was superior to regression, a
@@ -493,7 +494,9 @@ predictive accuracy \citep{Bellazzi2008}. SVMs work on the principle that when
 the data is represented in a high enough dimensional space, a linear hyperplane
 can be found where the margin between two different records is as large as
 possible. In Figure \ref{fig:svm-example} from Yoo et al. \citep{Yoo2012},
-hyperplane 2 is the better plane because its margin is as large as possible. 
+hyperplane 2 is the better plane because its margin is as large as possible,
+meaning that the SVM has the best generalising ability to classify unseen
+examples.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1.05]{images/a2-svm}
@@ -554,10 +557,10 @@ done to predict the length of stay of trauma patients using data mining
 techniques, which is something worth investigating as trauma is a complex
 medical condition. We have pointed out that there is also value in
 investigating a number of the best data mining techniques, i.e. using more
-than just neural networks. There is also value in investigating the performance
-of such a model on data sets from different locations, since most studies are
+than just neural networks. An investigation of the performance
+of such a model on data sets from different locations is also warranted, since
+most studies are
 only validated on one or two data sets. Additionally, length of stay prediction
 has largely been restricted to specific medical domains, and therefore it is
 worthwhile to examine if there are factors present in other domains which allow
 for a more general model of the length of stay. 
-

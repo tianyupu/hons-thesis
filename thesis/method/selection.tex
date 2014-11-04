@@ -15,11 +15,14 @@ of even state-of-the-art classifiers such as C4.5 decision trees
 of the most relevant features; to find them, we will use what is called
 \textit{feature selection}.
 
-Our data set contains 78 features aside from the class, which is a fairly high
-number. Many of these attributes
+One of our data sets (the trauma-specific one) contains 78 features aside from
+the class, which is a fairly large number. Many of these attributes
 are derived from others in the set: for example, whether or not a patient is
 over 65 years of age (the \texttt{age65} feature) is directly dependent on the
-value of their \texttt{age} attribute.
+value of their \texttt{age} attribute. The other general hospital data set
+contains 14 features, which is significantly less. For both data sets, we would
+like to see if we can maintain or improve classifier performance by reducing
+the number of features used.
 
 \section{Preliminary Removal of Features}
 We began the process of feature selection by removing attributes that were
@@ -43,18 +46,19 @@ the data set: \texttt{gcs1}, \texttt{iss8}, \texttt{mechanism}, \texttt{male},
 number.
 
 After eliminating redundant or inapplicable features as detailed above, we
-considered four \textit{automatic} (correlation-based
-feature selection, Pearson correlation, 1R and wrapper selection
+considered five \textit{automatic} (correlation-based
+feature selection, Pearson correlation, information gain, 1R and wrapper selection
 using C4.5) and two \textit{manual} feature selection methods (domain expert
 selection and the feature set used in existing work on trauma LOS prediction).
 These methods are described in the following sections.
 
 \section{Automatic Methods}
-Automatic feature selection methods are useful for when we do not have a deep
-understanding of the underlying domain and what each attribute really means to
-the class. Even if we are well-versed in the domain, evaluating a few different
-methods of automatic feature selection can give us new insight into the
-learning problem at hand. Here we will describe a few of the methods we used.
+Automatic feature selection methods are useful when we do not have a deep
+understanding of the underlying domain and the exact relationship of each
+feature to the class. Even if we are well-versed in the domain, evaluating a
+few different methods of automatic feature selection can give us new insight
+into the learning problem at hand, and could also prove useful in extracting
+new knowledge. Here we will describe a few of the methods we used.
 
 \subsection{Correlation-based Feature Selection}
 Correlation-based feature selection (CFS) is a method developed by Hall
@@ -139,10 +143,10 @@ classifier constructs simple 1-rules based on each feature and uses the feature
 that produces the lowest error rate (that is, the highest accuracy) on the data
 set to classify unseen examples. These accuracy rates can be calculated for
 each feature, which are then used to rank the features from highest to lowest
-accuracy. The worst accuracy for any feature is the 0R accuracy, which is the
-proportion of the majority class in the data set. This is because if 1R finds
-that the accuracy of the rule constructed using a feature is worse than 0R,
-then it will not use that rule and predict the majority class instead.
+accuracy. The worst accuracy for any feature is the Zero-R accuracy, which is
+the proportion of the majority class in the data set. This is because if 1R
+finds that the accuracy of the rule constructed using a feature is worse than
+Zero-R, then it will not use that rule and predict the majority class instead.
 
 We can also select a fixed number of features or all features above a certain
 1R accuracy threshold. This threshold is a slightly different quantity to the
@@ -157,7 +161,9 @@ selection on performance.
 
 \subsection{Wrapper-based Feature Selection}
 The feature selection methods described above (CFS, Pearson correlation and
-1R) have been described as \textit{filter} approaches to attribute selection.
+1R) have been described as \textit{filter} approaches to attribute selection,
+whereby the entire feature set is first ``filtered'' by some evaluation metric
+and the reduced features used in a learning algorithm.
 Kohavi and John proposed another approach, the \textit{wrapper} approach:
 instead of performing feature selection independently of the learning
 algorithm using some measure of ``relevance'',
@@ -184,7 +190,7 @@ Using decision trees to select features is relatively fast as due to the
 divide and conquer nature of the learning algorithm, and the tendency of the
 trees to select fewer features for learning than other algorithms. Like CFS,
 wrapper methods search for the best subset of features and do not require a
-threshold to discard attributes.
+threshold to decide which features to select.
 
 \section{Manual Selection}
 \label{sec:manual}
@@ -197,7 +203,8 @@ have enlisted the help of medical domain experts to assist in feature
 selection, due to their experience and understanding of the underlying
 problem and the effect of the features on the outcome. It will therefore be
 worthwhile to compare the performance of classifiers using features selected
-automatically and manually.
+automatically and manually. We were able to obtain two sets of features
+selected manually for the trauma data set.
 
 \subsection{Baseline Feature Set}
 The key previous work on trauma LOS prediction was by Dinh et. al.
@@ -206,7 +213,7 @@ use. We would like to use the features they selected as a baseline for
 evaluating the other feature selection methods we describe.
 
 \subsection{Domain Expert Selection}
-Consultation with a domain expert yielded another feature set that we could
+Consultation with a domain expert yielded another feature set that we
 use to compare with the baseline and with the other automatic methods.
 
 \section{Summary}

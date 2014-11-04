@@ -1,13 +1,13 @@
 \chapter{Source Code Listings}
 \label{app:code}
 
-In this appendix we display the source code of the most important scripts we
+In this appendix we display the source code of the most important programs we
 wrote in our to conduct our experiments. These are described in more detail
 in Section \ref{sec:code}. To download the latest version of the code, please
 visit \url{https://github.com/tianyupu/hons-thesis}.
 
 \lstset{
-  language = Python,
+  language = Java,
   texcl = false, % Parse comments as TeX
   backgroundcolor = \color{white},
   basicstyle = \footnotesize\ttfamily\singlespacing,
@@ -30,7 +30,13 @@ visit \url{https://github.com/tianyupu/hons-thesis}.
   tabsize = 2
 }
 
+\section{Ranked Distance Implementation}
+\label{sec:rankeddist-code}
+\lstset{language=Java}
+\lstinputlisting{../code/weka/RankedDistance.java}
+
 \section{Data Cleaning and Whitespace Removal}
+\lstset{language=Python}
 \label{sec:python-preprocess}
 \lstinputlisting{../code/sklearn/util.py}
 
@@ -52,10 +58,7 @@ experiment. A typical file looked like this:
 \lstinputlisting{../code/weka/summarise_results.sh}
 
 \subsection{Computing Confidence Intervals from Summarised Results}
+\label{sec:compute-ci}
 \lstset{language=Python}
 \lstinputlisting{../code/weka/compute_ci.py}
 
-\section{Ranked Distance Implementation}
-\label{sec:rankeddist-code}
-\lstset{language=Java}
-\lstinputlisting{../code/weka/RankedDistance.java}

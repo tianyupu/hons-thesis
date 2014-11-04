@@ -8,7 +8,7 @@ our results (such as using stratified cross-validation when others may have
 used a single training-test split), while still using performance measures
 comparable to the literature and suitable for our particular learning problem.
 This chapter discusses the procedure and performance measures used
-in evaluating our work.
+in our evaluation.
 
 \section{Evaluation Procedure}
 \subsection{Steps Involved}
@@ -17,22 +17,19 @@ and feature selection methods were:
 \begin{enumerate}
 \item The trauma LOS data was cleaned and preprocessed as described in Chapter
 \ref{chap:preprocess}, giving us two data sets: one with and one without
-discretisation. The general LOS data from Portugal was already cleaned when we
-received it; however, we discretised the continuous \texttt{los} variable to
-the same categories as for the trauma data (2 days or less, greater than 2
-days), normalised the numeric attribute \texttt{prev\_admissions}, and derived
-both a discretised and non-discretised data set. This resulted in 4 sets of
-data.
-\item For each data set, we evaluated the effect of the 4 automatic feature
+discretisation. This was also done for the general hospital data set, resulting
+in 4 sets of data.
+\item For each data set, we evaluated the effect of the 5 automatic feature
 selection methods on each of the 11 classifiers described in Chapter
-\ref{chap:classification}, giving us 44 configurations for each data set, over
-4 sets. Evaluation was performed using \textit{ten-fold stratified
+\ref{chap:classification}, giving us 55 configurations for each data set, over
+the 4 sets obtained in the previous step.
+Evaluation was performed using \textit{ten-fold stratified
 cross-validation} (described below).
 \item For the two trauma LOS data sets, we additionally evaluated the two
-manual feature selection methods with all 8 classifiers. Recall from Section
+manual feature selection methods with all 11 classifiers. Recall from Section
 \ref{sec:manual} that one of the feature sets is from the key previous work
 on trauma LOS prediction that we use as a baseline, and the other feature set
-is a set of features included through consultation with a domain expert.
+is a set of features derived through consultation with a domain expert.
 \end{enumerate}
 
 \subsection{Ten-fold Stratified Cross-Validation}
@@ -81,7 +78,8 @@ our experiments easily using scripts which we wrote (see Section
 Leading and trailing whitespace was removed and feature names transformed using
 code written in Python (language version 3.4.1) to manipulate the CSV exported
 from Microsoft Excel. All runs of WEKA were executed by
-a program we wrote in Bash (a Unix shell) script. This program was able to run
+a program we wrote in Bash (a Unix shell) script, the source of which can be
+found in Appendix \ref{sec:run-weka}. This program was able to run
 WEKA with the following features:
 \begin{itemize}
 \item The ability to specify filenames corresponding to the input training data
@@ -102,9 +100,11 @@ If we ran a set of classifiers 50 times in an experiment, the script would
 retrieve all 50 outputs of a performance measure (such as accuracy, described
 in the next section) for each classifier, and compute the mean and confidence
 interval (also discussed in the next section) in a single output that we could
-then save as CSV.
+then save as CSV. These can be found in Appendix \ref{sec:summarise-script} and
+\ref{sec:compute-ci}.
 
-In order to implement our novel Ranked Distance Nearest Neighbour algorithm,
+In order to implement our novel Ranked Distance Nearest Neighbour algorithm
+(introduced in Section
 \ref{sec:rankeddist}), we created our own class within the WEKA Java package
 hierarchy. This was implemented in Java and needed to implement the correct
 interfaces and override the right inherited methods in order for the $k$-NN
@@ -113,9 +113,7 @@ involved updating certain properties of the \texttt{weka.jar} executable in
 order to use the new class, as well as building the entire WEKA source. The
 development environment we used was Eclipse 4.2.1, and the
 source was built using version 1.7.0 Update 17 of the Java Development Kit.
-
-The source code listing of the most important programs we wrote are displayed
-in Appendix \ref{app:code}.
+The source for this can be found in Appendix \ref{sec:rankeddist-code}.
 
 \section{Performance Measures}
 There are many ways to evaluate the performance of learning algorithms. The
@@ -163,7 +161,7 @@ The area under this curve will lie between 0 and 1, with 1 indicating a
 classified correctly). The AUC of randomly picking between the two classes
 with equal probability is 0.5, with a ROC curve that is a straight line
 dividing the graph diagonally in half. Figure \ref{fig:sampleroc} shows
-two ROC curves on the same graph:
+three ROC curves on the same graph:
 
 \begin{figure}[h]
 \centering
@@ -179,7 +177,7 @@ classification problems, but we have included it in our work for a number of
 reasons. Firstly, it measures an aspect of classifiers that accuracy does not,
 and which is more important and useful in the domain: the ability to
 discriminate between instances of two classes. Recall from Chapter
-\ref{chap:classification} that 0R will always predict the majority class --
+\ref{chap:classification} that Zero-R will always predict the majority class --
 this means that it will be evaluated positively on the basis of accuracy
 as long as there are sufficiently more examples of one class than the other.
 However, the AUC of the classifier will be \textit{less} than 0.5, because it
@@ -234,7 +232,8 @@ classifiers, giving us a more accurate result.
 
 \section{Summary}
 In this section we described our method of evaluating the performance of each
-classifier and feature selection method that we use. We used accuracy and the
+classifier and feature selection method that we used, including the code
+written and software used. We used accuracy and the
 area under the curve to measure two different aspects of our classifiers, and
 we obtained these figures using stratified ten-fold cross-validation. Paired
 $t$-tests were conducted to test for statistical significance of improvements

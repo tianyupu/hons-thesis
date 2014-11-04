@@ -15,8 +15,9 @@ In this chapter we introduce the data sets and give an overview of
 preprocessing, describing the specific steps we took on our data.
 
 \section{Data Sets}
-In our work we obtained two independent sets of LOS data, one specifically for
-trauma and the other a general, hospital-wide data set.
+In our work we obtained two independent sets of LOS data through
+collaboration with medical experts and researchers in Portugal: one
+specifically for trauma and the other a general, hospital-wide data set.
 
 \subsection{Trauma}
 \subsubsection{Collection}
@@ -36,7 +37,7 @@ There were 2546 patient records in the data set we received, comprising of 79
 features, one of which was the target variable \texttt{los48}.
 \texttt{los48} was a binary variable -- that is, it could only take two
 values, 0 or 1 -- with 1 indicating that the patient stayed two days or less,
-and 0 indicating a stay of greater than 2 days.
+and 0 indicating a stay of longer than 2 days.
 
 \subsubsection{Features}
 The features present in the original data set are listed and briefly described
@@ -67,9 +68,8 @@ sets, but the overall process is similar. Common issues to deal with include:
 \begin{itemize}
 \item Incorrect spelling or punctuation, perhaps as a result of mistakes in
 data entry
-\item Leading or trailing whitespace, and other garbage characters,
-perhaps as a result of data entry or
-the system that stores the data
+\item Leading or trailing whitespace and other garbage characters,
+perhaps as a result of data entry or the system that stores the data
 \item Missing values for various features or for the class label
 \item Values for features that do not make sense (such as a patient age of
 -1)
@@ -105,10 +105,9 @@ selling and punctuation:
 \paragraph{Extraneous whitespace or other characters.}
 After correcting for spelling and punctuation errors,
 the data was then exported into CSV (comma-separated value) format, so that
-we could continue to process it programmatically rather than manually without
-having to use Excel. Many
-fields in the data set contained leading or trailing whitespace, which was
-removed with a few lines of Python code (see Appendix
+we could continue to process it programmatically, without the need for
+Excel. Many fields in the data set contained leading or trailing whitespace,
+which was removed with a few lines of Python code (see Appendix
 \ref{sec:python-preprocess}).
 All attribute names were converted to lowercase. In the case
 where attribute names consisted of several words, the spaces were replaced
@@ -127,7 +126,7 @@ At the end of the cleaning process, the data was converted into the
 Attribute-Relation File Format (ARFF)
 \footnote{\url{http://www.cs.waikato.ac.nz/ml/weka/arff.html}} for use in
 WEKA, a suite of machine learning algorithms implemented in Java
-\cite{Hall2009}. Each feature was carefully checked to ensure that their
+\cite{Hall2009}. Each feature was carefully checked to ensure that its
 type was specified correctly -- that is, the nominal attributes were
 distinguished from the numeric.
 
@@ -135,7 +134,9 @@ distinguished from the numeric.
 The general hospital data we received had already been preprocessed. The only
 preprocessing here was to
 undo the logarithm transform that had been applied to the \texttt{Previous
-Admissions} feature.
+Admissions} feature, because it had been previously applied during the course
+of other work conducted on the data set. This was done using $e^x-1$, where
+$x$ is the value of the feature. 
 
 \section{Normalisation}
 Features represent different pieces of information about a training example.
@@ -156,6 +157,7 @@ a_i = 2\left[\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}
 \end{equation*}
 where we have used $s=2$ and $t=-1$ to transform values into the $[-1,1]$
 range. This transformation was applied to each value of all numeric features
+of both data sets
 using WEKA, and was performed after all cleaning steps described above.
 
 \section{Discretisation}
@@ -186,11 +188,11 @@ described by Fayyad and Irani \cite{Fayyad1993}. Since we have labelled
 data, we are able to use both approaches. However, we will focus on evaluating
 the effect of supervised discretisation, as it is generally preferred to
 unsupervised discretisation when class information about the training examples
-is known. And the method proposed by Fayyad and Irani is one of the best known
-general supervised discretisation techniques \cite{Witten2005}.
+is known -- and the method proposed by Fayyad and Irani is one of the best
+known general supervised discretisation techniques \cite{Witten2005}.
 
 \subsection{Entropy-based Discretisation}
-In Chapter \ref{chap:classification} we outlined the induction of a decision
+In Section \ref{sec:c45} we outlined the induction of a decision
 tree on a data set, using the information gain as the criterion for deciding
 the attribute to split on at each step. A similar approach is used in Fayyad
 and Irani's entropy-based method of discretisation \cite{Fayyad1993}:
@@ -204,7 +206,7 @@ The \textit{minimum description length (MDL)} principle is used to determine
 the stopping criterion. The MDL value is calculated by adding the information
 values from two cases: split or do not split. If we split, then we can encode
 the split point in $\mathrm{log}_2(N-1)$ bits (where $N$ is the number of
-instances), then the classes of those above and below it. If we do not split,
+instances) and subsequently the classes of those above and below it. If we do not split,
 then each instance's label must be encoded. Mathematically, given $N$ examples
 with entropy $E$, sub-intervals $k_1$ and $k_2$ with the entropy of examples
 in each sub-interval denoted $E_1$ and $E_2$:
@@ -220,7 +222,8 @@ Since this requires exhaustive searching of the full range of feature values
 to find potential split points, this method of supervised discretisation can
 be time-consuming given large enough data sets. However, it has been proven
 that any potential split that minimises the information value will never occur
-between two examples of the same class. This means that we only need to
+between two examples of the same class \cite{Witten2005}.
+This means that we only need to
 consider splits between regions of different classes, reducing the number of
 possible points to consider.
 
@@ -238,10 +241,11 @@ process.
 
 We then discussed normalisation, an important transformation of
 continuous-valued data that ensures all features take on the same range of
-values. This is important for ensuring that classifiers sensitive to the
-relative range of values between features give valid outputs.
+values. This is important for ensuring that classifiers which are sensitive to
+the relative range of values between features give valid outputs.
 
 We concluded with outlining discretisation, in particular Fayyad and Irani's
-entropy-based method. Such a technique has not been used in LOS prediction
-and by including it in our work, we can evaluate its effectiveness in this
-domain and let our results serve as a baseline and reference for future work.
+supervised entropy-based method. Such a technique has not been used in LOS
+prediction and by including it in our work, we can evaluate its effectiveness
+in this domain and let our results serve as a baseline and reference for
+future work.

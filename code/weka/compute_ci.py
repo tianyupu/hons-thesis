@@ -63,5 +63,5 @@ for i in range(len(headings)):
         results = []
         for col in zip(*sample):
             m, u = compute_ci(col)
-            results.append('{0:.3f}({1:.5f})'.format(m, u))
+            results.append('{0:.3f}+/-{1:.5f}'.format(m, u))
         print(' '.join(results))

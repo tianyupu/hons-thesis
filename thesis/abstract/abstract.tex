@@ -5,7 +5,7 @@ judgement about how long they need to be hospitalised, so that doctors and
 hospital staff can plan the appropriate course of treatment for the patient
 to ensure they recover in the quickest possible time. This also ensures the
 most efficient use of limited hospital resources. However, previous studies
-have used a limited number of statistical techniques such as logistic
+have only used a limited number of statistical techniques such as logistic
 regression in order to predict the length of stay. Also, they have used only
 manual feature selection and have not investigated the effect of automatic
 feature selection on classifier performance.
@@ -16,11 +16,12 @@ and also assesses the effect of feature discretisation for all combinations
 of classifiers and feature selectors. Our evaluation were conducted on two
 datasets, one from a trauma ward in a major Sydney hospital and another one
 from a general hospital in Portugal. We propose a new classification algorithm
-called Ranked Distance Nearest Neighbor that considers the
+called Ranked Distance Nearest Neighbour that considers the
 relative importance of each feature when determining the nearest neighbours.
 
 For the trauma dataset, we were able to achieve an accuracy of 77.81\% with
-1-nearest neighbour and an area under the curve of 0.846 with logistic
+1-nearest neighbour and an area under the receiver operating characteristic
+curve of 0.846 with logistic
 regression. This represents an improvement of 2.75\% and 0.034 respectively
 over the previous best result on the same dataset. For the
 general hospital dataset, the best results were 98.23\% accuracy with a
