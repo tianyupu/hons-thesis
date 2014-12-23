@@ -1,9 +1,11 @@
-\documentclass[10pt]{article}
+\documentclass{article}
 
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,filecolor=blue,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+\usepackage[utf8]{inputenc}
 \usepackage{multicol}
 \usepackage{natbib}
 \usepackage{subcaption}
@@ -26,26 +28,19 @@
 \begin{document}
 \maketitle
 
+\renewcommand{\abstractname}{Summary}
+
 \begin{abstract}
-Predicting the length of hospital stay for injured patients involves making a
-judgement about how long they need to be hospitalised, so that doctors and
-hospital staff can plan the appropriate course of treatment for the patient
-to ensure they recover in the quickest possible time. However, previous studies
-have used a limited number of statistical techniques such as logistic
-regression in order to predict the length of stay, and have not considered
-automatic methods of feature selection.
+Objective:
 
-Our work systematically evaluates and compares the performance of a number of
-state-of-the-art classification algorithms and feature selection methods,
-and also assesses the effect of feature discretisation for all combinations
-of classifiers and feature selectors. We propose a new classification algorithm
-called Ranked Distance Nearest Neighbor that considers the
-relative importance of each feature when determining the nearest neighbours.
+Materials and methods:
 
-We were able to achieve improved accuracy and area
-under the curve for both data sets, and we also show that our proposed Ranked
-Distance Nearest Neighbour improves accuracy and area under the curve over
-traditional nearest neighbour algorithms.
+Results:
+
+Conclusions:
+
+Keywords:
+
 \end{abstract}
 
 \section{Introduction}
@@ -107,13 +102,89 @@ do this would mean that hospital staff are better equipped to handle patient
 cases and prepare for possible critical outcomes well in advance, resulting
 in time and resources saved for both hospital and patient.
 
-\section{Problem Statement}
-Our problem is a binary \textit{classification} task in which we
-predict one of two possible categories for a patient: a length of stay (LOS) of
-less than or equal to 2 days, or a LOS of greater than 2 days. 
+\section{Nearest Neighbour Classification}
+In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
+and discuss some extensions which we use in our work. Additionally, we will
+describe our contribution, which is an extension of the distance metric for
+finding the nearest neighbours.
 
-\section{Ranked Distance Nearest Neighbour}
-\subsection{Intuition}
+\subsection{Basic Algorithm}
+The $k$-nearest neighbour classifier is an example of an
+\textit{instance-based} learning algorithm. This is because it does not, unlike
+the other classifiers described in this section, attempt to deduce or
+generalise a relationship between the features and the class: it simply stores
+all training examples and classifies an unseen example by finding the $k$
+``nearest'' examples (or \textit{instances}) and assigning the majority class
+to the new example. In the simplest form of the algorithm, $k$ is chosen to be
+1 and the Euclidean distance is used to measure the closeness of neighbours:
+\begin{equation*}
+\mathrm{Distance} = \sqrt{(x_1-y_1)^2 + (x_2-y_2)^2 + \ldots + (x_n-y_n)^2}
+\end{equation*}
+where $x_i,y_i$ are the values of the $i$-th feature for two different feature
+vectors (or instances).
+
+Like the Na\"{i}ve Bayes classifier, $k$-NN allows all features to be taken
+into account equally when classifying a new example. However, since feature
+values often span different ranges and units of measurement, a particularly
+large range of values for a feature would contribute much more to the distance
+than another feature that spans a lower set of values.
+To avoid this, it is important to \textit{normalise} the
+values of each numeric feature before using $k$-NN: for each feature $i$, we
+calculate the normalised value of the feature for each training example. This
+is done using the following relationship:
+\begin{equation*}
+a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
+\end{equation*}
+where $a_i$ is the normalised feature value, $v_i$ is the actual value in the
+data set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is
+a scaling factor and $t$ indicates how much to translate the range by. If $s=1$
+and $t=0$, then the range of normalised values will be in $[0,1]$.
+
+\subsection{Existing and Proposed Extensions}
+There have been many extensions proposed to the $k$-NN algorithm described
+above. These usually seek to find a more suitable distance metric for the
+problem domain at hand, or to reduce the storage requirements of the original
+$k$-NN algorithm (since the classifier makes no attempt to generalise from the
+examples, all of them must be stored).
+We will focus on two algorithms that extend the standard Euclidean distance:
+K* and our proposed approach, Ranked Distance Nearest Neighbour.
+
+\subsubsection{K*: Instance-based Classifier with Entropic Distance Function}
+Cleary and Trigg developed K*, an instance-based classifier that uses entropy
+to measure the distances between instances \cite{Cleary1995}. They consider
+the distance between two instances to be the complexity of transforming one
+into another. Define a sequence of transformations on an instance:
+\begin{equation*}
+\bar{t}(a) = t_n(t_{n-1}(\ldots t_1(a)\ldots)), \bar{t} \in T
+\end{equation*}
+where $\bar{t} = t_1,\ldots,t_n$. We can define a probability function $p$
+that gives the probabilities of these transformations occurring, and then we
+can define a probability function that gives the probabilities of all paths
+(transformations) from example $a$ to $b$:
+\begin{equation*}
+P^*(b|a) = \sum_{\bar{t}\in T:\bar{t}(a)=b} p(\bar{t})
+\end{equation*}
+Within this framework, we can define transformations for both real-valued and
+categorical features, which allows K* to work with all types of features.
+The K* function is then defined as:
+\begin{equation*}
+K^*(b|a) = -\mathrm{log}_2P^*(b|a)
+\end{equation*}
+
+To calculate the probability of an instance $a$ being in a class $C$, we sum
+the probabilities from $a$ to each instance of $C$, and repeat for each class.
+The predicted class will be the one with the highest probability:
+\begin{equation*}
+P^*(C|a) = \sum_{b\in C} P^*(b|a)
+\end{equation*}
+
+We use K* as a comparison to the basic NN algorithm and also as a comparison
+to our proposed Ranked Distance Nearest Neighbour algorithm. Additionally,
+K* has not been yet been applied in predicting LOS, and its performance in this
+domain is worth investigating.
+
+\subsubsection{Ranked Distance Nearest Neighbour}
+\paragraph{Intuition}
 As we mentioned earlier, all features are considered equally in a $k$-NN
 classifier, which implies that all features are equally important in predicting
 the class. In practice, however, this is not always the case: to predict the
@@ -124,7 +195,7 @@ new NN algorithm that uses a modified distance function which takes into
 account the relative importance of all features called Ranked Distance
 Nearest Neighbour (RD).
 
-\subsection{Mathematical formulation}
+\paragraph{Mathematical formulation}
 Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
 $\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
 \begin{equation*}
@@ -134,7 +205,7 @@ where the $w_i$s weight the contribution of the $i$-th feature to the overall
 distance that is computed by the $k$-NN algorithm. We assume that all feature
 values have been normalised, as described above.
 
-\subsection{Assignment of weights}
+\paragraph{Assignment of weights}
 The weights $w_i$ can be tuned to match the particular problem that is being
 investigated. For our LOS classification problem, we will consider one way
 of weighting features.
@@ -157,28 +228,18 @@ results in all features contributing equally to the distance calculation.
 We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
 $c$ varies from 0 to 1.
 
-\section{Feature Selection}
+\section{Evaluation}
+\subsection{Data Set}
+Our evaluation was carried out using a trauma-specific data set
+containing 2546 records collected from 2007--2011 collected at a major hospital
+in Sydney, Australia.
+
+\subsection{Feature Selection}
 Here we introduce the feature selection algorithms we evaluate in our work.
 Several of these have not been investigated in previous work on length of
 stay prediction.
-\subsection{Correlation-based Feature Selection}
-Correlation-based feature selection (CFS) is a method developed by Hall
-\cite{Hall2000} which looks for a subset of features that have high correlation
-with the class but low intercorrelation among the features. In this case,
-correlation between two features is measured using what is called the
-\textit{symmetric uncertainty}:
-\begin{equation*}
-U(A,B) = 2\dfrac{H(A)+H(B)-H(A,B)}{H(A)+H(B)}
-\end{equation*}
-where $A$ and $B$ are two nominal attributes and $H$ is the entropy function.
-The entropies are calculated from the probabilities of each feature value, and
-$H(A,B)$, the joint entropy of $A$ and $B$, is calculated from the
-probabilities of each combination of values of $A$ and $B$. Note that $U(A,B)$
-is always between 0 and 1.
-CFS conducts a search through subsets of all features in order to find the
-one feature subset that has the best merit.
 
-\subsection{Pearson Correlation Coefficient}
+\subsubsection{Pearson Correlation Coefficient}
 The Pearson correlation coefficient measures the degree of linear correlation
 between two variables. It is always in the range $[-1,1]$, where -1 is total
 negative correlation, 0 is no (linear) correlation, and 1 is total positive
@@ -191,7 +252,7 @@ where $m$ is the number of training examples, $x_i$ is the value of feature
 $i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
 values and the class values respectively.
 
-\subsection{Information Gain}
+\subsubsection{Information Gain}
 We can also measure the IG of each feature as follows.
 If we have a class $C$ and a feature $F$, the entropy of the
 class before and after observing the feature is:
@@ -212,27 +273,7 @@ are greater than some threshold we specify, similarly to the correlation
 coefficient method of feature selection. We choose a similar set of thresholds
 because of the high numbers of features with very low information gain.
 
-\subsection{1R}
-Another way to evaluate the relevance of features is to use the idea behind the
-1R classifier described in Section. Recall that the 1R
-classifier constructs simple 1-rules based on each feature and uses the feature
-that produces the lowest error rate (that is, the highest accuracy) on the data
-set to classify unseen examples. These accuracy rates can be calculated for
-each feature, which are then used to rank the features from highest to lowest
-accuracy.
-
-We can also select a fixed number of features or all features above a certain
-1R accuracy threshold. This threshold is a slightly different quantity to the
-threshold of the correlation coefficient and information gain methods, as it
-is an accuracy, expressed in percentages. Our first threshold is the Zero-R
-accuracy for the trauma data set, which is the lower of the two Zero-R
-accuracies on our two data sets. We increase this percentage by in increasing
-increments to obtain a range of thresholds up to nearly 97\% accuracy (which
-discards all features for both data sets). Using the same thresholds across
-both data sets allows us to make valid comparisons of the effect of feature
-selection on performance.
-
-\subsection{Wrapper-based Feature Selection}
+\subsubsection{Wrapper-based Feature Selection}
 The feature selection methods described above (CFS, Pearson correlation and
 1R) have been described as \textit{filter} approaches to attribute selection.
 Kohavi and John proposed another approach, the \textit{wrapper} approach:
@@ -254,17 +295,13 @@ trees to select fewer features for learning than other algorithms. Like CFS,
 wrapper methods search for the best subset of features and do not require a
 threshold to discard attributes.
 
-\section{Evaluation Method}
-Our evaluation was carried out using a trauma-specific data set
-containing 2546 records collected from 2007--2011 collected at a major hospital
-in Sydney, Australia.
-\subsection{Classifiers}
+\subsection{Classification Algorithms}
 We tested the performance of Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision trees,
 support vector machines, multi-layer perceptrons, $k$-nearest neighbour with 1
 and 20 nearest neighbours, K* and logistic regression, as well as our proposed
 Ranked Distance Nearest Neighbour.
 
-\subsection{Procedure}
+\subsection{Experimental Setup and Procedure}
 The steps that we took to evaluate the performance of the various classifiers
 and feature selection methods were:
 \begin{enumerate}
@@ -471,6 +508,8 @@ of each feature into account when determining the nearest neighbours of an
 example. We found that this achieved better results than the other nearest
 neighbour algorithms we evaluated, but only when most of the original feature
 set was used.
+
+\section*{Acknowledgements}
 
 \bibliographystyle{abbrv}{
   \bibliography{../thesis/references}
