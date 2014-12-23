@@ -1,0 +1,154 @@
+\documentclass[compress]{beamer}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{verbatim}
+
+\usetikzlibrary{decorations.pathreplacing,calc}
+
+\newcommand{\tikzmark}[2][-3pt]{\tikz[remember picture, overlay, baseline=-2.0ex]\node[#1](#2){};}
+
+\tikzset{brace/.style={decorate, decoration={brace}},
+ brace mirrored/.style={decorate, decoration={brace,mirror}},
+}
+
+\newcounter{brace}
+\setcounter{brace}{0}
+\newcommand{\drawbrace}[3][brace]{%
+ \refstepcounter{brace}
+  \tikz[remember picture, overlay]\draw[#1] (#2.center)--(#3.center)node[pos=0.5, name=brace-\thebrace]{};
+}
+
+\newcounter{arrow}
+\setcounter{arrow}{0}
+\newcommand{\drawcurvedarrow}[3][]{%
+ \refstepcounter{arrow}
+  \tikz[remember picture, overlay]\draw (#2.center)edge[#1]node[coordinate,pos=0.5, name=arrow-\thearrow]{}(#3.center);
+}
+
+% #1 options, #2 position, #3 text 
+\newcommand{\annote}[3][]{%
+ \tikz[remember picture, overlay]\node[#1] at (#2) {#3};
+}
+
+\renewcommand*\footnoterule{} % remove footnote rule
+
+\definecolor{emerald}{RGB}{0,166,79}
+
+% Load the usyd template
+\input{usyd-beamer/usyd-beamer.tex}
+
+\setbeamerfont{footnote}{size=\tiny}
+
+\begin{document}
+\usydtitleframe{Predicting the Length of Stay in Hospital Using Data Mining Methods}{}{\textbf{Tianyu Pu} \\
+  Supervisors: Irena Koprinska \& Kalina Yacef}
+
+\section{Introduction}
+\subsection{}
+\begin{frame}{Introduction}
+Imagine that you have just been admitted to hospital...
+  \pause
+
+\vspace{0.5cm}
+\textbf{Why do we care?}
+\end{frame}
+
+\section{The Problem}
+\subsection{}
+\begin{frame}{The problem}
+Given
+\begin{center}
+\begin{tabular}{cccc|c}
+\tikzmark[]{x}age & gender & heart rate & ... & length of stay (LOS)\tikzmark[]{y} \\
+\hline
+\tikzmark[xshift=-0.80ex, yshift=-1ex]{a}45 & F & 122 & ... & $>$ 2 days \\
+23 & M & 98 & ... & $\leq$ 2 days \\
+\multicolumn{4}{c|}{\tikzmark[xshift=-13.3ex, yshift=-2ex]{b}...} & ... \\
+\end{tabular}
+\end{center}
+\drawbrace[brace mirrored, thick, gray]{y}{x}
+\drawbrace[brace mirrored, thick, gray]{a}{b}
+\annote[yshift=1.5ex, gray]{brace-1}{\scriptsize features}
+\annote[left, gray]{brace-2}{\scriptsize examples}
+
+\vspace{0.5cm}
+Predict LOS category for new patient
+\begin{center}
+\begin{tabular}{cccc|c}
+age & gender & heart rate & ... & length of stay (LOS)  \\
+\hline
+34 & F & 101 & ... & ? \\
+\end{tabular}
+\end{center}
+\end{frame}
+
+\section{Background and Previous Work}
+\subsection{}
+\begin{frame}{Prediction}
+\begin{center}
+\includegraphics<1>{learning.pdf}
+\includegraphics<2>{learning-focus2.pdf}
+\end{center}
+\end{frame}
+
+\subsection{}
+\begin{frame}{Feature discretisation and selection}
+\textbf{Discretisation}
+\begin{itemize}
+\item Convert numeric features into categorical features
+\item \textit{Supervised} discretisation
+\end{itemize}
+
+\vspace{0.5cm}
+
+  \pause
+\textbf{Selection}
+\begin{itemize}
+\item Find a subset of features that are the most `relevant'
+\item Two ways: \textit{manual} and \textit{automatic}
+\end{itemize}
+\end{frame}
+
+\subsection{}
+\begin{frame}{Learning algorithms}
+\textbf{Logistic regression}
+
+One of the most widely used approaches in LOS prediction
+\begin{equation*}
+\begin{aligned}
+\text{log}\left(\dfrac{\text{probability of LOS}\leq\text{2 days}}{\text{probability of LOS}>\text{2 days}}\right) &= b_0 + b_1\text{age} + b_2\text{gender} + \ldots
+\end{aligned}
+\end{equation*}
+  \pause
+
+\textbf{Others}
+
+Artificial neural networks, ...
+\end{frame}
+
+\subsection{}
+\begin{frame}{Where We're At}
+Comprehensive evaluation of feature selection, discretisation and learning algorithms
+\pause
+
+\vspace{0.5cm}
+Proposed new nearest-neighbour approach
+\end{frame}
+
+\section{Next Steps}
+\subsection{}
+\begin{frame}{Next Steps}
+Feedback from domain experts
+
+\pause
+\vspace{0.5cm}
+Draft papers for publication
+\pause
+
+\vspace{0.5cm}
+Investigate ensembles and refinement of nearest-neighbour method
+\end{frame}
+
+\end{document}
