@@ -46,8 +46,9 @@ Keywords:
 \section{Introduction}
 Hospitals often have limited funding, and therefore managing and utilising
 their resources efficiently has always been a priority \cite{Walczak2003}.
-One key measurement of hospital activity, health care utilisation, and hospital
-cost is the patient length of stay \citep{Omachonu2004,Ng2006}. The length of
+One key measurement of hospital activity, health care utilisation and hospital
+cost is the patient length of stay \citep{Omachonu2004,Ng2006}.
+The length of
 stay has been used in a wide variety of medical domains, such as burns
  \citep{Yang2010}, intensive
 care \citep{Tu1993,Harper2005,Perez2006,Dybowski1996},
@@ -63,9 +64,10 @@ medical domains.
 One of the more well-understood and widely used statistical methods for
 predicting the length of stay is \textit{logistic regression} \citep{Tu1996}.
 Logistic regression models are straightforward to construct and use via the
-help of statistical software packages such as SAS, and
+help of statistical software packages such as
+SAS\footnote{SAS Institute, Cary, NC, USA}, and
 also make the contribution of each independent variable to the final
-prediction explicit. Thus they is easy to interpret when compared to more
+prediction explicit. Thus they are easier to interpret when compared to more
 ``black box'' approaches such as artificial neural networks \citep{Adams2012}.
 A wide variety of other statistical approaches have been proposed, notably:
 various scoring systems from univariate analysis \citep{Adams2012,Lavoie2005},
@@ -75,7 +77,7 @@ models \citep{Perez2006,Jain1989,Kapadia2000}.
 
 Out of the development of the various statistically-motivated models, data
 mining techniques, particularly artificial neural networks,
-began to become more widely adopted following a number of
+began to be more widely adopted following a number of
 early applications to length of stay prediction in intensive
 care \citep{Tu1993,Dybowski1996}, in addition to disease diagnosis and mortality
 prediction \citep{Silva2006}. Artificial neural networks are able to detect
@@ -88,19 +90,39 @@ psychiatry \citep{Lowell1997}. Other data mining techniques have also been
 applied, such as support vector machines and tree-based
 methods \citep{Harper2005}.
 
-Given the benefits to the hospital of accurate length of stay prediction,
-this research aims to build upon improving length of stay prediction for trauma
-patients by utilising state-of-the-art data mining techniques. Being able to
-predict the length of stay for trauma patients is especially crucial because of
-the scarcity of patient care resource in this area \citep{Yang2010}.
-Additionally,
-despite the wealth of research into length of stay prediction in various
-medical domains, there has been little work done in generalising models from
-one domain to another, or to predict a combination of outcomes (not only
-length of stay, but mortality, or rehabilitation requirement). Being able to
-do this would mean that hospital staff are better equipped to handle patient
-cases and prepare for possible critical outcomes well in advance, resulting
-in time and resources saved for both hospital and patient.
+One of the major drawbacks of sophisticated data mining techniques is the high
+level of difficulty required in interpreting their predictions and the factors
+affecting those predictions. This is
+particularly true of artificial neural networks and the state-of-the-art
+support vector machine, which are able to achieve very high accuracy but can be
+non-intuitive to understand. Medical domain experts who use the predictions of
+trained learning algorithms need to understand how the algorithm reached its
+decision before they are able to confidently use it to aid their clinical
+decision-making.
+
+In this paper we present the application of nearest neighbour methods
+for predicting the length of stay category for patients admitted to a trauma
+ward. The categories are \textit{less than or equal to 2 days} or
+\textit{greater than 2 days}, which have been used in previous work on length
+of stay prediction in the same medical domain \citep{Dinh2013a}.
+Nearest neighour methods have not been studied in predicting the length of stay,
+and we believe they are much more intuitive to
+understand than techniques such as support vector machines.
+Additionally, they can be adjusted to suit particular medical domains by
+changing their similarity function. We compare the performance of the basic
+nearest neighbour algorithm, as well as an extension (K*), against the
+performance
+of previous work which used logistic regression. We also propose a novel
+extension to the standard nearest neighbour algorithm, Ranked Distance, and
+test its performance against the other classifiers. In addition, we apply a
+range of feature selection methods, as they have not been
+thoroughly studied in existing work. Finally, we compare the performance of
+all of these with the state-of-the-art support vector machines and the
+commonly-used artificial neural networks.
+
+We found that the standard 1-nearest neighbour classifier achieved the highest
+accuracy of 77.81\%, an improvement of 2.75\% over previous work using the same
+data set carried out by Dinh et al.\citep{Dinh2013a}.
 
 \section{Nearest Neighbour Classification}
 In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
