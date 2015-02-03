@@ -101,7 +101,7 @@ decision before they are able to confidently use it to aid their clinical
 decision-making.
 
 In this paper we present the application of nearest neighbour methods
-for predicting the length of stay category for patients admitted to a trauma
+in predicting the length of stay category for patients admitted to a trauma
 ward. The categories are \textit{less than or equal to 2 days} or
 \textit{greater than 2 days}, which have been used in previous work on length
 of stay prediction in the same medical domain \citep{Dinh2013a}.
@@ -115,16 +115,31 @@ performance
 of previous work which used logistic regression. We also propose a novel
 extension to the standard nearest neighbour algorithm, Ranked Distance, and
 test its performance against the other classifiers. In addition, we apply a
-range of feature selection methods, as they have not been
+range of feature selection methods and systematically investigate the effect
+of discretisation, as they have not been
 thoroughly studied in existing work. Finally, we compare the performance of
-all of these with the state-of-the-art support vector machines and the
+these with the state-of-the-art support vector machines and the
 commonly-used artificial neural networks.
 
-We found that the standard 1-nearest neighbour classifier achieved the highest
-accuracy of 77.81\%, an improvement of 2.75\% over previous work using the same
-data set carried out by Dinh et al.\citep{Dinh2013a}.
+We found that the standard nearest neighbour classifier using only 1 nearest
+neighbour achieved a ten-fold cross-validated accuracy of 77.81\%, the highest
+out of all the methods. This is an improvement of 2.75\% over previous work
+carried out by Dinh et al. \citep{Dinh2013a} using the same data set. Also, the
+nearest neighbour classifiers almost always outperformed the logistic
+regression, support vector machines and neural networks when the number of
+features was gradually reduced. This means that predictions are able to be made
+more quickly, and will also be more intuitive to interpret and understand for
+physicians.
+
+In Section \ref{sec:nn}, we outline the basics of nearest neighbour
+classification and describe both the existing K* extension and our proposed
+extension, Ranked Distance. Section \ref{sec:eval} describes the method used
+to evaluate the performance of these classifiers, and Section \ref{sec:results}
+proceeds to discuss the results. We present concluding remarks in Section
+\ref{sec:conclusions}.
 
 \section{Nearest Neighbour Classification}
+\label{sec:nn}
 In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
 and discuss some extensions which we use in our work. Additionally, we will
 describe our contribution, which is an extension of the distance metric for
@@ -251,6 +266,7 @@ We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
 $c$ varies from 0 to 1.
 
 \section{Evaluation}
+\label{sec:eval}
 \subsection{Data Set}
 Our evaluation was carried out using a trauma-specific data set
 containing 2546 records collected from 2007--2011 collected at a major hospital
@@ -340,6 +356,7 @@ is a set of features included through consultation with a domain expert.
 \end{enumerate}
 
 \section{Results and Discussion}
+\label{sec:results}
 The best accuracy was 77.81\%, achieved using the $k$-NN algorithm
 with 1 nearest neighbour, a discretised data set, and feature selection using a
 C4.5 wrapper. The best AUC of 0.846 was achieved using logistic regression with
@@ -502,8 +519,8 @@ make predictions without requiring a lot of information about a patient,
 which is a crucial consideration if this is to be implemented for use by
 physicians.
 
-
 \section{Conclusions}
+\label{sec:conclusions}
 The best accuracy we achieved on the trauma data was 77.81\% with the $k$-NN
 classifier using 1 nearest neighbour and 11 out of 78 features. This represents
 an improvement over previous work done by Dinh et al. \cite{Dinh2013a}
