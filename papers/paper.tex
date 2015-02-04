@@ -133,22 +133,19 @@ physicians.
 
 In Section \ref{sec:nn}, we outline the basics of nearest neighbour
 classification and describe both the existing K* extension and our proposed
-extension, Ranked Distance. Section \ref{sec:eval} describes the method used
+extension, Ranked Distance. Section \ref{sec:features} outlines the feature
+selection methods we used. Section \ref{sec:eval} describes the method used
 to evaluate the performance of these classifiers, and Section \ref{sec:results}
 proceeds to discuss the results. We present concluding remarks in Section
 \ref{sec:conclusions}.
 
 \section{Nearest Neighbour Classification}
 \label{sec:nn}
-In this section we will describe the $k$-nearest neighbour ($k$-NN) algorithm
-and discuss some extensions which we use in our work. Additionally, we will
-describe our contribution, which is an extension of the distance metric for
-finding the nearest neighbours.
 
 \subsection{Basic Algorithm}
 The $k$-nearest neighbour classifier is an example of an
-\textit{instance-based} learning algorithm. This is because it does not, unlike
-the other classifiers described in this section, attempt to deduce or
+\textit{instance-based} learning algorithm. This is because it does not attempt
+to deduce or
 generalise a relationship between the features and the class: it simply stores
 all training examples and classifies an unseen example by finding the $k$
 ``nearest'' examples (or \textit{instances}) and assigning the majority class
@@ -265,18 +262,13 @@ results in all features contributing equally to the distance calculation.
 We will use $f(\mathrm{Rank}) = \frac{1}{\mathrm{Rank}^c}$, where
 $c$ varies from 0 to 1.
 
-\section{Evaluation}
-\label{sec:eval}
-\subsection{Data Set}
-Our evaluation was carried out using a trauma-specific data set
-containing 2546 records collected from 2007--2011 collected at a major hospital
-in Sydney, Australia.
-
-\subsection{Feature Selection}
+\section{Feature Selection}
+\label{sec:features}
 Here we introduce the feature selection algorithms we evaluate in our work.
 Several of these have not been investigated in previous work on length of
 stay prediction.
 
+\subsection{Automatic Selection}
 \subsubsection{Pearson Correlation Coefficient}
 The Pearson correlation coefficient measures the degree of linear correlation
 between two variables. It is always in the range $[-1,1]$, where -1 is total
@@ -332,6 +324,17 @@ divide and conquer nature of the learning algorithm, and the tendency of the
 trees to select fewer features for learning than other algorithms. Like CFS,
 wrapper methods search for the best subset of features and do not require a
 threshold to discard attributes.
+
+\subsection{Manual Selection}
+
+\section{Evaluation}
+\label{sec:eval}
+\subsection{Data Set}
+Our evaluation was carried out using a trauma-specific data set
+containing 2546 records collected from 2007--2011 collected at a major hospital
+in Sydney, Australia.
+
+\subsection{Discretisation}
 
 \subsection{Classification Algorithms}
 We tested the performance of Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision trees,
