@@ -265,13 +265,21 @@ $c$ varies from 0 to 1.
 \section{Feature Selection}
 \label{sec:features}
 Here we introduce the feature selection algorithms we evaluate in our work.
-Several of these have not been investigated in previous work on length of
-stay prediction.
+Several of these have not been investigated in previous work on LOS prediction.
+The role of feature selection is to reduce the number of attributes taken into
+consideration by a learning algorithm, which improves running speed and can
+make the resulting learned relationship easier to understand. We used both
+automatic and manual methods of selecting features.
 
 \subsection{Automatic Selection}
+Automatic feature selection involves calculating the ``relevance'' of each
+feature to predicting the class and only keeping features for use in training
+if their relevance is above some threshold. We consider the Pearson correlation
+coefficient, information gain and the wrapper approach.
+
 \subsubsection{Pearson Correlation Coefficient}
 The Pearson correlation coefficient measures the degree of linear correlation
-between two variables. It is always in the range $[-1,1]$, where -1 is total
+between two variables. It is always in the range $[-1,1]$, where $-1$ is total
 negative correlation, 0 is no (linear) correlation, and 1 is total positive
 correlation. We compute the Pearson correlation between each feature and the
 class using:
@@ -283,7 +291,7 @@ $i$, and $\bar{x}$ and $\bar{c}$ are the arithmetic averages of the feature
 values and the class values respectively.
 
 \subsubsection{Information Gain}
-We can also measure the IG of each feature as follows.
+We can also measure the information gain (IG) of each feature as follows.
 If we have a class $C$ and a feature $F$, the entropy of the
 class before and after observing the feature is:
 \begin{equation*}
@@ -299,16 +307,18 @@ IG(C|F) = \mathrm{entropy}(C) - \mathrm{entropy}(C|F)
 \end{equation*}
 
 We can compute the IG for each feature and then select subsets of features that
-are greater than some threshold we specify, similarly to the correlation
+are greater than some threshold we specify, similar to the correlation
 coefficient method of feature selection. We choose a similar set of thresholds
 because of the high numbers of features with very low information gain.
 
 \subsubsection{Wrapper-based Feature Selection}
-The feature selection methods described above (CFS, Pearson correlation and
-1R) have been described as \textit{filter} approaches to attribute selection.
+The feature selection methods described above (Pearson correlation and IG) have
+been described as \textit{filter} approaches to
+attribute selection, because the feature set is reduced \textit{before} it
+is given to the learning algorithm.
 Kohavi and John proposed another approach, the \textit{wrapper} approach:
 instead of performing feature selection independently of the learning
-algorithm using some measure of ``relevance'',
+algorithm using some measure of ``relevance,''
 the learning algorithm itself is used to evaluate the goodness of
 subsets of features \cite{Kohavi1997}. 
 
@@ -321,11 +331,31 @@ and multi-layer perceptrons). We will evaluate the use of C4.5 decision trees
 in selecting features using the wrapper approach.
 Using decision trees to select features is relatively fast as due to the
 divide and conquer nature of the learning algorithm, and the tendency of the
-trees to select fewer features for learning than other algorithms. Like CFS,
-wrapper methods search for the best subset of features and do not require a
+trees to select fewer features for learning than other algorithms.
+Wrapper methods search for the best subset of features and do not require a
 threshold to discard attributes.
 
 \subsection{Manual Selection}
+All of the above automatic feature selection methods use some notion of
+``relevance,'' such as information gain or linear correlation,
+in order to determine the best subset of features to select.
+Depending on the problem at hand, these definitions of relevance may or may
+not work well with the data. In the LOS prediction literature, studies
+have enlisted the help of medical domain experts to assist in feature
+selection, due to their experience and understanding of the underlying
+problem and the effect of the features on the outcome. It will therefore be
+worthwhile to compare the performance of classifiers using features selected
+automatically and manually.
+
+\subsubsection{Domain Expert Selection}
+Consultation with a domain expert yielded a feature set that we
+use to compare with the baseline and with the other automatic methods.
+
+\subsection{Baseline Feature Set}
+The key previous work on trauma LOS prediction was by Dinh et. al.
+\cite{Dinh2013a}, who used a specific feature set from the data set that we
+use. We would like to use the features they selected as a baseline for
+evaluating the other feature selection methods we describe.
 
 \section{Evaluation}
 \label{sec:eval}
@@ -335,6 +365,43 @@ containing 2546 records collected from 2007--2011 collected at a major hospital
 in Sydney, Australia.
 
 \subsection{Discretisation}
+Fayyad
+and Irani's entropy-based method of discretisation \cite{Fayyad1993}:
+to discretise an attribute,
+each possible split point is considered and the information gain from that
+split is computed. The split point with the highest information gain is
+therefore chosen. Once the first split is determined, the algorithm continues
+recursively in the newly created upper and lower ranges.
+
+The \textit{minimum description length (MDL)} principle is used to determine
+the stopping criterion. The MDL value is calculated by adding the information
+values from two cases: split or do not split. If we split, then we can encode
+the split point in $\mathrm{log}_2(N-1)$ bits (where $N$ is the number of
+instances) and subsequently the classes of those above and below it. If we do not split,
+then each instance's label must be encoded. Mathematically, given $N$ examples
+with entropy $E$, sub-intervals $k_1$ and $k_2$ with the entropy of examples
+in each sub-interval denoted $E_1$ and $E_2$:
+\begin{equation*}
+\mathrm{MDL} = \dfrac{\mathrm{log}_2(N-1)}{N} + \dfrac{\mathrm{log}_2(3^k-2) - kE + k_1E_1 + k_2E_2}{N}
+\end{equation*}
+The first term is the information needed for the splitting point, and the
+second is a correction necessary for encoding which classes belong to which
+sub-interval. The decision rule is then to split if the information gain for
+that split exceeds the MDL value.
+
+Since this requires exhaustive searching of the full range of feature values
+to find potential split points, this method of supervised discretisation can
+be time-consuming given large enough data sets. However, it has been proven
+that any potential split that minimises the information value will never occur
+between two examples of the same class \cite{Witten2005}.
+This means that we only need to
+consider splits between regions of different classes, reducing the number of
+possible points to consider.
+
+The data was discretised according to the above method using the supervised
+discretisation filter in WEKA. We kept both the original data set (without
+discretisation) and the discretised data set for comparison.
+
 
 \subsection{Classification Algorithms}
 We tested the performance of Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision trees,
