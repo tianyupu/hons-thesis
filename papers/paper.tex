@@ -166,9 +166,10 @@ To avoid this, it is important to \textit{normalise} the
 values of each numeric feature before using $k$-NN: for each feature $i$, we
 calculate the normalised value of the feature for each training example. This
 is done using the following relationship:
-\begin{equation*}
+\begin{equation}
+\label{eq:normalise}
 a_i = s\left(\dfrac{v_i - \mathrm{min }v_i}{\mathrm{max }v_i - \mathrm{min }v_i}\right) + t
-\end{equation*}
+\end{equation}
 where $a_i$ is the normalised feature value, $v_i$ is the actual value in the
 data set, max $v_i$ and min $v_i$ are taken over all training examples, $s$ is
 a scaling factor and $t$ indicates how much to translate the range by. If $s=1$
@@ -360,69 +361,61 @@ evaluating the other feature selection methods we describe.
 \section{Evaluation}
 \label{sec:eval}
 \subsection{Data Set}
-Our evaluation was carried out using a trauma-specific data set
-containing 2546 records collected from 2007--2011 collected at a major hospital
-in Sydney, Australia.
+The data set used consisted of trauma registry data from the trauma centre
+at the Royal Prince Alfred Hospital, a major trauma centre in New South Wales,
+Australia. It covered all adult (age 15 and over) inpatient admissions to the
+trauma centre from 2007--2011. 
+All patients were first admitted to the trauma ward until discharged
+or transferred to an appropriate unit within the hospital. A single trained
+data manager recorded a variety of attributes about the admitted patient,
+such as age, gender, blood pressure, mechanism of injury and body regions
+that were injured.
 
-\subsection{Discretisation}
-Fayyad
-and Irani's entropy-based method of discretisation \cite{Fayyad1993}:
-to discretise an attribute,
-each possible split point is considered and the information gain from that
-split is computed. The split point with the highest information gain is
-therefore chosen. Once the first split is determined, the algorithm continues
-recursively in the newly created upper and lower ranges.
+There were 2546 patient records in the data set we received, comprising of 79
+features, one of which was the target variable \texttt{los48}.
+\texttt{los48} was a binary variable -- that is, it could only take two
+values, 0 or 1 -- with 1 indicating that the patient stayed two days or less,
+and 0 indicating a stay of longer than 2 days.
 
-The \textit{minimum description length (MDL)} principle is used to determine
-the stopping criterion. The MDL value is calculated by adding the information
-values from two cases: split or do not split. If we split, then we can encode
-the split point in $\mathrm{log}_2(N-1)$ bits (where $N$ is the number of
-instances) and subsequently the classes of those above and below it. If we do not split,
-then each instance's label must be encoded. Mathematically, given $N$ examples
-with entropy $E$, sub-intervals $k_1$ and $k_2$ with the entropy of examples
-in each sub-interval denoted $E_1$ and $E_2$:
-\begin{equation*}
-\mathrm{MDL} = \dfrac{\mathrm{log}_2(N-1)}{N} + \dfrac{\mathrm{log}_2(3^k-2) - kE + k_1E_1 + k_2E_2}{N}
-\end{equation*}
-The first term is the information needed for the splitting point, and the
-second is a correction necessary for encoding which classes belong to which
-sub-interval. The decision rule is then to split if the information gain for
-that split exceeds the MDL value.
+\subsection{Preprocessing}
+The data set was cleaned by correcting spelling and punctuation
+inconsistencies and removing extraneous whitespace. Examples which had missing
+values for at least one feature were removed, in line with previous work on the
+same data set.
 
-Since this requires exhaustive searching of the full range of feature values
-to find potential split points, this method of supervised discretisation can
-be time-consuming given large enough data sets. However, it has been proven
-that any potential split that minimises the information value will never occur
-between two examples of the same class \cite{Witten2005}.
-This means that we only need to
-consider splits between regions of different classes, reducing the number of
-possible points to consider.
-
-The data was discretised according to the above method using the supervised
-discretisation filter in WEKA. We kept both the original data set (without
-discretisation) and the discretised data set for comparison.
-
+Continuous-valued features were then normalised into the $[0,1]$ range as
+described in Section \ref{sec:nn} above, substituting $s=2$ and $t=-1$ into
+Equation \ref{eq:normalise}. These continuous features were then discretised
+using Fayyad and Irani's method of supervised discretisation
+\citep{Fayyad1993}. We kept both the original data set (normalised, without
+discretisation) and the discretised (and normalised) data set for comparison.
 
 \subsection{Classification Algorithms}
-We tested the performance of Zero-R, 1R, Na\"{i}ve Bayes, C4.5 decision trees,
+We tested the performance of
 support vector machines, multi-layer perceptrons, $k$-nearest neighbour with 1
 and 20 nearest neighbours, K* and logistic regression, as well as our proposed
-Ranked Distance Nearest Neighbour.
+Ranked Distance Nearest Neighbour -- a total of 7 different classifiers.
+
+\subsection{Statistical Significance}
 
 \subsection{Experimental Setup and Procedure}
 The steps that we took to evaluate the performance of the various classifiers
 and feature selection methods were:
 \begin{enumerate}
-\item For each data set, we evaluated the effect of the 4 automatic feature
-selection methods on each of the 8 classifiers listed above, giving us 32
-configurations for each data set, over
-4 sets. Evaluation was performed using ten runs of \textit{ten-fold stratified
-cross-validation}.
-\item For the two trauma LOS data sets, we additionally evaluated the two
-manual feature selection methods with all 8 classifiers. Recall from Section
-\ref{sec:manual} that one of the feature sets is from the key previous work
-on trauma LOS prediction that we use as a baseline, and the other feature set
-is a set of features included through consultation with a domain expert.
+\item For both the discretised and non-discretised data set, we trained all 7
+classifiers without feature selection. Evaluation was performed using ten runs
+of \textit{ten-fold stratified cross-validation}.
+\item Then, for each data set, we evaluated the effect of the 3 automatic
+feature
+selection methods on each of the 7 classifiers listed above, giving us 21
+configurations for the discretised and non-discretised data set.
+\item In order to ensure that the baseline in the literature was comparable
+to our work, we used the baseline features and applied their method, logistic
+regression, to obtain a measure of performance on the non-discretised data set.
+We also evaluated this feature set against the rest of the 6 classifiers, and
+repeated this using the discretised data.
+\item Additionally, the expert-selected features were tested against all 7
+classifiers, with both the discretised and non-discretised data.
 \end{enumerate}
 
 \section{Results and Discussion}
@@ -466,23 +459,6 @@ using the discretised data set.
 \caption{}
 \label{}
 \end{subfigure}
-
-\begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-cfs-acc.eps}
-\caption{}
-\label{fig:tr-nothreshold-cfs-acc}
-\end{subfigure}%
-\begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-cfs-auc.eps}
-\caption{}
-\label{}
-\end{subfigure}
-\caption[]{Comparison of accuracy and AUC between classifiers for each non-threshold feature selection method, grouped by whether or not discretisation was applied.}
-\label{fig:tr-nothreshold}
-\end{figure*}
-
-\begin{figure*}
-\ContinuedFloat
 
 \begin{subfigure}{.48\textwidth}
 \includegraphics[width=\textwidth]{../thesis/images/results/tr-wrapper-acc.eps}
