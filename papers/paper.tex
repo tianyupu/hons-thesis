@@ -143,7 +143,7 @@ proceeds to discuss the results. We present concluding remarks in Section
 \label{sec:nn}
 
 \subsection{Basic Algorithm}
-The $k$-nearest neighbour classifier is an example of an
+The $k$-nearest neighbour ($k$-NN) classifier is an example of an
 \textit{instance-based} learning algorithm. This is because it does not attempt
 to deduce or
 generalise a relationship between the features and the class: it simply stores
@@ -392,9 +392,11 @@ discretisation) and the discretised (and normalised) data set for comparison.
 
 \subsection{Classification Algorithms}
 We tested the performance of
-support vector machines, multi-layer perceptrons, $k$-nearest neighbour with 1
-and 20 nearest neighbours, K* and logistic regression, as well as our proposed
-Ranked Distance Nearest Neighbour -- a total of 7 different classifiers.
+support vector machines (SVMs), multi-layer perceptrons (MLPs), $k$-nearest
+neighbour with 1
+and 20 nearest neighbours, K* and logistic regression (LR), as well as our
+proposed
+Ranked Distance Nearest Neighbour (RD) -- a total of 7 different classifiers.
 
 \subsection{Statistical Significance}
 
@@ -420,10 +422,12 @@ classifiers, with both the discretised and non-discretised data.
 
 \section{Results and Discussion}
 \label{sec:results}
+
+\subsection{Overall Performance}
 The best accuracy was 77.81\%, achieved using the $k$-NN algorithm
 with 1 nearest neighbour, a discretised data set, and feature selection using a
 C4.5 wrapper. The best AUC of 0.846 was achieved using logistic regression with
-features selected by a correlation coefficient threshold of 0.1, and again
+features selected by a correlation coefficient threshold of 0.1, again
 using the discretised data set.
 
 \begin{figure*}[htbp]
@@ -474,9 +478,16 @@ using the discretised data set.
 \label{}
 \end{figure*}
 
+Recall that in order for our work to be comparable to that of previous work on
+trauma LOS prediction by Dinh et al. \cite{Dinh2013a}, we use the same data set
+that they used, and also tested the features they used as one of the manual
+feature selection methods.
+From Table \ref{tab:overall-tr-acc} we can see that
+the best accuracy achieved using their features is 75.06\% with logistic
+regression.
 It is worth noting that our best accuracy, using $k$-NN with 1
-nearest neighbour, shows a statistically significant improvement upon the accuracy
-that they achieved by 2.75\%
+nearest neighbour, shows a statistically significant improvement of 2.75\% upon
+the accuracy achieved by Dinh et al.
 while using only 11 features (compared to the 19 they used). These 11 features
 make up only 14.1\% of all features in the data set, and performed better than
 the 11 features selected manually by the domain expert.
@@ -500,6 +511,7 @@ set, we should mention that logistic regression came a very close second with
 also achieved a higher AUC, and has the added advantages of being faster to
 train, mathematically well-understood and widely applied in medicine.
 
+\subsection{Comparison of Feature Selection Methods}
 The best accuracy and AUC results for
 each classifier resulted from a reduced feature set obtained through a
 particular feature selection method. There was at least one feature selector
@@ -523,7 +535,23 @@ equally well when used in conjunction with logistic regression and SVMs.
 Interestingly, although the C4.5
 wrapper method selects features which allow classifiers to achieve good
 accuracy, only in 2 out of the 20 combinations of classifiers did it give the
-best AUC result out of all the feature selectors. 
+best AUC result out of all the feature selectors.
+
+Note that regardless of whether we consider accuracy or AUC to be more
+important in evaluating how our classifiers performed, neither the baseline
+feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
+the domain expert (both of which were manually selected) yielded better
+results than automatic feature selection in all but two cases. We did find
+that expert selection produced the best accuracy result for 1R (equal with
+correlation coefficient selection, but used less features) and that the
+baseline feature set produced the best accuracy for Na\"{i}ve Bayes. Neither
+feature selection method produced the best AUC result for any classifier.
+This is a surprising result because intuitively and in the literature it
+has been stated that in a highly specialised field such as medicine, the domain
+experts would be best-equipped to make judgements about which features to
+use \cite{Witten2005}, and these should give reasonable results. However,
+our results show that in attempting to classify patients according to their
+LOS, we should consider both manual and automatic approaches.
 
 Recall that $k$-NN with 1 nearest neighbour and C4.5 wrapper feature
 selection produced the best accuracy (77.81\%) for the trauma data set, and
@@ -564,6 +592,86 @@ only does this speed up the training time, it also means that we are able to
 make predictions without requiring a lot of information about a patient,
 which is a crucial consideration if this is to be implemented for use by
 physicians.
+
+\subsection{Comparison of Classifiers}
+Figures \ref{fig:tr-nothreshold} and \ref{fig:tr-threshold} compare the
+accuracy and AUC of all classifiers under each feature selection method for
+the trauma data set.
+The methods that do not select features based upon a specified threshold
+(manual methods as well as CFS, C4.5 wrapper and no feature selection)
+are graphed in Figure \ref{fig:tr-nothreshold}, and the methods that select
+based upon thresholds (correlation, information gain and 1R) are graphed
+in Figure \ref{fig:tr-threshold}, showing varying accuracy and AUC as the
+threshold is changed.
+
+In terms of classification accuracy, we did not find a lot of variation
+between all classifiers, with Zero-R producing 66.91\% accuracy and 77.81\%
+being the best we achieved -- an improvement of just over 10\%. The AUC of
+the 11 classifiers we tested ranged from 0.498 with Zero-R to 0.846 with
+logistic regression. Logistic regression, the \textit{de facto} method
+used in LOS classification, performed consistently better than the others
+across all feature
+selection methods, but only when the feature set was not heavily reduced by
+the feature selector: in these cases, such as the results from Figure
+\ref{fig:tr-nothreshold-cfs-acc} showing classifier performance with features
+selected by CFS, C4.5 decision trees and nearest
+neighbour methods have higher accuracy than logistic regression. This is also
+apparent from the graphs in Figure \ref{fig:tr-threshold}: for all three
+feature selection methods, as we increase the threshold, logistic regression
+drops in performance after the initial few thresholds and is outperformed by
+C4.5 and the various nearest neighbour classifiers ($k$-NN with 1 and 20
+neighbours and K*), as well as our Ranked Distance algorithm.
+This is true for both accuracy and AUC.
+
+We found that in most cases, the SVM did not achieve a higher accuracy or
+AUC than logistic regression with the same features even though SVMs are
+considered the state-of-the-art in classification algorithms. Additionally,
+as the feature set was reduced, the discriminating ability of SVMs (as
+indicated by the AUC) decreased more than their accuracy: this is particularly
+noticeable in Figure \ref{fig:tr-threshold-oner}, where the AUC of the SVM
+drops sharply to below the AUC of even the 1R classifier at the 67.905\%
+threshold, where there are
+only 4 features. SVMs have not been used in a LOS classification problem like
+ours, so there will need to be further work carried out in order to assess the
+suitability of using SVMs to classify patient LOS.
+
+Although the MLP has been investigated in studies attempting to identify
+factors associated with longer LOS or mortality for trauma patients
+\cite{Hunter2000,McGonigal1993}, leading to improved results with the neural
+network, we did not see the MLP outperform all other classifiers with respect
+to accuracy or AUC for any feature selection method for this data set. In fact,
+the MLP often performed no better than any of the nearest neighbour
+classifiers, which use a straightfoward mechanism of classifying unseen
+examples. Even if the MLP had managed to achieve superior accuracy or AUC, the
+``black box'' nature of its prediction decisions are a barrier for their
+widespread use in medical decision-making.
+
+Nearest neighbour approaches appear to have performed well on this data set in
+both accuracy and AUC, especially in comparison to more sophisticated
+classifiers and when the feature set is significantly reduced. From the graphs
+in Figure \ref{fig:tr-threshold}, we can see that all the nearest neighbours
+approaches perform similarly when the number of features is decreased, but our
+Ranked Distance algorithm showed a statistically significant improvement over
+other NN algorithms. This
+improvement is not apparent at smaller feature sets, where using the standard
+$k$-NN algorithm with 1 or 20 neighbours performs slightly better.
+The performance of NN we observed in our results is
+an interesting finding because nearest neighbours have not been commonly
+applied in predicting the LOS, but there is intuitive appeal in the
+case-by-case nature of how these algorithms classify new examples that should
+be explored further. Unlike MLPs and SVMs, prediction decision of nearest
+neighbours are more transparent and understandable. However, the major drawback
+of NN algorithms is their storage requirement and the computational time
+required to search for the nearest neighbours to make the classification.
+
+There is a limitation to our findings that needs to be noted: we did not
+attempt to tune the parameters of the classifiers in order to find the ones
+that resulted in the best performance, so our statements are based on the
+results of the default parameters of each classifier.
+MLPs in particular are sensitive to
+the network architecture, so it is likely that its accuracy and AUC could be
+improved if the parameters were selected to optimise its performance on this
+data set.
 
 \section{Conclusions}
 \label{sec:conclusions}
