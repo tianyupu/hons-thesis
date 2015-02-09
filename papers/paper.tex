@@ -517,7 +517,7 @@ each classifier resulted from a reduced feature set obtained through a
 particular feature selection method. There was at least one feature selector
 for each classifier that managed to outperform the same classifier with
 no feature selection. This is likely due to the large number of features in
-the original data -- after cleaning and preliminary removal of redundant
+the original data: after cleaning and preliminary removal of redundant
 features, we were still left with over 50. Many of these would still likely
 be irrelevant to predicting the class.
 Out of 20 combinations of classifiers
@@ -525,8 +525,7 @@ and discretisation (the 10 classifiers with and 10 without
 discretisation), the C4.5 wrapper method resulted in the best
 accuracy for 7 of these combinations, followed by 5 using information gain
 and 4 using the correlation coefficient and very few for the other methods.
-Under no combination was 1R the best feature selection method to use, as other
-methods produced better accuracy.
+\texttt{TODO: recount the numbers in this paragraph.}
 
 Focussing our attention on the AUC reveals slightly different patterns. Here we
 find that the correlation coefficient and the information gain are the feature
@@ -538,13 +537,10 @@ accuracy, only in 2 out of the 20 combinations of classifiers did it give the
 best AUC result out of all the feature selectors.
 
 Note that regardless of whether we consider accuracy or AUC to be more
-important in evaluating how our classifiers performed, neither the baseline
+important in evaluating classifiers, neither the baseline
 feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
 the domain expert (both of which were manually selected) yielded better
-results than automatic feature selection in all but two cases. We did find
-that expert selection produced the best accuracy result for 1R (equal with
-correlation coefficient selection, but used less features) and that the
-baseline feature set produced the best accuracy for Na\"{i}ve Bayes. Neither
+results than automatic feature selection in all but two cases. Neither
 feature selection method produced the best AUC result for any classifier.
 This is a surprising result because intuitively and in the literature it
 has been stated that in a highly specialised field such as medicine, the domain
@@ -554,7 +550,7 @@ our results show that in attempting to classify patients according to their
 LOS, we should consider both manual and automatic approaches.
 
 Recall that $k$-NN with 1 nearest neighbour and C4.5 wrapper feature
-selection produced the best accuracy (77.81\%) for the trauma data set, and
+selection produced the best accuracy (77.81\%) for the data set, and
 logistic regression with correlation coefficient feature selection at a
 threshold of 0.1 gave the best AUC (0.846). These two feature selection
 methods selected 11 and 29 features respectively, and the features that
@@ -583,10 +579,10 @@ features before training), as the learning algorithm used as the wrapper
 needs to be invoked at each of the folds of cross-validation. Additionally,
 the $k$-NN algorithm becomes slower as the data set increases in the number
 of examples. We did not face such a problem during our work, but this will
-have to be addressed for larger data sets. It is also common to use more
+need to be addressed for larger data sets. It is also common to use more
 than one nearest neighbour, so care needs to be taken to find a suitable number
 of neighbours for a given problem. Finally, we achieved an improvement
-in AUC of 0.034 but this was with 29 features, which is still a fairly large
+in AUC of 0.034 but with 29 features, which is still a fairly large
 number. The importance of using a fewer number of features is twofold: not
 only does this speed up the training time, it also means that we are able to
 make predictions without requiring a lot of information about a patient,
@@ -595,12 +591,11 @@ physicians.
 
 \subsection{Comparison of Classifiers}
 Figures \ref{fig:tr-nothreshold} and \ref{fig:tr-threshold} compare the
-accuracy and AUC of all classifiers under each feature selection method for
-the trauma data set.
+accuracy and AUC of all classifiers under each feature selection method.
 The methods that do not select features based upon a specified threshold
-(manual methods as well as CFS, C4.5 wrapper and no feature selection)
+(manual and baseline as well as C4.5 wrapper and no feature selection)
 are graphed in Figure \ref{fig:tr-nothreshold}, and the methods that select
-based upon thresholds (correlation, information gain and 1R) are graphed
+based upon thresholds (correlation and information gain) are graphed
 in Figure \ref{fig:tr-threshold}, showing varying accuracy and AUC as the
 threshold is changed.
 
@@ -614,9 +609,9 @@ across all feature
 selection methods, but only when the feature set was not heavily reduced by
 the feature selector: in these cases, such as the results from Figure
 \ref{fig:tr-nothreshold-cfs-acc} showing classifier performance with features
-selected by CFS, C4.5 decision trees and nearest
+selected by C4.5 decision trees and nearest
 neighbour methods have higher accuracy than logistic regression. This is also
-apparent from the graphs in Figure \ref{fig:tr-threshold}: for all three
+apparent from the graphs in Figure \ref{fig:tr-threshold}: for both
 feature selection methods, as we increase the threshold, logistic regression
 drops in performance after the initial few thresholds and is outperformed by
 C4.5 and the various nearest neighbour classifiers ($k$-NN with 1 and 20
@@ -626,12 +621,9 @@ This is true for both accuracy and AUC.
 We found that in most cases, the SVM did not achieve a higher accuracy or
 AUC than logistic regression with the same features even though SVMs are
 considered the state-of-the-art in classification algorithms. Additionally,
-as the feature set was reduced, the discriminating ability of SVMs (as
-indicated by the AUC) decreased more than their accuracy: this is particularly
-noticeable in Figure \ref{fig:tr-threshold-oner}, where the AUC of the SVM
-drops sharply to below the AUC of even the 1R classifier at the 67.905\%
-threshold, where there are
-only 4 features. SVMs have not been used in a LOS classification problem like
+as the feature set was reduced, both the discriminating ability of SVMs
+(indicated by the AUC) and accuracy decreased noticeably. SVMs have not been
+used in a LOS classification problem like
 ours, so there will need to be further work carried out in order to assess the
 suitability of using SVMs to classify patient LOS.
 
@@ -648,7 +640,7 @@ widespread use in medical decision-making.
 
 Nearest neighbour approaches appear to have performed well on this data set in
 both accuracy and AUC, especially in comparison to more sophisticated
-classifiers and when the feature set is significantly reduced. From the graphs
+classifiers and when the feature set was significantly reduced. From the graphs
 in Figure \ref{fig:tr-threshold}, we can see that all the nearest neighbours
 approaches perform similarly when the number of features is decreased, but our
 Ranked Distance algorithm showed a statistically significant improvement over
