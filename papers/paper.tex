@@ -157,7 +157,7 @@ to the new example. In the simplest form of the algorithm, $k$ is chosen to be
 where $x_i,y_i$ are the values of the $i$-th feature for two different feature
 vectors (or instances).
 
-Like the Na\"{i}ve Bayes classifier, $k$-NN allows all features to be taken
+$k$-NN allows all features to be taken
 into account equally when classifying a new example. However, since feature
 values often span different ranges and units of measurement, a particularly
 large range of values for a feature would contribute much more to the distance
@@ -539,10 +539,10 @@ best AUC result out of all the feature selectors.
 Note that regardless of whether we consider accuracy or AUC to be more
 important in evaluating classifiers, neither the baseline
 feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
-the domain expert (both of which were manually selected) yielded better
-results than automatic feature selection in all but two cases. Neither
+the domain expert yielded better
+results than automatic feature selection in all but \texttt{two?} cases. Neither
 feature selection method produced the best AUC result for any classifier.
-This is a surprising result because intuitively and in the literature it
+This is a surprising result because intuitively -- and in the literature -- it
 has been stated that in a highly specialised field such as medicine, the domain
 experts would be best-equipped to make judgements about which features to
 use \cite{Witten2005}, and these should give reasonable results. However,
