@@ -157,6 +157,7 @@ to the new example. In the simplest form of the algorithm, $k$ is chosen to be
 where $x_i,y_i$ are the values of the $i$-th feature for two different feature
 vectors (or instances).
 
+\subsection{Normalisation}
 $k$-NN allows all features to be taken
 into account equally when classifying a new example. However, since feature
 values often span different ranges and units of measurement, a particularly
@@ -219,7 +220,7 @@ K* has not been yet been applied in predicting LOS, and its performance in this
 domain is worth investigating.
 
 \subsubsection{Ranked Distance Nearest Neighbour}
-\paragraph{Intuition}
+\paragraph{Intuition.}
 As we mentioned earlier, all features are considered equally in a $k$-NN
 classifier, which implies that all features are equally important in predicting
 the class. In practice, however, this is not always the case: to predict the
@@ -230,7 +231,7 @@ new NN algorithm that uses a modified distance function which takes into
 account the relative importance of all features called Ranked Distance
 Nearest Neighbour (RD).
 
-\paragraph{Mathematical formulation}
+\paragraph{Mathematical formulation.}
 Given two instances $\mathbf{x} = (x_1,x_2,\ldots,x_n)$ and
 $\mathbf{y} = (y_1,y_2,\ldots,y_n)$, the distance between them is given by:
 \begin{equation*}
@@ -240,7 +241,7 @@ where the $w_i$s weight the contribution of the $i$-th feature to the overall
 distance that is computed by the $k$-NN algorithm. We assume that all feature
 values have been normalised, as described above.
 
-\paragraph{Assignment of weights}
+\paragraph{Assignment of weights.}
 The weights $w_i$ can be tuned to match the particular problem that is being
 investigated. For our LOS classification problem, we will consider one way
 of weighting features.
