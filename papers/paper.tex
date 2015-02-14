@@ -479,9 +479,8 @@ using the discretised data set.
 \end{figure*}
 
 Recall that in order for our work to be comparable to that of previous work on
-trauma LOS prediction by Dinh et al. \cite{Dinh2013a}, we use the same data set
-that they used, and also tested the features they used as one of the manual
-feature selection methods.
+trauma LOS prediction by Dinh et al. \cite{Dinh2013a}, we use the same data
+set and also test the features they used as the baseline feature set.
 From Table \ref{tab:overall-tr-acc} we can see that
 the best accuracy achieved using their features is 75.06\% with logistic
 regression.
@@ -509,25 +508,19 @@ of all combinations of classifiers and feature selection methods for this data
 set, we should mention that logistic regression came a very close second with
 77.7\%, outperforming more sophisticated approaches such as SVM and MLP. It
 also achieved a higher AUC, and has the added advantages of being faster to
-train, mathematically well-understood and widely applied in medicine.
+train and widely applied in medicine.
 
 \subsection{Comparison of Feature Selection Methods}
 The best accuracy and AUC results for
 each classifier resulted from a reduced feature set obtained through a
-particular feature selection method. There was at least one feature selector
-for each classifier that managed to outperform the same classifier with
-no feature selection. This is likely due to the large number of features in
-the original data: after cleaning and preliminary removal of redundant
-features, we were still left with over 50. Many of these would still likely
-be irrelevant to predicting the class.
-Out of 20 combinations of classifiers
+particular feature selection method. Out of 20 combinations of classifiers
 and discretisation (the 10 classifiers with and 10 without
 discretisation), the C4.5 wrapper method resulted in the best
 accuracy for 7 of these combinations, followed by 5 using information gain
 and 4 using the correlation coefficient and very few for the other methods.
 \texttt{TODO: recount the numbers in this paragraph.}
 
-Focussing our attention on the AUC reveals slightly different patterns. Here we
+In terms of AUC, we
 find that the correlation coefficient and the information gain are the feature
 selectors that give the best AUC for most of the classifiers, and perform
 equally well when used in conjunction with logistic regression and SVMs.
@@ -539,7 +532,7 @@ best AUC result out of all the feature selectors.
 Note that regardless of whether we consider accuracy or AUC to be more
 important in evaluating classifiers, neither the baseline
 feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
-the domain expert yielded better
+the expert yielded better
 results than automatic feature selection in all but \texttt{two?} cases. Neither
 feature selection method produced the best AUC result for any classifier.
 This is a surprising result because intuitively -- and in the literature -- it
@@ -569,36 +562,9 @@ support the findings of McGonigal et al. \cite{McGonigal1993} who used
 related problem in the same medical domain.
 Our observations suggest the use of feature selection not only as a
 pre-processing step to improve the accuracy or AUC of a classifier, but also
-as a tool used separately that could help extract insights from medical data.
-
-Although we were able to achieve higher accuracy and AUC than the baseline,
-our best approaches also have a number of limitations which need to be pointed
-out. The first point to note is that using a wrapper method of feature
-selection is slower than using a filter approach (or manually picking the
-features before training), as the learning algorithm used as the wrapper
-needs to be invoked at each of the folds of cross-validation. Additionally,
-the $k$-NN algorithm becomes slower as the data set increases in the number
-of examples. We did not face such a problem during our work, but this will
-need to be addressed for larger data sets. It is also common to use more
-than one nearest neighbour, so care needs to be taken to find a suitable number
-of neighbours for a given problem. Finally, we achieved an improvement
-in AUC of 0.034 but with 29 features, which is still a fairly large
-number. The importance of using a fewer number of features is twofold: not
-only does this speed up the training time, it also means that we are able to
-make predictions without requiring a lot of information about a patient,
-which is a crucial consideration if this is to be implemented for use by
-physicians.
+as a tool used independently to extract insights from medical data.
 
 \subsection{Comparison of Classifiers}
-Figures \ref{fig:tr-nothreshold} and \ref{fig:tr-threshold} compare the
-accuracy and AUC of all classifiers under each feature selection method.
-The methods that do not select features based upon a specified threshold
-(manual and baseline as well as C4.5 wrapper and no feature selection)
-are graphed in Figure \ref{fig:tr-nothreshold}, and the methods that select
-based upon thresholds (correlation and information gain) are graphed
-in Figure \ref{fig:tr-threshold}, showing varying accuracy and AUC as the
-threshold is changed.
-
 In terms of classification accuracy, we did not find a lot of variation
 between all classifiers, with Zero-R producing 66.91\% accuracy and 77.81\%
 being the best we achieved -- an improvement of just over 10\%. The AUC of
@@ -609,7 +575,7 @@ across all feature
 selection methods, but only when the feature set was not heavily reduced by
 the feature selector: in these cases, such as the results from Figure
 \ref{fig:tr-nothreshold-cfs-acc} showing classifier performance with features
-selected by C4.5 decision trees and nearest
+selected by C4.5 and nearest
 neighbour methods have higher accuracy than logistic regression. This is also
 apparent from the graphs in Figure \ref{fig:tr-threshold}: for both
 feature selection methods, as we increase the threshold, logistic regression
@@ -635,8 +601,8 @@ to accuracy or AUC for any feature selection method for this data set. In fact,
 the MLP often performed no better than any of the nearest neighbour
 classifiers, which use a straightfoward mechanism of classifying unseen
 examples. Even if the MLP had managed to achieve superior accuracy or AUC, the
-``black box'' nature of its prediction decisions are a barrier for their
-widespread use in medical decision-making.
+``black box'' nature of its prediction decisions is a barrier for their
+widespread adoption in medical decision-making.
 
 Nearest neighbour approaches appear to have performed well on this data set in
 both accuracy and AUC, especially in comparison to more sophisticated
@@ -652,11 +618,19 @@ an interesting finding because nearest neighbours have not been commonly
 applied in predicting the LOS, but there is intuitive appeal in the
 case-by-case nature of how these algorithms classify new examples that should
 be explored further. Unlike MLPs and SVMs, prediction decision of nearest
-neighbours are more transparent and understandable. However, the major drawback
-of NN algorithms is their storage requirement and the computational time
-required to search for the nearest neighbours to make the classification.
+neighbours are more transparent and understandable.
 
-There is a limitation to our findings that needs to be noted: we did not
+Although we were able to achieve higher accuracy and AUC than the baseline,
+our best approaches also have a number of limitations which need to be pointed
+out. The first point to note is that using a wrapper method of feature
+selection is slower than using a filter approach (or manually picking the
+features before training), as the learning algorithm used as the wrapper
+needs to be invoked at each of the folds of cross-validation. Additionally,
+the $k$-NN algorithm becomes slower as the data set increases in the number
+of examples. We did not face such a problem during our work, but this will
+need to be addressed for larger data sets. It is also common to use more
+than one nearest neighbour, so care needs to be taken to find a suitable number
+of neighbours for a given problem. Finally, we did not
 attempt to tune the parameters of the classifiers in order to find the ones
 that resulted in the best performance, so our statements are based on the
 results of the default parameters of each classifier.
