@@ -1,0 +1,21 @@
+=cluster LR SVM 1NN 20NN RD K* MLP
+title=Expert Selection
+ylabel=Accuracy (%)
+font=Helvetica
+fontsz=12
+=nolegend
+legendx=right
+legendy=center
+=norotate
+xlabel=
+=table
+Discretised 76.45%  75.67%  72.56%  75.51%  76.19%  75.08%  73.45%
+NotDiscretised 74.53%  74.48%  68.77%  72.11%  74.58%  72.60%  72.31%
+
+=yerrorbars
+Discretised 0.06% 0.02% 0.11% 0.19% 0.16% 0.09% 0.16%
+NotDiscretised 0.06% 0.04% 0.09% 0.19% 0.23% 0.08% 0.16%
+min=0
+max=100
+=noupperright
+=nolegoutline

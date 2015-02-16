@@ -1,0 +1,21 @@
+=cluster LR SVM 1NN 20NN RD K* MLP
+title=Baseline (Dinh et al.)
+ylabel=Accuracy (%)
+font=Helvetica
+fontsz=12
+legendx=right
+legendy=center
+=nolegend
+=norotate
+xlabel=
+=table
+Discretised 75.06%  74.47%  70.28%  73.59%  69.68%  72.20%  73.03%
+NotDiscretised 75.06%  74.47%  70.28%  73.59%  69.68%  72.20%  73.03%
+
+=yerrorbars
+Discretised 0.06% 0.07% 0.08% 0.15% 0.30% 0.11% 0.15%
+NotDiscretised 0.06% 0.07% 0.08% 0.15% 0.30% 0.11% 0.15%
+min=0
+max=100
+=noupperright
+=nolegoutline

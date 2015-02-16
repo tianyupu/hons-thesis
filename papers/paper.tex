@@ -399,8 +399,6 @@ and 20 nearest neighbours, K* and logistic regression (LR), as well as our
 proposed
 Ranked Distance Nearest Neighbour (RD) -- a total of 7 different classifiers.
 
-\subsection{Statistical Significance}
-
 \subsection{Experimental Setup and Procedure}
 The steps that we took to evaluate the performance of the various classifiers
 and feature selection methods were:
@@ -419,6 +417,8 @@ We also evaluated this feature set against the rest of the 6 classifiers, and
 repeated this using the discretised data.
 \item Additionally, the expert-selected features were tested against all 7
 classifiers, with both the discretised and non-discretised data.
+\item Paired $t$-tests for statistical significance were carried out to
+determine whether or not discrepancies in performance were significant.
 \end{enumerate}
 
 \section{Results and Discussion}
@@ -433,45 +433,45 @@ using the discretised data set.
 
 \begin{figure*}[htbp]
 \begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-nofs-acc.eps}
+\includegraphics[width=\textwidth]{results/tr-nofs-acc.eps}
 \caption{}
 \label{}
 \end{subfigure}%
 \begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-nofs-auc.eps}
+\includegraphics[width=\textwidth]{results/tr-nofs-auc.eps}
 \caption{}
 \label{}
 \end{subfigure}
 
 \begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-dinh-acc.eps}
+\includegraphics[width=\textwidth]{results/tr-dinh-acc.eps}
 \caption{}
 \label{}
 \end{subfigure}%
 \begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-dinh-auc.eps}
+\includegraphics[width=\textwidth]{results/tr-dinh-auc.eps}
 \caption{}
 \label{}
 \end{subfigure}
 
 \begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-expert-acc.eps}
+\includegraphics[width=\textwidth]{results/tr-expert-acc.eps}
 \caption{}
 \label{}
 \end{subfigure}%
 \begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-expert-auc.eps}
+\includegraphics[width=\textwidth]{results/tr-expert-auc.eps}
 \caption{}
 \label{}
 \end{subfigure}
 
 \begin{subfigure}{.48\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-wrapper-acc.eps}
+\includegraphics[width=\textwidth]{results/tr-wrapper-acc.eps}
 \caption{}
 \label{}
 \end{subfigure}%
 \begin{subfigure}{.55\textwidth}
-\includegraphics[width=\textwidth]{../thesis/images/results/tr-wrapper-auc.eps}
+\includegraphics[width=\textwidth]{results/tr-wrapper-auc.eps}
 \caption{}
 \label{}
 \end{subfigure}
