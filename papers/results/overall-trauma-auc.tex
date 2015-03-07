@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{r|cccccc}
+Classifier & None & Baseline & Expert & C4.5 Wrapper & Correlation & IG \\ \hline
+LR & \begin{tabular}[c]{@{}c@{}}0.844 (0.0004)\\ D\end{tabular} & 0.812 (0.0003)* & \begin{tabular}[c]{@{}c@{}}0.825 (0.0003)\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.831 (0.0002)\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.846 (0.0003)\\ D, t=0.1\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.844 (0.0005)\\ D, t=0\end{tabular} \\
+SVM & \begin{tabular}[c]{@{}c@{}}0.843 (0.0004)\\ D\end{tabular} & 0.787 (0.0011)* & 0.807 (0.0003) & 0.806 (0.0003) & \textbf{\begin{tabular}[c]{@{}c@{}}0.844 (0.0004)\\ D, t=0.1\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.842 (0.0004)\\ D, t=0\end{tabular} \\
+1NN & \begin{tabular}[c]{@{}c@{}}0.726 (0.0013)\\ D\end{tabular} & 0.719 (0.001)* & \begin{tabular}[c]{@{}c@{}}0.760 (0.0011)\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.816 (0.0007)\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.798 (0.0005)\\ D, t=0.2\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.768 (0.0006)\\ T=0.1\end{tabular} \\
+20NN & \begin{tabular}[c]{@{}c@{}}0.827 (0.0008)\\ D\end{tabular} & 0.792 (0.0007)* & \begin{tabular}[c]{@{}c@{}}0.808 (0.001)\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.828 (0.0007)\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.831 (0.0009)\\ D, t=0.1\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.832 (0.0013)\\ D, t=0.01\end{tabular}} \\
+RD & \begin{tabular}[c]{@{}c@{}}0.834 (0.0009)\\ D\end{tabular} & 0.742 (0.0016)* & \begin{tabular}[c]{@{}c@{}}0.807 (0.0012)\\ D\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.825 (0.0009)\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.836 (0.0011)\\ D, t=0.01\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.834 (0.0011)\\ D, t=0.005\end{tabular} \\
+K* & \begin{tabular}[c]{@{}c@{}}0.768 (0.0008)\\ D\end{tabular} & 0.774 (0.0008)* & \begin{tabular}[c]{@{}c@{}}0.803 (0.0006)\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.838 (0.0003)\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.82 (0.0012)\\ D, t=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.802 (0.0008)\\ D, t=0.01\end{tabular} \\
+MLP & \begin{tabular}[c]{@{}c@{}}0.803 (0.0015)\\ D\end{tabular} & 0.781 (0.0014)* & \begin{tabular}[c]{@{}c@{}}0.784 (0.0016)\\ D\end{tabular} & \textbf{\begin{tabular}[c]{@{}c@{}}0.825 (0.0008)\\ D\end{tabular}} & \begin{tabular}[c]{@{}c@{}}0.818 (0.0011)\\ T=0.15\end{tabular} & \begin{tabular}[c]{@{}c@{}}0.803 (0.0017)\\ D, t=0\end{tabular}
+\end{tabular}
+}
+\caption{Overall best AUC of each classifier with a particular feature selection method on the trauma data set. * indicates that results were identical regardless of discretisation. D indicates that discretisation was used, and $t$ is the threshold at which the feature selector was applied. The absence of * or D means that not discretising produced a better result. The best result for each classifier is highlighted in bold, with ties broken in favour of the smallest feature set.}
+\label{tab:overall-tr-auc}
+\end{table}

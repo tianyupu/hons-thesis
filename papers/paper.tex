@@ -431,70 +431,6 @@ C4.5 wrapper. The best AUC of 0.846 was achieved using logistic regression with
 features selected by a correlation coefficient threshold of 0.1, again
 using the discretised data set.
 
-\begin{figure*}[htbp]
-\begin{subfigure}{.50\textwidth}
-\includegraphics[width=\textwidth]{results/tr-nofs-acc.eps}
-\caption{}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.57\textwidth}
-\includegraphics[width=\textwidth]{results/tr-nofs-auc.eps}
-\caption{}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.50\textwidth}
-\includegraphics[width=\textwidth]{results/tr-dinh-acc.eps}
-\caption{}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.57\textwidth}
-\includegraphics[width=\textwidth]{results/tr-dinh-auc.eps}
-\caption{}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.50\textwidth}
-\includegraphics[width=\textwidth]{results/tr-expert-acc.eps}
-\caption{}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.57\textwidth}
-\includegraphics[width=\textwidth]{results/tr-expert-auc.eps}
-\caption{}
-\label{}
-\end{subfigure}
-
-\begin{subfigure}{.50\textwidth}
-\includegraphics[width=\textwidth]{results/tr-wrapper-acc.eps}
-\caption{}
-\label{}
-\end{subfigure}%
-\begin{subfigure}{.57\textwidth}
-\includegraphics[width=\textwidth]{results/tr-wrapper-auc.eps}
-\caption{}
-\label{}
-\end{subfigure}
-\caption[]{Comparison of accuracy and AUC between classifiers for each non-threshold feature selection method, grouped by whether or not discretisation was applied.}
-\label{}
-\end{figure*}
-
-\begin{figure}[htbp]
-\begin{subfigure}{1.1\textwidth}
-\includegraphics[width=\textwidth]{results/tr-corr.eps}
-\caption{}
-\label{fig:tr-threshold-corr}
-\end{subfigure}
-
-\begin{subfigure}{1.1\textwidth}
-\includegraphics[width=\textwidth]{results/tr-ig.eps}
-\caption{}
-\label{fig:tr-threshold-ig}
-\end{subfigure}
-\caption[]{Comparison of accuracy and AUC between classifiers for feature selectors that discard features based on a threshold. Solid lines correspond to a result without discretisation, and dashed lines correspond to a result with discretisation.}
-\label{fig:tr-threshold}
-\end{figure}
-
 Recall that in order for our work to be comparable to that of previous work on
 trauma LOS prediction by Dinh et al. \cite{Dinh2013a}, we use the same data
 set and also test the features they used as the baseline feature set.
@@ -526,6 +462,9 @@ set, we should mention that logistic regression came a very close second with
 77.7\%, outperforming more sophisticated approaches such as SVM and MLP. It
 also achieved a higher AUC, and has the added advantages of being faster to
 train and widely applied in medicine.
+
+\input{results/overall-trauma-acc.tex}
+\input{results/overall-trauma-auc.tex}
 
 \subsection{Comparison of Feature Selection Methods}
 The best accuracy and AUC results for
@@ -580,6 +519,9 @@ related problem in the same medical domain.
 Our observations suggest the use of feature selection not only as a
 pre-processing step to improve the accuracy or AUC of a classifier, but also
 as a tool used independently to extract insights from medical data.
+
+\input{results/tr-nothreshold-plots.tex}
+\input{results/tr-corr-ig-plots.tex}
 
 \subsection{Comparison of Classifiers}
 In terms of classification accuracy, we did not find a lot of variation
