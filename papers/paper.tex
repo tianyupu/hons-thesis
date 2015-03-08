@@ -469,27 +469,25 @@ train and widely applied in medicine.
 \subsection{Comparison of Feature Selection Methods}
 The best accuracy and AUC results for
 each classifier resulted from a reduced feature set obtained through a
-particular feature selection method. Out of 20 combinations of classifiers
-and discretisation (the 10 classifiers with and 10 without
+particular feature selection method. Out of 14 combinations of classifiers
+and discretisation (the 7 classifiers with and 7 without
 discretisation), the C4.5 wrapper method resulted in the best
-accuracy for 7 of these combinations, followed by 5 using information gain
-and 4 using the correlation coefficient and very few for the other methods.
-\texttt{TODO: recount the numbers in this paragraph.}
+accuracy for 5 of these combinations, followed by 5 using information gain,
+2 using the correlation coefficient and very few for the other methods.
 
 In terms of AUC, we
 find that the correlation coefficient and the information gain are the feature
 selectors that give the best AUC for most of the classifiers, and perform
 equally well when used in conjunction with logistic regression and SVMs.
-Interestingly, although the C4.5
-wrapper method selects features which allow classifiers to achieve good
-accuracy, only in 2 out of the 20 combinations of classifiers did it give the
-best AUC result out of all the feature selectors.
+Interestingly, correlation coefficient as a feature selector produced the
+best AUC results for 6 out the 14 combinations, compared to only 2 when we
+considered accuracy instead.
 
 Note that regardless of whether we consider accuracy or AUC to be more
 important in evaluating classifiers, neither the baseline
 feature set from Dinh et al. \cite{Dinh2013a} nor the features suggested by
 the expert yielded better
-results than automatic feature selection in all but \texttt{two?} cases. Neither
+results than automatic feature selection in all cases. Neither
 feature selection method produced the best AUC result for any classifier.
 This is a surprising result because intuitively -- and in the literature -- it
 has been stated that in a highly specialised field such as medicine, the domain
@@ -533,7 +531,8 @@ used in LOS classification, performed consistently better than the others
 across all feature
 selection methods, but only when the feature set was not heavily reduced by
 the feature selector: in these cases, such as the results from Figure
-\ref{fig:tr-nothreshold-cfs-acc} showing classifier performance with features
+\ref{fig:tr-nothreshold-wrapper-acc} and \ref{fig:tr-nothreshold-wrapper-auc}
+showing classifier performance with features
 selected by C4.5 and nearest
 neighbour methods have higher accuracy than logistic regression. This is also
 apparent from the graphs in Figure \ref{fig:tr-threshold}: for both
